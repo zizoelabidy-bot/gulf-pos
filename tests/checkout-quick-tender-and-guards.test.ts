@@ -2480,7 +2480,7 @@ async function testVisualHierarchyAndPrematurePaidGuards() {
       const primaryPayBtn = payButtons[payButtons.length - 1];
       assert.ok(
         String(primaryPayBtn?.props?.className || '').includes('bg-brand'),
-        'Enabled Primary Pay CTA uses FloCafe bg-brand styling',
+        'Enabled Primary Pay CTA uses GULF POS bg-brand styling',
       );
 
       // Overpayment ($20.00 Cash, $0.00 Card -> $5.80 change) BEFORE submitting:

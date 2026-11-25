@@ -517,13 +517,13 @@ async function main() {
             JSON.stringify([
               {
                 tag_name: 'tax-pack-official-india-v1.0.0',
-                html_url: 'https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/v1',
+                html_url: 'https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/tag/v1',
                 draft: false,
                 assets: [
                   {
                     name: 'catalog.json',
                     browser_download_url:
-                      'https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/tax-pack-official-india-v1.0.0/catalog.json',
+                      'https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/tax-pack-official-india-v1.0.0/catalog.json',
                   },
                 ],
               },
@@ -564,9 +564,9 @@ async function main() {
         minFloVersion: '1.0.0',
         digest: 'a'.repeat(64),
         downloadUrl:
-          'https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/tax-pack-official-india-v1.0.0/pack.json',
+          'https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/tax-pack-official-india-v1.0.0/pack.json',
         signatureUrl:
-          'https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/tax-pack-official-india-v1.0.0/pack.json.sig',
+          'https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/tax-pack-official-india-v1.0.0/pack.json.sig',
       };
       let downloadPackErrCode = '';
       try {

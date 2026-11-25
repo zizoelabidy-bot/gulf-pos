@@ -465,7 +465,7 @@ async function run() {
       payment_details: [{ method: 'cash', amount: 50.0 }],
     };
     const usTenant = {
-      business_name: 'FloCafe New York',
+      business_name: 'GULF POS New York',
       currency: 'USD',
       country: 'US',
       timezone: 'America/New_York',
@@ -542,7 +542,7 @@ async function run() {
 
     // Urdu
     const urTenant = {
-      business_name: 'Flo Cafe Lahore',
+      business_name: 'GULF POS Lahore',
       currency: 'PKR',
       country: 'PK',
       timezone: 'Asia/Karachi',
@@ -561,7 +561,7 @@ async function run() {
     );
 
     const hiTenant = {
-      business_name: 'FloCafe Delhi',
+      business_name: 'GULF POS Delhi',
       currency: 'INR',
       country: 'IN',
       timezone: 'Asia/Kolkata',
@@ -580,7 +580,7 @@ async function run() {
     );
 
     const sqTenant = {
-      business_name: 'FloCafe Tiranë',
+      business_name: 'GULF POS Tiranë',
       currency: 'ALL',
       country: 'AL',
       timezone: 'Europe/Tirane',
@@ -599,7 +599,7 @@ async function run() {
     );
 
     const neTenant = {
-      business_name: 'FloCafe Kathmandu',
+      business_name: 'GULF POS Kathmandu',
       currency: 'NPR',
       country: 'NP',
       timezone: 'Asia/Kathmandu',
@@ -618,7 +618,7 @@ async function run() {
     );
 
     const jvTenant = {
-      business_name: 'FloCafe Yogyakarta',
+      business_name: 'GULF POS Yogyakarta',
       currency: 'IDR',
       country: 'ID',
       timezone: 'Asia/Jakarta',
@@ -637,7 +637,7 @@ async function run() {
     );
 
     const mrTenant = {
-      business_name: 'FloCafe Pune',
+      business_name: 'GULF POS Pune',
       currency: 'INR',
       country: 'IN',
       timezone: 'Asia/Kolkata',
@@ -656,7 +656,7 @@ async function run() {
     );
 
     const swTenant = {
-      business_name: 'FloCafe Nairobi',
+      business_name: 'GULF POS Nairobi',
       currency: 'KES',
       country: 'KE',
       timezone: 'Africa/Nairobi',
@@ -675,7 +675,7 @@ async function run() {
     );
 
     const paTenant = {
-      business_name: 'FloCafe Amritsar',
+      business_name: 'GULF POS Amritsar',
       currency: 'INR',
       country: 'IN',
       timezone: 'Asia/Kolkata',
@@ -694,7 +694,7 @@ async function run() {
     );
 
     const taTenant = {
-      business_name: 'FloCafe Chennai',
+      business_name: 'GULF POS Chennai',
       currency: 'INR',
       country: 'IN',
       timezone: 'Asia/Kolkata',
@@ -717,7 +717,7 @@ async function run() {
     );
 
     const ukTenant = {
-      business_name: 'FloCafe Київ',
+      business_name: 'GULF POS Київ',
       currency: 'UAH',
       country: 'UA',
       timezone: 'Europe/Kyiv',
@@ -1794,7 +1794,7 @@ async function run() {
           },
         },
         {
-          business_name: 'FloCafe New York',
+          business_name: 'GULF POS New York',
           currency: 'USD',
           country: 'US',
           timezone: 'America/New_York',
@@ -1909,7 +1909,7 @@ async function run() {
           },
         },
         {
-          business_name: 'FloCafe São Paulo',
+          business_name: 'GULF POS São Paulo',
           currency: 'BRL',
           country: 'BR',
           timezone: 'America/Sao_Paulo',
@@ -1930,7 +1930,7 @@ async function run() {
       html: generateBillHtml(
         testIranBill,
         {
-          business_name: 'FloCafe XP-58 Store',
+          business_name: 'GULF POS XP-58 Store',
           currency: 'USD',
           country: 'US',
           timezone: 'America/New_York',
@@ -1953,7 +1953,7 @@ async function run() {
       html: generateBillHtml(
         testIranBill,
         {
-          business_name: 'FloCafe XP-58 Store',
+          business_name: 'GULF POS XP-58 Store',
           currency: 'USD',
           country: 'US',
           timezone: 'America/New_York',
@@ -1976,7 +1976,7 @@ async function run() {
       html: generateBillHtml(
         testIranBill,
         {
-          business_name: 'FloCafe XP-58 Store',
+          business_name: 'GULF POS XP-58 Store',
           currency: 'USD',
           country: 'US',
           timezone: 'America/New_York',
@@ -1999,7 +1999,7 @@ async function run() {
       html: generateBillHtml(
         testIranBill,
         {
-          business_name: 'FloCafe 80mm Store',
+          business_name: 'GULF POS 80mm Store',
           currency: 'USD',
           country: 'US',
           timezone: 'America/New_York',
@@ -2168,7 +2168,7 @@ async function run() {
       },
     };
     const inrTenant = {
-      business_name: 'FloCafe Mumbai',
+      business_name: 'GULF POS Mumbai',
       currency: 'INR',
       country: 'IN',
       timezone: 'Asia/Kolkata',

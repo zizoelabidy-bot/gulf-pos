@@ -102,7 +102,7 @@ function createDatabaseMissingError(dbPath: string): Error & { code: string } {
   const error = new Error(
     `Database file is missing at ${dbPath}, but this install was previously initialized. ` +
       'Refusing to start with a new, empty database to avoid silently losing existing data. ' +
-      'Restore from a backup (Settings → Backup & Restore, or the backups folder) and restart Flo Cafe.',
+      'Restore from a backup (Settings → Backup & Restore, or the backups folder) and restart GULF POS.',
   ) as Error & { code: string };
   error.code = 'ERR_DATABASE_MISSING';
   return error;
@@ -3941,7 +3941,7 @@ function inspectOpenBackupDatabaseForDowngrade(
       status: 'corrupt_or_invalid',
       schemaVersion: null,
       appVersion: null,
-      detail: 'Backup does not contain an initialized Flo Cafe schema',
+      detail: 'Backup does not contain an initialized GULF POS schema',
     };
   }
 
@@ -3961,7 +3961,7 @@ function inspectOpenBackupDatabaseForDowngrade(
       status: 'corrupt_or_invalid',
       schemaVersion: pragmaVersion,
       appVersion,
-      detail: `Backup is missing required Flo Cafe table(s): ${missingCoreTables.join(', ')}`,
+      detail: `Backup is missing required GULF POS table(s): ${missingCoreTables.join(', ')}`,
     };
   }
 
@@ -4456,7 +4456,7 @@ export function restoreCompatibleBackupForDowngrade(
         throw new Error(
           `Active SQLite rollback journal detected (${activeRollbackJournalPath}). ` +
             `Refusing backup restore so uncommitted newer-database recovery state is not lost or replayed. ` +
-            `Update Flo Cafe to the latest compatible version to recover the database cleanly before restoring.`,
+            `Update GULF POS to the latest compatible version to recover the database cleanly before restoring.`,
         );
       }
     };
@@ -4468,7 +4468,7 @@ export function restoreCompatibleBackupForDowngrade(
       const inspection = inspectBackupSnapshotForDowngrade(stagedSource.snapshotPath, maxSupported);
       if (inspection.status === 'incompatible_newer') {
         throw new Error(
-          `Selected backup cannot be restored: ${inspection.detail}. Update Flo Cafe or choose an older compatible backup.`,
+          `Selected backup cannot be restored: ${inspection.detail}. Update GULF POS or choose an older compatible backup.`,
         );
       }
       if (inspection.status !== 'compatible') {
@@ -6350,7 +6350,7 @@ export function restoreBackup(
         backupSchemaVersion,
         currentSchemaVersion: currentVersion,
         tablesRestored: 0,
-        error: 'Backup does not contain an initialized Flo Cafe schema',
+        error: 'Backup does not contain an initialized GULF POS schema',
       };
     }
 
@@ -6396,7 +6396,7 @@ export function restoreBackup(
             backupSchemaVersion,
             currentSchemaVersion: currentVersion,
             tablesRestored: 0,
-            error: `Backup is missing required Flo Cafe table(s): ${missingCoreTables.join(', ')}`,
+            error: `Backup is missing required GULF POS table(s): ${missingCoreTables.join(', ')}`,
           };
         }
         if (backupSchemaVersion >= 85 && !stagedTables.has('inventory_movements')) {
@@ -10501,7 +10501,7 @@ export class SchemaVersionMismatchError extends Error {
     super(
       `Database schema (v${dbVersion}) is newer than this app version supports (v${appVersion}). ` +
         `This usually means another device or a previous update already upgraded this database. ` +
-        `Please update Flo Cafe to the latest version before continuing.`,
+        `Please update GULF POS to the latest version before continuing.`,
     );
     this.name = 'SchemaVersionMismatchError';
   }

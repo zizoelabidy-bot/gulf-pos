@@ -965,7 +965,7 @@ export function DatabaseSettingsTab({
             reader.onload = async (event) => {
               try {
                 const data = JSON.parse(event.target?.result as string) as ImportPayload;
-                if (!data.app || data.app !== 'FloDesktop') {
+                if (!data.app || data.app !== 'GULFPOSDesktop') {
                   toast.error(t('invalidExportFile'));
                   return;
                 }

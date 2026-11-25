@@ -227,7 +227,7 @@ class PrinterService {
     if (!navigator.usb) {
       if (typeof window !== 'undefined' && !window.isSecureContext) {
         throw new Error(
-          'WebUSB needs a secure connection. Open FloCafe over HTTPS or on localhost, or have an administrator mark this address as secure in Chrome (chrome://flags/#unsafely-treat-insecure-origin-as-secure).',
+          'WebUSB needs a secure connection. Open GULF POS over HTTPS or on localhost, or have an administrator mark this address as secure in Chrome (chrome://flags/#unsafely-treat-insecure-origin-as-secure).',
         );
       }
       throw new Error('WebUSB API is not supported in this browser. Use Chrome or Edge 89+.');

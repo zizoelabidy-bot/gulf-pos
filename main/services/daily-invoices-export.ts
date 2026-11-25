@@ -549,7 +549,7 @@ export function buildDailyInvoicesExportDataset(
   const currency = sales.summary.currency || getTenantCurrency(db);
   const minorFactor = getCurrencyMinorUnitFactor(currency);
 
-  const storeLegalName = readDbSetting(db, 'business_name') || 'FloCafe Store';
+  const storeLegalName = readDbSetting(db, 'business_name') || 'GULF POS Store';
   const storeAddress = readDbSetting(db, 'business_address');
   const storeTaxId = readDbSetting(db, 'tax_registration_number');
   const storeCountry = readDbSetting(db, 'country');

@@ -500,7 +500,7 @@ async function main() {
       payments: [{ method: 'cash', amount: 204.75 }],
     };
     const sampleTenant: any = {
-      business_name: 'FloCafe Test',
+      business_name: 'GULF POS Test',
       currency: 'USD',
       country: 'US',
       timezone: 'UTC',

@@ -553,7 +553,7 @@ async function targetValidationTest() {
     assertEqualOrThrow(
       await probePort('127.0.0.1', 3001, 500),
       false,
-      'probePort rejects local FloCafe API port 127.0.0.1:3001',
+      'probePort rejects local GULF POS API port 127.0.0.1:3001',
     );
     assertEqualOrThrow(
       await probePort('0.0.0.0', 9100, 500),
@@ -571,12 +571,12 @@ async function targetValidationTest() {
     assertEqualOrThrow(
       await probePort('127.0.0.1', apiMockPort, 500),
       false,
-      'probePort rejects active FloCafe server port even when listening on 127.0.0.1',
+      'probePort rejects active GULF POS server port even when listening on 127.0.0.1',
     );
     assertEqualOrThrow(
       apiMockConnections,
       0,
-      'listening server on active FloCafe port receives zero probe connections',
+      'listening server on active GULF POS port receives zero probe connections',
     );
     assertEqualOrThrow(
       connectCalls.length,
@@ -615,7 +615,7 @@ async function targetValidationTest() {
       },
       {
         type: 'pdl-datastream',
-        name: 'FloCafe API Port',
+        name: 'GULF POS API Port',
         host: 'localhost',
         address: '127.0.0.1',
         port: 3001,
@@ -674,7 +674,7 @@ async function targetValidationTest() {
   assertEqualOrThrow(
     discovered.map((p) => `${p.address}:${p.port}:${p.source}`).join(','),
     '127.0.0.1:9100:mdns,192.168.1.50:9100:both,192.168.1.51:9100:port-scan,192.168.1.52:9101:mdns',
-    'discoverLanPrinters filters disallowed targets while preserving valid LAN and non-FloCafe 127.0.0.1:9100 printers',
+    'discoverLanPrinters filters disallowed targets while preserving valid LAN and non-GULF POS 127.0.0.1:9100 printers',
   );
 
   const blockedLocalApiScan = await discoverLanPrinters({
@@ -703,14 +703,14 @@ async function targetValidationTest() {
     browse: async () => [
       {
         type: 'pdl-datastream',
-        name: 'FloCafe API Port Only',
+        name: 'GULF POS API Port Only',
         host: 'localhost',
         address: '127.0.0.1',
         port: 3001,
       },
       {
         type: 'ipp',
-        name: 'FloCafe API Port IPP',
+        name: 'GULF POS API Port IPP',
         host: 'localhost',
         address: '127.0.0.1',
         port: 631,

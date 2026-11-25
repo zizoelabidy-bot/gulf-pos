@@ -1,5 +1,5 @@
 /**
- * Allowlist for everything FloCafe sends to PostHog. Usage follows the sharing level, the email
+ * Allowlist for everything GULF POS sends to PostHog. Usage follows the sharing level, the email
  * only the `full` level, and exceptions follow diagnostics transmission.
  */
 
@@ -222,7 +222,7 @@ const IDENTIFIER = /^[A-Za-z_$<][\w$.<>]{0,99}$/;
 const CHUNK_ID = /^[\w-]{1,100}$/;
 const OPAQUE_REF = /^[0-9a-f]{16}$/;
 const OPAQUE_REF_KEYS = new Set(['store_ref', 'staff_ref', 'install_ref']);
-/** The only distinct ids FloCafe creates: account, device, and per-launch. */
+/** The only distinct ids GULF POS creates: account, device, and per-launch. */
 const FLO_DISTINCT_ID = /^(?:acct_[0-9a-f]{16}|inst_[0-9a-f]{16}|anon_[0-9a-f-]{36})$/;
 const ACCOUNT_DISTINCT_ID = /^acct_/;
 const EMAIL = /[^\s@"'<>]+@[^\s@"'<>]+\.[^\s@"'<>]+/g;
@@ -602,7 +602,7 @@ function scrubException(
   const capturePoint = source.capture_point ?? options.defaultCapturePoint;
   if (!isPostHogCapturePoint(capturePoint)) return null;
   const context = contextProperties(source);
-  // An exception captured outside FloCafe's own calls arrives without these fields.
+  // An exception captured outside GULF POS's own calls arrives without these fields.
   for (const [key, value] of Object.entries(options.exceptionContext ?? {})) {
     if (context[key] === undefined && typeof value === 'string' && value) context[key] = value;
   }

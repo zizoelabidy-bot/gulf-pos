@@ -67,7 +67,7 @@ const {
 const { runShutdownSteps } = require('../main/shutdown');
 
 async function main(): Promise<void> {
-  console.log('🧪 FloCafe Google Drive Tests');
+  console.log('🧪 GULF POS Google Drive Tests');
   console.log('='.repeat(60));
 
   // ── isGoogleDriveConfigured() ────────────────────────────────────────
@@ -978,7 +978,7 @@ async function main(): Promise<void> {
   for (const [key, value] of [
     ['google_drive_account_subject', 'subject-a'],
     ['google_drive_destination_folder_id', 'folder-a'],
-    ['google_drive_destination_folder_name', 'FloCafe Backups'],
+    ['google_drive_destination_folder_name', 'GULF POS Backups'],
     ['google_drive_folder_id', 'folder-a'],
     ['google_drive_owned_destinations', '["folder-a","folder-b"]'],
   ])
@@ -1500,7 +1500,7 @@ async function main(): Promise<void> {
       for (const [key, value] of [
         ['google_drive_account_subject', 'subject-a'],
         ['google_drive_destination_folder_id', 'folder-a'],
-        ['google_drive_destination_folder_name', 'FloCafe Backups'],
+        ['google_drive_destination_folder_name', 'GULF POS Backups'],
         ['google_drive_folder_id', 'folder-a'],
         ['google_drive_owned_destinations', '["folder-a"]'],
         ['google_drive_revoke_status', ''],
@@ -2201,7 +2201,7 @@ async function main(): Promise<void> {
       {
         google_drive_account_subject: 'subject-a',
         google_drive_destination_folder_id: 'folder-a',
-        google_drive_destination_folder_name: 'FloCafe Backups',
+        google_drive_destination_folder_name: 'GULF POS Backups',
         google_drive_folder_id: 'folder-a',
         google_drive_owned_destinations: '["folder-a","folder-b"]',
       },

@@ -1,6 +1,6 @@
 /**
  * Proves that fronting the real POS, KDS and Server App listeners with in-process TLS keeps
- * every loopback-trust and per-client-IP decision correct: a LAN device reaching FloCafe over
+ * every loopback-trust and per-client-IP decision correct: a LAN device reaching GULF POS over
  * HTTPS is seen with its real address, so it can never pass the POS-computer-only guards and
  * cannot lock out another device.
  */

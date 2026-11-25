@@ -107,7 +107,7 @@ const sampleBill = {
 };
 
 const sampleTenant = {
-  business_name: 'Flo Cafe',
+  business_name: 'GULF POS',
   currency: 'USD',
   country: 'US',
   timezone: 'UTC',

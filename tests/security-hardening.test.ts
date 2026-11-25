@@ -312,7 +312,7 @@ async function main() {
   assert(rateLimitHit, 'owner hits authRateLimit after 10 requests to PUT /api/staff/:id');
 
   // ── Order access is role-gated, never ownership-gated ────────────────────
-  // FloCafe is an open system for order visibility: any staff whose role can
+  // GULF POS is an open system for order visibility: any staff whose role can
   // reach the orders page/API can see and act on any order, regardless of who
   // created it. Access is restricted by role (this block) and by specific
   // action (e.g. KDS stage transitions are chef/manager/owner-only), never by

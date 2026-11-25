@@ -755,7 +755,7 @@ try {
       user: { id: 'owner-1', name: 'Owner', email: 'owner@test.com', role: 'owner' } as any,
       currentTenant: {
         id: 't1',
-        business_name: 'FloCafe',
+        business_name: 'GULF POS',
         role: 'owner',
         currency: 'USD',
         country: 'US',

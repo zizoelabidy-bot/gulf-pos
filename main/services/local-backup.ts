@@ -19,9 +19,9 @@ const BACKUP_FILE_PATTERN =
 
 export function getLocalBackupDir(): string {
   try {
-    return path.join(app.getPath('documents'), 'FloCafe', 'Backups');
+    return path.join(app.getPath('documents'), 'GULF POS', 'Backups');
   } catch {
-    return path.join(app.getPath('userData'), 'FloCafe', 'Backups');
+    return path.join(app.getPath('userData'), 'GULF POS', 'Backups');
   }
 }
 

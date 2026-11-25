@@ -313,7 +313,7 @@ export function renderMenuViaDocument(
     options.columns,
   ))
     lines.push(`{CENTER}${line}{/CENTER}`);
-  lines.push('{CENTER}Powered by FloCafe{/CENTER}', '{FEED}', '{CUT}');
+  lines.push('{CENTER}Powered by GULF CCTV{/CENTER}', '{FEED}', '{CUT}');
   const data = buildEscPos(
     lines,
     options.useUnicode === true,

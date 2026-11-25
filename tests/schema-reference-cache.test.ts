@@ -1,5 +1,5 @@
 /**
- * Regression and validation tests for FloCafe Issue #1177:
+ * Regression and validation tests for GULF POS Issue #1177:
  * Database recovery rebuilds reference schema at most once per process lifetime.
  *
  * Usage: node tests/run-electron-node-test.cjs tests/schema-reference-cache.test.ts

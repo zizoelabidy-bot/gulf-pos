@@ -116,7 +116,7 @@ test.before(async () => {
     if (request.url !== '/json') return response.writeHead(404).end();
     sendJson(response, 200, [{
       type: 'page',
-      title: 'Flo Cafe',
+      title: 'GULF POS',
       webSocketDebuggerUrl: `ws://127.0.0.1:${cdpPort}`,
     }]);
   });
@@ -190,7 +190,7 @@ test('cdpEval bounds target discovery and websocket handshakes', async () => {
     if (request.url !== '/json') return response.writeHead(404).end();
     sendJson(response, 200, [{
       type: 'page',
-      title: 'Flo Cafe',
+      title: 'GULF POS',
       webSocketDebuggerUrl: `ws://127.0.0.1:${targetPort}`,
     }]);
   });

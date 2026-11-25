@@ -3999,7 +3999,7 @@ export function formatStoredZReportWhatsAppMessage(
   const businessName =
     (options?.businessName !== undefined
       ? options.businessName
-      : (getSettingValue('business_name') ?? '')) || 'FloCafe';
+      : (getSettingValue('business_name') ?? '')) || 'GULF POS';
 
   let closedByName = options?.closedByName;
   if (!closedByName) {

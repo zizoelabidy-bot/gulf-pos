@@ -2712,7 +2712,7 @@ async function main() {
           user: { id: owner.userId, role: 'owner', name: 'Owner', email: 'owner@test.com' },
           currentTenant: {
             id: 'local',
-            business_name: 'FloCafe Test',
+            business_name: 'GULF POS Test',
             role: 'owner',
             currency: 'USD',
             country: 'US',

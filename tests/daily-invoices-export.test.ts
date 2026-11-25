@@ -102,7 +102,7 @@ Module._load = function (request: string, parent: unknown, isMain: boolean) {
         isPackaged: true,
         getPath: () => testDir,
         getVersion: () => 'test',
-        getName: () => 'FloCafe',
+        getName: () => 'GULF POS',
       },
       BrowserWindow: FakePdfBrowserWindow,
       ipcMain: {
@@ -329,7 +329,7 @@ async function main() {
 
   // Configure store metadata
   db.prepare(
-    "INSERT OR REPLACE INTO settings (key, value, updated_at) VALUES ('business_name', 'FloCafe Artisan Roasters <script>alert(1)</script>', CURRENT_TIMESTAMP)",
+    "INSERT OR REPLACE INTO settings (key, value, updated_at) VALUES ('business_name', 'GULF POS Artisan Roasters <script>alert(1)</script>', CURRENT_TIMESTAMP)",
   ).run();
   db.prepare(
     "INSERT OR REPLACE INTO settings (key, value, updated_at) VALUES ('business_address', '42 Espresso Lane, Bengaluru', CURRENT_TIMESTAMP)",
@@ -681,7 +681,7 @@ async function main() {
 
       // Verify XSS escaping on store name
       assert.ok(
-        compiledHtml.includes('FloCafe Artisan Roasters &lt;script&gt;alert(1)&lt;/script&gt;'),
+        compiledHtml.includes('GULF POS Artisan Roasters &lt;script&gt;alert(1)&lt;/script&gt;'),
         'store legal name is HTML-escaped',
       );
       assert.ok(

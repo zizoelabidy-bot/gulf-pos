@@ -639,7 +639,7 @@ async function main() {
       privateKey,
     ).toString('base64');
     const releaseTag = 'tax-pack-test-legacy-in-pack-v1.1.0';
-    const releaseBase = `https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/${releaseTag}`;
+    const releaseBase = `https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/${releaseTag}`;
     const catalogEntry = {
       id: downloadedPack.id,
       publisher: downloadedPack.publisher,
@@ -787,7 +787,7 @@ async function main() {
       privateKey,
     ).toString('base64');
     const wrappedTag = 'tax-pack-test-legacy-in-pack-v1.3.0';
-    const wrappedBase = `https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/${wrappedTag}`;
+    const wrappedBase = `https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/${wrappedTag}`;
     const wrappedEntry = {
       id: wrappedPack.id,
       publisher: wrappedPack.publisher,
@@ -1161,7 +1161,7 @@ async function main() {
     }, null, 2);
     const labelsSignature = sign(null, Buffer.from(labelsArtifactJson, 'utf8'), privateKey).toString('base64');
     const labelsTag = 'tax-pack-test-labels-in-pack-v2.0.0';
-    const labelsBase = `https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/${labelsTag}`;
+    const labelsBase = `https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/${labelsTag}`;
     const labelsEntry = {
       id: labelsPack.id,
       publisher: labelsPack.publisher,
@@ -1318,7 +1318,7 @@ async function main() {
       }, null, 2);
       const rejectSignature = sign(null, Buffer.from(rejectArtifactJson, 'utf8'), privateKey).toString('base64');
       const rejectTag = 'tax-pack-test-labels-reject-pack-v9.0.0';
-      const rejectBase = `https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/${rejectTag}`;
+      const rejectBase = `https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/${rejectTag}`;
       const rejectEntry = {
         id: rejectPack.id,
         publisher: rejectPack.publisher,
@@ -1373,13 +1373,13 @@ async function main() {
       packs: [wrappedEntry],
     };
     const reinstallCatalogUrl = `${wrappedBase}/reinstall-catalog.json`;
-    const reinstallReleasesUrl = 'https://api.github.com/repos/FreeOpenSourcePOS/FloCafe-Plugins/releases?per_page=100&page=1';
+    const reinstallReleasesUrl = 'https://api.github.com/repos/FreeOpenSourcePOS/GULF POS-Plugins/releases?per_page=100&page=1';
     const reinstallFetch = async (input: string | URL | Request) => {
       const url = String(input);
       if (url === reinstallReleasesUrl) {
         return new Response(JSON.stringify([{
           tag_name: wrappedTag,
-          html_url: `https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/${wrappedTag}`,
+          html_url: `https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/tag/${wrappedTag}`,
           draft: false,
           assets: [{ name: 'catalog.json', browser_download_url: reinstallCatalogUrl }],
         }]), { status: 200 });
@@ -1475,7 +1475,7 @@ async function main() {
       privateKey,
     ).toString('base64');
     const newCountryTag = 'tax-pack-brand-new-country-pack-v1.0.0';
-    const newCountryBase = `https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/${newCountryTag}`;
+    const newCountryBase = `https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/${newCountryTag}`;
     const newCountryEntry = {
       id: newCountryPack.id,
       publisher: newCountryPack.publisher,
@@ -1519,8 +1519,8 @@ async function main() {
       ...catalogEntry,
       version: incompatiblePack.version,
       minFloVersion: incompatiblePack.minFloVersion,
-      downloadUrl: `https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/${incompatibleTag}/test-legacy-in-pack-v1.2.0.json`,
-      signatureUrl: `https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/${incompatibleTag}/test-legacy-in-pack-v1.2.0.json.sig`,
+      downloadUrl: `https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/${incompatibleTag}/test-legacy-in-pack-v1.2.0.json`,
+      signatureUrl: `https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/${incompatibleTag}/test-legacy-in-pack-v1.2.0.json.sig`,
       digest: taxPackSha256(incompatiblePackJson),
     };
     const incompatibleFetch = async (input: string | URL | Request) => new Response(

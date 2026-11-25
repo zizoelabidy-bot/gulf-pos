@@ -128,7 +128,7 @@ function resolveHtmlOptions(options?: CashCloseHtmlOptions): Required<CashCloseH
       : (getSettingValue('business_name') ?? '');
 
   return {
-    businessName: businessName || 'FloCafe',
+    businessName: businessName || 'GULF POS',
     currency: currency || 'USD',
     locale: locale || 'en-US',
     timezone: timezone || 'UTC',

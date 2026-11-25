@@ -23,7 +23,7 @@ interface DbProfile {
   };
 }
 
-/** Code pages FloCafe can actually emit; the snapshot may list more. */
+/** Code pages GULF POS can actually emit; the snapshot may list more. */
 const EMITTABLE_CODE_PAGES: readonly ThermalCodePage[] = ['cp437', 'cp850', 'cp858', 'windows1252'];
 const PAPER_WIDTHS: readonly SupportedPrinterProfile['defaultPaperWidth'][] = [
   'cols-32',

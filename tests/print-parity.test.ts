@@ -19,7 +19,7 @@
  * explicit capability model; when that happens these marked assertions must
  * be updated intentionally — they are NOT permanent architecture.
  *
- * Issue: https://github.com/FreeOpenSourcePOS/FloCafe/issues/439
+ * Issue: https://github.com/FreeOpenSourcePOS/GULF POS/issues/439
  */
 
 import * as fs from 'node:fs';

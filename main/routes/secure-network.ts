@@ -73,7 +73,7 @@ router.get('/ca.cer', (_req: Request, res: Response) => {
   const ca = getSecureNetwork()?.getPublicCa();
   if (!ca) return void res.status(404).json({ error: 'No certificate available' });
   res.setHeader('Content-Type', 'application/x-x509-ca-cert');
-  res.setHeader('Content-Disposition', 'attachment; filename="FloCafe-Local-CA.cer"');
+  res.setHeader('Content-Disposition', 'attachment; filename="GULF POS-Local-CA.cer"');
   res.setHeader('Cache-Control', 'no-store');
   res.send(ca.der);
 });
@@ -82,7 +82,7 @@ router.get('/ca.pem', (_req: Request, res: Response) => {
   const ca = getSecureNetwork()?.getPublicCa();
   if (!ca) return void res.status(404).json({ error: 'No certificate available' });
   res.setHeader('Content-Type', 'application/x-pem-file');
-  res.setHeader('Content-Disposition', 'attachment; filename="FloCafe-Local-CA.pem"');
+  res.setHeader('Content-Disposition', 'attachment; filename="GULF POS-Local-CA.pem"');
   res.setHeader('Cache-Control', 'no-store');
   res.send(ca.pem);
 });

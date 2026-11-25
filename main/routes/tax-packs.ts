@@ -538,7 +538,7 @@ export function validationChecklist(
   add(
     4,
     semverAtLeast(APP_VERSION, pack.minFloVersion),
-    `FloCafe ${APP_VERSION} satisfies minimum compatible version ${pack.minFloVersion}`,
+    `GULF POS ${APP_VERSION} satisfies minimum compatible version ${pack.minFloVersion}`,
   );
   add(
     5,

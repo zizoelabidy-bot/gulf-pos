@@ -7360,7 +7360,7 @@ export default function SettingsPage() {
                 <p className="text-sm text-muted-foreground mb-6">{t('aboutDescription')}</p>
                 <div className="space-y-3">
                   <a
-                    href="https://github.com/FreeOpenSourcePOS/FloCafe"
+                    href="https://github.com/FreeOpenSourcePOS/GULF POS"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-brand hover:underline"

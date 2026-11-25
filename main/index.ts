@@ -1198,7 +1198,7 @@ function createTray(): void {
         },
       ]);
 
-      tray.setToolTip('Flo Cafe');
+      tray.setToolTip('GULF POS');
       tray.setContextMenu(linuxMenu);
       // Single-click also shows the window on Linux (no double-click standard).
       tray.on('click', () => {
@@ -1517,7 +1517,7 @@ function createMenu(): void {
       label: 'Window',
       submenu: [
         {
-          label: 'Flo Cafe',
+          label: 'GULF POS',
           click: () => {
             if (showMainWindow()) mainWindow?.focus();
           },
@@ -1573,7 +1573,7 @@ function showAbout(): void {
   dialog.showMessageBox({
     type: 'info',
     title: 'About Flo',
-    message: 'Flo Cafe',
+    message: 'GULF POS',
     detail: [
       `Version: ${app.getVersion()}`,
       `Electron: ${process.versions.electron}`,

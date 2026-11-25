@@ -92,7 +92,7 @@ function runTests(): void {
  * Issue #790: PowerShell diagnostics must survive the subprocess byte boundary.
  *
  * Windows PowerShell 5.1 encodes redirected stdout/stderr with the console/OEM
- * code page, so the helpers force UTF-8 for both streams and FloCafe decodes
+ * code page, so the helpers force UTF-8 for both streams and GULF POS decodes
  * UTF-8. These cases drive the real `printViaUSB()` transport through a stub
  * `powershell` that writes exact bytes to stderr, so a pre-decoded JavaScript
  * string is never the thing under test.
@@ -198,7 +198,7 @@ async function runEncodingRegression(): Promise<void> {
       "console-code-page bytes decode lossily, which is why the helper must emit UTF-8",
     );
 
-    // 5. The command FloCafe actually sends carries the UTF-8 stream contract
+    // 5. The command GULF POS actually sends carries the UTF-8 stream contract
     //    for both stdout and stderr before the helper body runs.
     const dumpPath = path.join(fixtureDir, "command.txt");
     process.env[DUMP_ENV] = dumpPath;

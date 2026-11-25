@@ -90,7 +90,7 @@ Module._load = function (request: string, parent: unknown, isMain: boolean) {
         isPackaged: true,
         getPath: () => testDir,
         getVersion: () => 'test',
-        getName: () => 'FloCafe',
+        getName: () => 'GULF POS',
       },
       BrowserWindow: RecordingWindow,
     };

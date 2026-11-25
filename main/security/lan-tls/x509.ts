@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 
 /**
- * Minimal X.509 v3 issuer for the fixed profiles FloCafe needs: a long-lived local root CA and
+ * Minimal X.509 v3 issuer for the fixed profiles GULF POS needs: a long-lived local root CA and
  * short-lived server leaf certificates signed by it (ECDSA P-256 / SHA-256). Output is verified by
  * Node's own `X509Certificate` parser in tests.
  */
@@ -288,7 +288,7 @@ export function issueLeafCertificate(
     sequence(oid(OID.ecdsaWithSha256)),
     issuerNameDer,
     sequence(formatTime(notBefore), formatTime(notAfter)),
-    name(request.commonName ?? 'FloCafe', request.organization ?? 'FloCafe'),
+    name(request.commonName ?? 'GULF POS', request.organization ?? 'GULF POS'),
     spki,
     explicit(
       3,

@@ -297,7 +297,7 @@ function count(sql: string): number | undefined {
   }
 }
 
-/** Counts only: how much this store used FloCafe in the last 24 hours, and how it is set up. */
+/** Counts only: how much this store used GULF POS in the last 24 hours, and how it is set up. */
 export function readDailyUsageSummary(): Record<string, number | boolean | string> {
   const day = "datetime('now', '-1 day')";
   const counts: Record<string, number | undefined> = {

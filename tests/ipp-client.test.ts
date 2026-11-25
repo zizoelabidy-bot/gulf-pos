@@ -11,12 +11,12 @@
  *   while outbound UNIX socket /private/var/run/cupsd is permitted by application.sb:293,777-779
  *   and socket-activated by launchd (org.cups.cupsd.plist). Submitting raw ESC/POS bytes with
  *   document-format = application/vnd.cups-raw succeeds with HTTP 200 / IPP 0x0000 (successful-ok),
- *   FloCafe logs `[Printer] IPP print queued for "EPSON_TM_T20II" (job <id>)`, /var/log/cups/access_log
+ *   GULF POS logs `[Printer] IPP print queued for "EPSON_TM_T20II" (job <id>)`, /var/log/cups/access_log
  *   records `"POST /printers/EPSON_TM_T20II HTTP/1.1" 200 <bytes> Print-Job successful-ok`, and
  *   /var/log/cups/error_log records no filter or permission errors.
  * - Scenario B (No matching CUPS queue configured):
  *   CUPS returns HTTP 200 with IPP statusCode 0x0406 (client-error-not-found) and status-message
- *   "The printer or class does not exist." FloCafe logs `[Printer] IPP print failed for "<name>":
+ *   "The printer or class does not exist." GULF POS logs `[Printer] IPP print failed for "<name>":
  *   Printer queue "<name>" was not found in macOS Printers & Scanners...` and returns
  *   { ok: false, failureClass: 'not_configured' } with actionable System Settings > Printers & Scanners
  *   setup guidance.

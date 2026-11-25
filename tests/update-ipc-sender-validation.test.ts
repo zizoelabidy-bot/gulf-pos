@@ -761,9 +761,9 @@ async function runTests() {
   // Safe external HTTPS URL -> prevented in-window, opened externally
   navPrevented = false;
   openedExternalUrl = null;
-  willNavigate(mockNavEvent, 'https://github.com/FreeOpenSourcePOS/FloCafe');
+  willNavigate(mockNavEvent, 'https://github.com/FreeOpenSourcePOS/GULF POS');
   assert.equal(navPrevented, true, 'external HTTPS navigation prevented');
-  assert.equal(openedExternalUrl, 'https://github.com/FreeOpenSourcePOS/FloCafe');
+  assert.equal(openedExternalUrl, 'https://github.com/FreeOpenSourcePOS/GULF POS');
 
   // Safe external HTTP URL -> prevented in-window, opened externally
   navPrevented = false;

@@ -564,7 +564,7 @@ async function main() {
 
     const artifactJson = fs.readFileSync(path.join(PACKS_DIR, 'community-singapore.json'), 'utf8');
     const releaseTag = `tax-pack-${singapore.id}-v${singapore.version}`;
-    const releaseBaseUrl = `https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/${releaseTag}`;
+    const releaseBaseUrl = `https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/${releaseTag}`;
     const packAssetUrl = `${releaseBaseUrl}/${singapore.id}-v${singapore.version}.json`;
     const signature = sign(
       null,

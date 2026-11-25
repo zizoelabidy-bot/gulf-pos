@@ -912,7 +912,7 @@ async function runTests() {
       { ip: '169.254.10.20', port: 9100, label: 'Legitimate IPv4 link-local printer' },
       { ip: 'fe80::1', port: 9100, label: 'Legitimate IPv6 link-local printer' },
       { ip: 'printer.local', port: 9100, label: 'mDNS hostname printer' },
-      { ip: '127.0.0.1', port: 9100, label: 'Loopback non-FloCafe printer port' },
+      { ip: '127.0.0.1', port: 9100, label: 'Loopback non-GULF POS printer port' },
     ];
 
     for (const target of allowedTargets) {
@@ -931,7 +931,7 @@ async function runTests() {
     assert(validNetRes.status === 201, 'POST allows loopback printer on port 9100');
     const validNetId = validNetRes.body.printer.id;
 
-    // Partial PUT updating port to FloCafe's own server port on loopback must be rejected
+    // Partial PUT updating port to GULF POS's own server port on loopback must be rejected
     const putBadPort = await request(app).put(`/api/printers/${validNetId}`).send({ port: 3001 });
     assert(
       putBadPort.status === 400,

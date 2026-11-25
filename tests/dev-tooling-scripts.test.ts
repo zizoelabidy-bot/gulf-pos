@@ -209,14 +209,14 @@ if (args[0] === 'ls') {
 
   // Positive cases (should match as Flo processes)
   const positiveCases = [
-    'node /Users/dev/FloCafe/dist/index.js',
-    'node /Users/dev/FloCafe/dist/main/index.js',
-    'node C:\\FloCafe\\dist\\main\\index.js',
-    '/Applications/Flo Cafe.app/Contents/MacOS/Flo Cafe',
+    'node /Users/dev/GULF POS/dist/index.js',
+    'node /Users/dev/GULF POS/dist/main/index.js',
+    'node C:\\GULF POS\\dist\\main\\index.js',
+    '/Applications/GULF POS.app/Contents/MacOS/GULF POS',
     '/usr/bin/flocafe --no-sandbox',
     'electron . --appName=flo-desktop',
-    'node /path/to/FloCafe/dev-server.js',
-    'node /path/to/FloCafe/dist/index.js',
+    'node /path/to/GULF POS/dev-server.js',
+    'node /path/to/GULF POS/dist/index.js',
     'com.flo.desktop.helper',
     'flo-pos-service',
   ];
@@ -231,8 +231,8 @@ if (args[0] === 'ls') {
     'node /Users/other-project/dist/index.js',
     'node /Users/other-project/dev-server.js',
     'node /home/user/app/dev-server.js',
-    'node /Users/dev/FloCafe/other-server.js',
-    'node /Users/dev/FloCafe-tools/dev-server.js',
+    'node /Users/dev/GULF POS/other-server.js',
+    'node /Users/dev/GULF POS-tools/dev-server.js',
     'python3 -m http.server 3000',
     'nginx: master process',
     'postgres -D /data',

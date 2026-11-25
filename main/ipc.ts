@@ -335,7 +335,7 @@ export function registerIpcHandlers(
         return {
           success: false,
           error:
-            'Invalid backup file: missing schema version metadata. This backup may have been created with an older version of FloDesktop.',
+            'Invalid backup file: missing schema version metadata. This backup may have been created with an older version of GULFPOSDesktop.',
         };
       }
 

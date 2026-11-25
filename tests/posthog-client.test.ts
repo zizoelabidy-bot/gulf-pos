@@ -288,7 +288,7 @@ async function main() {
     token: 'phc',
   });
   assert.equal(alias(goodAlias, false), null, 'aliases follow telemetry');
-  assert.equal(alias({ ...goodAlias, alias: 'ada@example.com' }), null, 'only FloCafe ids alias');
+  assert.equal(alias({ ...goodAlias, alias: 'ada@example.com' }), null, 'only GULF POS ids alias');
 
   const throttle = createScreenViewThrottle(1_000);
   assert.deepEqual(throttle('a|/pos/', 0), { send: true, repeatViews: 0 });
@@ -418,7 +418,7 @@ async function main() {
               frames: [
                 { filename: '/Users/ada/node_modules/leftpad/index.js', lineno: 1, colno: 1 },
                 {
-                  filename: '/Users/ada/FloCafe/main/index.ts',
+                  filename: '/Users/ada/GULF POS/main/index.ts',
                   function: 'placeOrder',
                   lineno: 4,
                   colno: 2,

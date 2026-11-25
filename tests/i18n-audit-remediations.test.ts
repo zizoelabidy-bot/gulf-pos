@@ -209,7 +209,7 @@ async function run() {
     const html = generateBillHtml(
       sampleBill,
       {
-        business_name: 'FloCafe Audit Test',
+        business_name: 'GULF POS Audit Test',
         currency: 'USD',
         country: 'US',
         timezone: 'UTC',
@@ -245,7 +245,7 @@ async function run() {
   windowOpenedSync = false;
   await printWebBill(
     sampleBill,
-    { business_name: 'FloCafe Audit Test', currency: 'USD', country: 'US', timezone: 'UTC' } as any,
+    { business_name: 'GULF POS Audit Test', currency: 'USD', country: 'US', timezone: 'UTC' } as any,
     { language: 'fa' as any },
   );
   assert(
@@ -262,7 +262,7 @@ async function run() {
     await printWebBill(
       sampleBill,
       {
-        business_name: 'FloCafe Audit Test',
+        business_name: 'GULF POS Audit Test',
         currency: 'USD',
         country: 'US',
         timezone: 'UTC',
@@ -286,7 +286,7 @@ async function run() {
     await printWebBill(
       sampleBill,
       {
-        business_name: 'FloCafe Audit Test',
+        business_name: 'GULF POS Audit Test',
         currency: 'USD',
         country: 'US',
         timezone: 'UTC',
@@ -329,7 +329,7 @@ async function run() {
 
   const printPromise = printWebBill(
     sampleBill,
-    { business_name: 'FloCafe Audit Test', currency: 'USD', country: 'US', timezone: 'UTC' } as any,
+    { business_name: 'GULF POS Audit Test', currency: 'USD', country: 'US', timezone: 'UTC' } as any,
     { language: 'en' as any },
   );
 
@@ -347,7 +347,7 @@ async function run() {
   mockOnloadCallback = null;
   const printClosedPromise = printWebBill(
     sampleBill,
-    { business_name: 'FloCafe Audit Test', currency: 'USD', country: 'US', timezone: 'UTC' } as any,
+    { business_name: 'GULF POS Audit Test', currency: 'USD', country: 'US', timezone: 'UTC' } as any,
     { language: 'en' as any },
   );
   // Window closed before onload
@@ -382,7 +382,7 @@ async function run() {
 
   const pollPrintPromise = printWebBill(
     sampleBill,
-    { business_name: 'FloCafe Audit Test', currency: 'USD', country: 'US', timezone: 'UTC' } as any,
+    { business_name: 'GULF POS Audit Test', currency: 'USD', country: 'US', timezone: 'UTC' } as any,
     { language: 'en' as any },
   );
 
@@ -743,7 +743,7 @@ async function run() {
     html: generateBillHtml(
       sampleBill,
       {
-        business_name: 'FloCafe Manhattan',
+        business_name: 'GULF POS Manhattan',
         currency: 'USD',
         country: 'US',
         timezone: 'America/New_York',
@@ -758,7 +758,7 @@ async function run() {
     html: generateBillHtml(
       sampleBill,
       {
-        business_name: 'FloCafe Madrid',
+        business_name: 'GULF POS Madrid',
         currency: 'EUR',
         country: 'ES',
         timezone: 'Europe/Madrid',
@@ -773,7 +773,7 @@ async function run() {
     html: generateBillHtml(
       sampleBill,
       {
-        business_name: 'FloCafe Paris',
+        business_name: 'GULF POS Paris',
         currency: 'EUR',
         country: 'FR',
         timezone: 'Europe/Paris',
@@ -788,7 +788,7 @@ async function run() {
     html: generateBillHtml(
       sampleBill,
       {
-        business_name: 'FloCafe São Paulo',
+        business_name: 'GULF POS São Paulo',
         currency: 'BRL',
         country: 'BR',
         timezone: 'America/Sao_Paulo',
@@ -821,7 +821,7 @@ async function run() {
     html: generateBillHtml(
       sampleBill,
       {
-        business_name: 'FloCafe Amritsar',
+        business_name: 'GULF POS Amritsar',
         currency: 'INR',
         country: 'IN',
         timezone: 'Asia/Kolkata',

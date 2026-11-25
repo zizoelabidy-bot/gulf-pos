@@ -17,7 +17,7 @@ import {
 import dualRatePack from './fixtures/synthetic-dual-rate-pack.json';
 
 const releaseTag = 'tax-pack-test-dual-rate-pack-v1.1.0';
-const releaseBase = `https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/${releaseTag}`;
+const releaseBase = `https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/${releaseTag}`;
 
 function response(value: string, status = 200): Response {
   return new Response(value, {
@@ -143,11 +143,11 @@ test('catalog discovery finds the newest tax-pack release and verifies its detac
   const catalogUrl = `${releaseBase}/catalog.json`;
   const fetchImpl: typeof fetch = async (input) => {
     const url = String(input);
-    if (url.startsWith('https://api.github.com/repos/FreeOpenSourcePOS/FloCafe-Plugins/releases')) {
+    if (url.startsWith('https://api.github.com/repos/FreeOpenSourcePOS/GULF POS-Plugins/releases')) {
       return response(JSON.stringify([
         {
           tag_name: releaseTag,
-          html_url: `https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/tag/${releaseTag}`,
+          html_url: `https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/tag/${releaseTag}`,
           draft: false,
           assets: [{ name: 'catalog.json', browser_download_url: catalogUrl }],
         },
@@ -203,7 +203,7 @@ test('download rejects digest mismatches, signature tampering, and non-release U
       ...fixture.catalog,
       packs: [{
         ...fixture.entry,
-        downloadUrl: `https://github.com/FreeOpenSourcePOS/FloCafe/releases/download/${releaseTag}/pack.json`,
+        downloadUrl: `https://github.com/FreeOpenSourcePOS/GULF POS/releases/download/${releaseTag}/pack.json`,
       }],
     }),
     /invalid entry/,
@@ -253,8 +253,8 @@ test('release builder signs exact pack bytes and preserves other catalog entries
       version: '1.0.0',
       publishedAt: '2026-01-01',
       minFloVersion: '2.4.0',
-      downloadUrl: 'https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/tax-pack-test-flat-rate-pack-v1.0.0/test-flat-rate-pack-v1.0.0.json',
-      signatureUrl: 'https://github.com/FreeOpenSourcePOS/FloCafe-Plugins/releases/download/tax-pack-test-flat-rate-pack-v1.0.0/test-flat-rate-pack-v1.0.0.json.sig',
+      downloadUrl: 'https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/tax-pack-test-flat-rate-pack-v1.0.0/test-flat-rate-pack-v1.0.0.json',
+      signatureUrl: 'https://github.com/FreeOpenSourcePOS/GULF POS-Plugins/releases/download/tax-pack-test-flat-rate-pack-v1.0.0/test-flat-rate-pack-v1.0.0.json.sig',
       digest: '0'.repeat(64),
     }],
   }));

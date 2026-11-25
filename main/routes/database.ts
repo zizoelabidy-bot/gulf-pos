@@ -167,7 +167,7 @@ router.get('/export', requirePermission('database.manage'), (req: Request, res: 
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
     res.json({
       version: 1,
-      app: 'FloDesktop',
+      app: 'GULFPOSDesktop',
       exported_at: new Date().toISOString(),
       schema_version: String(getCurrentSchemaVersion()),
       redacted_fields: result.redactedFields,

@@ -45,7 +45,7 @@ export function setQrMenuDriveClientFactoryForTests(
 }
 
 export const DRIVE_FILE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
-export const DRIVE_BACKUP_FOLDER_NAME = 'FloCafe Backups';
+export const DRIVE_BACKUP_FOLDER_NAME = 'GULF POS Backups';
 export const DRIVE_RESTORE_CONFIRMATION = 'RESTORE GOOGLE DRIVE BACKUP';
 export const DRIVE_WARNING_SETTING = 'google_drive_warning_acknowledged';
 
@@ -3676,7 +3676,7 @@ class GoogleDriveService {
       (fileSize === null || fileSize === bytes);
     return {
       id: String(file.id),
-      name: String(file.name || 'FloCafe backup'),
+      name: String(file.name || 'GULF POS backup'),
       kind: properties.flo_backup_kind as BackupKind,
       created_at: String(file.createdTime || properties.flo_backup_created_at || ''),
       bytes,
@@ -4021,8 +4021,8 @@ class GoogleDriveService {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
         res.end(
           error || !code || !stateMatches
-            ? '<html><body>Google Drive connection failed. Close this window and return to FloCafe.</body></html>'
-            : '<html><body>Google Drive connected. Close this window and return to FloCafe.</body></html>',
+            ? '<html><body>Google Drive connection failed. Close this window and return to GULF POS.</body></html>'
+            : '<html><body>Google Drive connected. Close this window and return to GULF POS.</body></html>',
         );
         if (error) return finish(() => reject(createDriveError('reauth_required')));
         if (!code || !stateMatches)

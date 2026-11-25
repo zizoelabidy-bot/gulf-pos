@@ -41,7 +41,7 @@ const mockApp = {
     if (name === 'documents') return testDir;
     return testDir;
   },
-  getName: () => 'FloCafe',
+  getName: () => 'GULF POS',
   getVersion: () => '0.0.0-test',
 };
 const mainFrame = { frameToken: 'frame-main', detached: false };

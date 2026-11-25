@@ -63,7 +63,7 @@ async function run() {
   // Test 2: Uppercase / Mixed-case email
   const res2 = await request(app)
     .post('/api/auth/login')
-    .send({ email: 'Owner@FloCafe.Local', password: 'Pass1234!' });
+    .send({ email: 'Owner@GULF POS.Local', password: 'Pass1234!' });
   assertEqual(res2.status, 200, 'Mixed-case email login succeeds');
 
   // Test 3: Whitespace-padded email
@@ -81,7 +81,7 @@ async function run() {
   // Test 5: Main API wrong password with mixed-case email
   const res5 = await request(app)
     .post('/api/auth/login')
-    .send({ email: 'Owner@FloCafe.Local', password: 'WrongPassword!' });
+    .send({ email: 'Owner@GULF POS.Local', password: 'WrongPassword!' });
   assertEqual(res5.status, 401, 'Main API: Wrong password with mixed-case returns 401');
   assert(!res5.body.access_token, 'Main API: No access token issued on wrong password');
 
@@ -176,7 +176,7 @@ async function run() {
     // KDS Test 3: Mixed-case email
     const kdsRes3 = await request(kdsUrl)
       .post('/api/auth/login')
-      .send({ email: 'ChEf@FloCafe.Local', password: 'ChefPass1234!' });
+      .send({ email: 'ChEf@GULF POS.Local', password: 'ChefPass1234!' });
     assertEqual(kdsRes3.status, 200, 'KDS: Mixed-case email login succeeds');
     assertEqual(
       kdsRes3.body.user?.email,
@@ -213,7 +213,7 @@ async function run() {
 
     const kdsRes7b = await request(kdsUrl)
       .post('/api/auth/login')
-      .send({ email: 'ChEf@FloCafe.Local', password: 'WrongPassword!' });
+      .send({ email: 'ChEf@GULF POS.Local', password: 'WrongPassword!' });
     assertEqual(kdsRes7b.status, 401, 'KDS: Wrong password with mixed-case returns 401');
 
     // KDS Test 8: Inactive chef user returns 401

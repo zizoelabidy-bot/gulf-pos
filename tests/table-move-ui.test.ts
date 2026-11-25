@@ -35,7 +35,7 @@ const apiCalls: Array<{ url: string; payload?: unknown }> = [];
 const authState = {
   currentTenant: {
     id: 'tenant-1',
-    name: 'Flo Cafe',
+    name: 'GULF POS',
     role: 'cashier',
     permission_ids: ['tables.orders.move'],
   },

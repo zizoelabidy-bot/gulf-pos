@@ -149,7 +149,7 @@ function executeWorkflowStep(
 const fakeGh = `#!/bin/sh
 printf '%s\\n' "$*" >> "$RELEASE_TEST_LOG"
 if [ "$1" = "release" ] && [ "$2" = "view" ]; then exit 1; fi
-if [ "$1" = "api" ] && [ "\${2:-}" = "repos/FreeOpenSourcePOS/FloCafe/releases/latest" ] && [ -n "\${RELEASE_TEST_LATEST_FAILURE:-}" ]; then
+if [ "$1" = "api" ] && [ "\${2:-}" = "repos/FreeOpenSourcePOS/GULF POS/releases/latest" ] && [ -n "\${RELEASE_TEST_LATEST_FAILURE:-}" ]; then
   printf 'HTTP/2.0 %s Error\\n' "$RELEASE_TEST_LATEST_FAILURE"
   exit 1
 fi
@@ -364,17 +364,17 @@ function run() {
   assert.equal(masProvenance.env.RELEASE_TAG, '${{ inputs.release_tag }}');
   const masProvenanceExecution = executeWorkflowStep(masProvenance, {
     env: { RELEASE_REF_NAME: '3.4.0', RELEASE_REF_TYPE: 'tag', RELEASE_TAG: '3.4.0' },
-    expressions: { 'github.repository': 'FreeOpenSourcePOS/FloCafe', 'github.sha': 'a'.repeat(40) },
+    expressions: { 'github.repository': 'FreeOpenSourcePOS/GULF POS', 'github.sha': 'a'.repeat(40) },
     fakeCommands: { node: captureNodeArgs },
   });
   assert.equal(masProvenanceExecution.status, 0, masProvenanceExecution.stderr);
   assert.equal(
     masProvenanceExecution.log.trim(),
-    `node scripts/release-gate/validate-release-ref.cjs --repo FreeOpenSourcePOS/FloCafe --tag 3.4.0 --commit ${'a'.repeat(40)} --main-ref main`,
+    `node scripts/release-gate/validate-release-ref.cjs --repo FreeOpenSourcePOS/GULF POS --tag 3.4.0 --commit ${'a'.repeat(40)} --main-ref main`,
   );
   const masBranchExecution = executeWorkflowStep(masProvenance, {
     env: { RELEASE_REF_NAME: 'main', RELEASE_REF_TYPE: 'branch', RELEASE_TAG: '3.4.0' },
-    expressions: { 'github.repository': 'FreeOpenSourcePOS/FloCafe', 'github.sha': 'a'.repeat(40) },
+    expressions: { 'github.repository': 'FreeOpenSourcePOS/GULF POS', 'github.sha': 'a'.repeat(40) },
     fakeCommands: { node: captureNodeArgs },
   });
   assert.notEqual(masBranchExecution.status, 0, 'MAS publishing must reject non-tag workflow refs');
@@ -411,13 +411,13 @@ function run() {
   assert.equal(validateProvenance.env.RELEASE_TAG, '${{ steps.release-metadata.outputs.tag }}');
   const validateProvenanceExecution = executeWorkflowStep(validateProvenance, {
     env: { RELEASE_TAG: '3.4.0' },
-    expressions: { 'github.repository': 'FreeOpenSourcePOS/FloCafe', 'github.sha': 'a'.repeat(40) },
+    expressions: { 'github.repository': 'FreeOpenSourcePOS/GULF POS', 'github.sha': 'a'.repeat(40) },
     fakeCommands: { node: captureNodeArgs },
   });
   assert.equal(validateProvenanceExecution.status, 0, validateProvenanceExecution.stderr);
   assert.equal(
     validateProvenanceExecution.log.trim(),
-    `node scripts/release-gate/validate-release-ref.cjs --repo FreeOpenSourcePOS/FloCafe --tag 3.4.0 --commit ${'a'.repeat(40)} --main-ref main`,
+    `node scripts/release-gate/validate-release-ref.cjs --repo FreeOpenSourcePOS/GULF POS --tag 3.4.0 --commit ${'a'.repeat(40)} --main-ref main`,
   );
   assert.deepEqual(Object.keys(createRelease.outputs).sort(), [
     'channel',
@@ -552,7 +552,7 @@ function run() {
       RELEASE_CHANNEL: 'beta',
     },
     expressions: {
-      'github.repository': 'FreeOpenSourcePOS/FloCafe',
+      'github.repository': 'FreeOpenSourcePOS/GULF POS',
       'needs.create-release.outputs.manifest_prefix': 'beta',
       'github.sha': 'a'.repeat(40),
     },
@@ -580,7 +580,7 @@ function run() {
       RELEASE_CHANNEL: 'stable',
     },
     expressions: {
-      'github.repository': 'FreeOpenSourcePOS/FloCafe',
+      'github.repository': 'FreeOpenSourcePOS/GULF POS',
       'needs.create-release.outputs.manifest_prefix': 'latest',
       'github.sha': 'b'.repeat(40),
     },
@@ -598,7 +598,7 @@ function run() {
       RELEASE_CHANNEL: 'stable',
     },
     expressions: {
-      'github.repository': 'FreeOpenSourcePOS/FloCafe',
+      'github.repository': 'FreeOpenSourcePOS/GULF POS',
       'needs.create-release.outputs.manifest_prefix': 'latest',
       'github.sha': 'b'.repeat(40),
     },
@@ -631,7 +631,7 @@ function run() {
   );
   const validatePromotedProvenanceExecution = executeWorkflowStep(validatePromotedProvenance, {
     env: { RELEASE_TAG: '3.3.0' },
-    expressions: { 'github.repository': 'FreeOpenSourcePOS/FloCafe', 'github.sha': 'b'.repeat(40) },
+    expressions: { 'github.repository': 'FreeOpenSourcePOS/GULF POS', 'github.sha': 'b'.repeat(40) },
     fakeCommands: { node: captureNodeArgs },
   });
   assert.equal(
@@ -641,7 +641,7 @@ function run() {
   );
   assert.equal(
     validatePromotedProvenanceExecution.log.trim(),
-    `node scripts/release-gate/validate-release-ref.cjs --repo FreeOpenSourcePOS/FloCafe --tag 3.3.0 --commit ${'b'.repeat(40)} --allow-off-main --allow-historical-promotion`,
+    `node scripts/release-gate/validate-release-ref.cjs --repo FreeOpenSourcePOS/GULF POS --tag 3.3.0 --commit ${'b'.repeat(40)} --allow-off-main --allow-historical-promotion`,
   );
   const promoteVerifierDependencies = findStep(promoteJob, 'Install verifier dependencies');
   const promoteVerifier = findStep(
@@ -660,7 +660,7 @@ function run() {
     {
       env: { RELEASE_TAG: '3.3.0' },
       expressions: {
-        'github.repository': 'FreeOpenSourcePOS/FloCafe',
+        'github.repository': 'FreeOpenSourcePOS/GULF POS',
         'inputs.candidate_manifest_asset_id': '299',
         'inputs.candidate_manifest_sha256': 'a'.repeat(64),
       },
@@ -713,7 +713,7 @@ printf 'node %s\\n' "$*" >> "$RELEASE_TEST_LOG"
   const promoteStableVerifierExecution = executeWorkflowStep(promoteStableVerifier, {
     env: { RELEASE_TAG: '3.4.0' },
     expressions: {
-      'github.repository': 'FreeOpenSourcePOS/FloCafe',
+      'github.repository': 'FreeOpenSourcePOS/GULF POS',
       'needs.verify-release.outputs.candidate_manifest_asset_id': '299',
       'needs.verify-release.outputs.candidate_manifest_sha256': 'a'.repeat(64),
     },
@@ -722,7 +722,7 @@ printf 'node %s\\n' "$*" >> "$RELEASE_TEST_LOG"
   assert.equal(promoteStableVerifierExecution.status, 0, promoteStableVerifierExecution.stderr);
   assert.equal(
     promoteStableVerifierExecution.log.trim(),
-    `node scripts/release-gate/verify-stable-promotion.cjs --repo FreeOpenSourcePOS/FloCafe --tag 3.4.0 --candidate-asset-id 299 --manifest-sha256 ${'a'.repeat(64)}`,
+    `node scripts/release-gate/verify-stable-promotion.cjs --repo FreeOpenSourcePOS/GULF POS --tag 3.4.0 --candidate-asset-id 299 --manifest-sha256 ${'a'.repeat(64)}`,
     'automatic promotion must feed the same script the run already verified, not a re-derived or dispatch-provided value',
   );
   const promoteStablePromote = findStep(
@@ -733,7 +733,7 @@ printf 'node %s\\n' "$*" >> "$RELEASE_TEST_LOG"
   assert.equal(promoteStablePromote.env.RELEASE_TAG, '${{ needs.create-release.outputs.version }}');
   const promoteStablePromoteRejectsDraft = executeWorkflowStep(promoteStablePromote, {
     env: { RELEASE_TAG: '3.4.0' },
-    expressions: { 'github.repository': 'FreeOpenSourcePOS/FloCafe' },
+    expressions: { 'github.repository': 'FreeOpenSourcePOS/GULF POS' },
     // Real jq parses this fake gh's JSON — jq itself isn't faked so the
     // draft:true value actually flows through to the script's own check.
     fakeCommands: { gh: '#!/bin/sh\nprintf \'{"draft":true,"prerelease":false,"id":42}\\n\'\n' },
@@ -764,14 +764,14 @@ esac
   }
   const promoteStableAllowsNewer = executeWorkflowStep(promoteStablePromote, {
     env: { RELEASE_TAG: '3.5.0' },
-    expressions: { 'github.repository': 'FreeOpenSourcePOS/FloCafe' },
+    expressions: { 'github.repository': 'FreeOpenSourcePOS/GULF POS' },
     fakeCommands: { gh: fakeGhForPromotion('3.4.0') },
   });
   assert.equal(promoteStableAllowsNewer.status, 0, promoteStableAllowsNewer.stderr);
   assert.match(promoteStableAllowsNewer.stdout, /Promoted 3\.5\.0 to GitHub Latest/);
   const promoteStableAllowsWhenNoCurrentLatest = executeWorkflowStep(promoteStablePromote, {
     env: { RELEASE_TAG: '3.4.0' },
-    expressions: { 'github.repository': 'FreeOpenSourcePOS/FloCafe' },
+    expressions: { 'github.repository': 'FreeOpenSourcePOS/GULF POS' },
     fakeCommands: { gh: fakeGhForPromotion('not-found') },
   });
   assert.equal(
@@ -781,7 +781,7 @@ esac
   );
   const promoteStableRefusesOlder = executeWorkflowStep(promoteStablePromote, {
     env: { RELEASE_TAG: '3.4.0' },
-    expressions: { 'github.repository': 'FreeOpenSourcePOS/FloCafe' },
+    expressions: { 'github.repository': 'FreeOpenSourcePOS/GULF POS' },
     fakeCommands: { gh: fakeGhForPromotion('3.5.0') },
   });
   assert.notEqual(
@@ -792,7 +792,7 @@ esac
   assert.match(promoteStableRefusesOlder.stdout, /must never move Latest backward/);
   const promoteStableFailsOnLatestLookupError = executeWorkflowStep(promoteStablePromote, {
     env: { RELEASE_TAG: '3.4.0' },
-    expressions: { 'github.repository': 'FreeOpenSourcePOS/FloCafe' },
+    expressions: { 'github.repository': 'FreeOpenSourcePOS/GULF POS' },
     fakeCommands: { gh: fakeGhForPromotion('server-error') },
   });
   assert.notEqual(
@@ -844,7 +844,7 @@ esac
   ] as const) {
     const matrixEvidence = executeWorkflowStep(candidateEvidenceStep, {
       env: {
-        RELEASE_REPOSITORY: 'FreeOpenSourcePOS/FloCafe',
+        RELEASE_REPOSITORY: 'FreeOpenSourcePOS/GULF POS',
         CANDIDATE_TAG: '3.3.1-beta.1',
         MATRIX_RESULT: matrixResult,
       },
@@ -860,7 +860,7 @@ esac
   const shellInjection = 'safe"; echo injected >&2; #';
   const safeCandidateVerification = executeWorkflowStep(candidateVerifyStep, {
     env: {
-      RELEASE_REPOSITORY: 'FreeOpenSourcePOS/FloCafe',
+      RELEASE_REPOSITORY: 'FreeOpenSourcePOS/GULF POS',
       CANDIDATE_TAG: shellInjection,
       CANDIDATE_COMMIT: 'a'.repeat(40),
       CANDIDATE_MANIFEST_SHA256: 'b'.repeat(64),
@@ -964,7 +964,7 @@ esac
   const draftReleaseStep = findStep(createRelease, 'Create GitHub draft release (if not exists)');
   const draftStable = executeWorkflowStep(draftReleaseStep, {
     env: { RELEASE_TAG: '3.3.0', RELEASE_VERSION: '3.3.0', RELEASE_CHANNEL: 'stable' },
-    expressions: { 'github.repository': 'FreeOpenSourcePOS/FloCafe' },
+    expressions: { 'github.repository': 'FreeOpenSourcePOS/GULF POS' },
     fakeCommands: { gh: fakeGh, git: fakeGit },
   });
   assert.equal(draftStable.status, 0, draftStable.stderr);
@@ -984,7 +984,7 @@ esac
 
   const draftBeta = executeWorkflowStep(draftReleaseStep, {
     env: { RELEASE_TAG: '3.3.1-beta.1', RELEASE_VERSION: '3.3.0', RELEASE_CHANNEL: 'beta' },
-    expressions: { 'github.repository': 'FreeOpenSourcePOS/FloCafe' },
+    expressions: { 'github.repository': 'FreeOpenSourcePOS/GULF POS' },
     fakeCommands: { gh: fakeGh, git: fakeGit },
   });
   assert.equal(draftBeta.status, 0, draftBeta.stderr);
@@ -1005,7 +1005,7 @@ exit 1
 `;
   const draftExisting = executeWorkflowStep(draftReleaseStep, {
     env: { RELEASE_TAG: '3.3.0', RELEASE_VERSION: '3.3.0', RELEASE_CHANNEL: 'stable' },
-    expressions: { 'github.repository': 'FreeOpenSourcePOS/FloCafe' },
+    expressions: { 'github.repository': 'FreeOpenSourcePOS/GULF POS' },
     fakeCommands: { gh: fakeGhExistingDraft, git: fakeGit },
   });
   assert.equal(draftExisting.status, 0, draftExisting.stderr);
@@ -1037,7 +1037,7 @@ exit 1
 `;
   const draftEmpty = executeWorkflowStep(draftReleaseStep, {
     env: { RELEASE_TAG: '3.3.0', RELEASE_VERSION: '3.3.0', RELEASE_CHANNEL: 'stable' },
-    expressions: { 'github.repository': 'FreeOpenSourcePOS/FloCafe' },
+    expressions: { 'github.repository': 'FreeOpenSourcePOS/GULF POS' },
     fakeCommands: { gh: fakeGhEmptyDraft, git: fakeGit },
   });
   assert.notEqual(
@@ -1057,7 +1057,7 @@ exit 1
       'needs.create-release.outputs.prerelease': 'false',
       'needs.create-release.outputs.make_latest': 'false',
       'needs.create-release.outputs.channel': 'stable',
-      'github.repository': 'FreeOpenSourcePOS/FloCafe',
+      'github.repository': 'FreeOpenSourcePOS/GULF POS',
       'github.sha': 'a'.repeat(40),
     },
     fakeCommands: { gh: fakeGh, node: captureNodeArgs },
@@ -1079,7 +1079,7 @@ exit 1
       'needs.create-release.outputs.prerelease': 'true',
       'needs.create-release.outputs.make_latest': 'false',
       'needs.create-release.outputs.channel': 'beta',
-      'github.repository': 'FreeOpenSourcePOS/FloCafe',
+      'github.repository': 'FreeOpenSourcePOS/GULF POS',
       'github.sha': 'a'.repeat(40),
     },
     fakeCommands: { gh: fakeGh, node: captureNodeArgs },
@@ -1108,7 +1108,7 @@ exit 1
       'needs.create-release.outputs.prerelease': 'true',
       'needs.create-release.outputs.make_latest': 'false',
       'needs.create-release.outputs.channel': 'beta',
-      'github.repository': 'FreeOpenSourcePOS/FloCafe',
+      'github.repository': 'FreeOpenSourcePOS/GULF POS',
       'github.sha': 'a'.repeat(40),
     },
     fakeCommands: { gh: fakeGh, node: captureNodeArgs },
@@ -1122,7 +1122,7 @@ exit 1
       'needs.create-release.outputs.prerelease': 'true',
       'needs.create-release.outputs.make_latest': 'false',
       'needs.create-release.outputs.channel': 'beta',
-      'github.repository': 'FreeOpenSourcePOS/FloCafe',
+      'github.repository': 'FreeOpenSourcePOS/GULF POS',
       'github.sha': 'a'.repeat(40),
     },
     fakeCommands: { gh: fakeGh, node: captureNodeArgs },
@@ -1143,7 +1143,7 @@ exit 1
   const promoteStable = executeWorkflowStep(promoteStep, {
     env: { RELEASE_TAG: '3.3.0', RELEASE_CHANNEL: 'stable' },
     expressions: {
-      'github.repository': 'FreeOpenSourcePOS/FloCafe',
+      'github.repository': 'FreeOpenSourcePOS/GULF POS',
       'needs.create-release.outputs.version': '3.3.0',
       'needs.create-release.outputs.channel': 'stable',
     },
@@ -1160,7 +1160,7 @@ exit 1
   const promoteBeta = executeWorkflowStep(promoteStep, {
     env: { RELEASE_TAG: '3.3.1-beta.1', RELEASE_CHANNEL: 'beta' },
     expressions: {
-      'github.repository': 'FreeOpenSourcePOS/FloCafe',
+      'github.repository': 'FreeOpenSourcePOS/GULF POS',
       'needs.create-release.outputs.version': '3.3.1-beta.1',
       'needs.create-release.outputs.channel': 'beta',
     },
@@ -1173,7 +1173,7 @@ exit 1
     [
       path.join(__dirname, '../scripts/verify-release-assets.cjs'),
       '--repo',
-      'FreeOpenSourcePOS/FloCafe',
+      'FreeOpenSourcePOS/GULF POS',
       '--tag',
       '3.3.1-nightly.1',
       '--channel',
@@ -1286,21 +1286,21 @@ exit 1
     run_number: 40,
     head_branch: 'main',
     head_sha: 'a'.repeat(40),
-    html_url: 'https://github.com/FreeOpenSourcePOS/FloCafe/actions/runs/1000',
+    html_url: 'https://github.com/FreeOpenSourcePOS/GULF POS/actions/runs/1000',
   };
   const newerPush = {
     id: 1002,
     run_number: 41,
     head_branch: 'main',
     head_sha: 'b'.repeat(40),
-    html_url: 'https://github.com/FreeOpenSourcePOS/FloCafe/actions/runs/1002',
+    html_url: 'https://github.com/FreeOpenSourcePOS/GULF POS/actions/runs/1002',
   };
   const otherBranchRun = {
     id: 1003,
     run_number: 42,
     head_branch: 'some-other-branch',
     head_sha: 'c'.repeat(40),
-    html_url: 'https://github.com/FreeOpenSourcePOS/FloCafe/actions/runs/1003',
+    html_url: 'https://github.com/FreeOpenSourcePOS/GULF POS/actions/runs/1003',
   };
   const fakeRunsGh = `#!/bin/sh
 if [ "\${CI_TEST_GH_FAIL:-}" = "1" ]; then
@@ -1314,7 +1314,7 @@ cat "$CI_TEST_RUNS_FIXTURE"
     return {
       GH_TOKEN: 'test-token',
       CONCURRENCY_BRANCH: 'main',
-      GITHUB_REPOSITORY: 'FreeOpenSourcePOS/FloCafe',
+      GITHUB_REPOSITORY: 'FreeOpenSourcePOS/GULF POS',
       GITHUB_RUN_ID: String(thisPush.id),
       GITHUB_RUN_NUMBER: String(thisPush.run_number),
       CI_TEST_RUNS_FIXTURE: runsFixturePath,

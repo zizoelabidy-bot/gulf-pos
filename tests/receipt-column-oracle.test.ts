@@ -43,7 +43,7 @@ import {
 
 const GOLDEN_PATH = path.join(__dirname, 'fixtures/receipt-columns/golden-receipt-columns-v1.txt');
 const GOLDEN_HEADER = [
-  '# FloCafe receipt column golden fixture v1',
+  '# GULF POS receipt column golden fixture v1',
   '#',
   '# Every block below is a measurement of emitted ESC/POS output:',
   '#   rule=<cells>   cell count of every full-width rule the stream rendered',

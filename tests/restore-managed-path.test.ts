@@ -167,7 +167,7 @@ async function run(): Promise<void> {
     {
       success: false,
       error:
-        'Invalid backup file: missing schema version metadata. This backup may have been created with an older version of FloDesktop.',
+        'Invalid backup file: missing schema version metadata. This backup may have been created with an older version of GULFPOSDesktop.',
     },
     'IPC allows managed backup path past the boundary to schema inspection',
   );
@@ -251,7 +251,7 @@ async function run(): Promise<void> {
     {
       success: false,
       error:
-        'Invalid backup file: missing schema version metadata. This backup may have been created with an older version of FloDesktop.',
+        'Invalid backup file: missing schema version metadata. This backup may have been created with an older version of GULFPOSDesktop.',
     },
     'IPC rejects zero metadata schema_version at preflight',
   );

@@ -1546,7 +1546,7 @@ export async function printPaymentTicket(
     } = resolvePrinterContext(printer || { paper_width: '80mm' });
     const readSetting = (key: string): string | null =>
       options.settings !== undefined ? (options.settings[key] ?? null) : getSettingValue(key);
-    const storeName = readSetting('business_name') || 'FloCafe';
+    const storeName = readSetting('business_name') || 'GULF POS';
     const snapshot = resolveRegionalSnapshot({
       country: readSetting('country') || undefined,
       currency: readSetting('currency') || undefined,
@@ -5219,7 +5219,7 @@ export function validateNetworkPrinterTarget(rawHost: string, port: number): str
   if (isLocalHost) {
     const ownPorts = new Set<number>([getServerPort(), getKdsPort(), getServerAppPort()]);
     if (ownPorts.has(port)) {
-      return 'Printer address cannot target a local FloCafe server port';
+      return 'Printer address cannot target a local GULF POS server port';
     }
   }
 
@@ -5729,7 +5729,7 @@ public static class FloRawPrinter {
             EnsureReady(hPrinter);
 
             DOCINFO docInfo = new DOCINFO();
-            docInfo.pDocName = "FloCafe Receipt";
+            docInfo.pDocName = "GULF POS Receipt";
             docInfo.pDataType = "RAW";
 
             uint jobId = StartDocPrinter(hPrinter, 1, docInfo);

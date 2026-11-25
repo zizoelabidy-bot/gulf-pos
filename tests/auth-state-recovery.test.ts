@@ -86,12 +86,12 @@ async function run() {
 
   // Case 5: Valid tenant object
   storage.clear();
-  const validTenant = { id: 1, business_name: 'Flo Cafe', country: 'IN', currency: 'INR' };
+  const validTenant = { id: 1, business_name: 'GULF POS', country: 'IN', currency: 'INR' };
   storage.setItem('tenant', JSON.stringify(validTenant));
   const case5 = parseStoredTenant(storage.getItem('tenant'));
   assertOrThrow(case5.tenant !== null, 'Valid tenant parsed successfully');
   assertEqualOrThrow(case5.tenant.id, 1, 'Valid tenant id matches');
-  assertEqualOrThrow(case5.tenant.business_name, 'Flo Cafe', 'Valid tenant business_name matches');
+  assertEqualOrThrow(case5.tenant.business_name, 'GULF POS', 'Valid tenant business_name matches');
   assertEqualOrThrow(case5.cleaned, false, 'Valid tenant data is preserved in storage');
 
   console.log('\n✅ Frontend Auth State Recovery tests passed!');

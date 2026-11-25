@@ -1,5 +1,5 @@
 /**
- * FloDesktop DB Integrity Audit (diagnostic tool, not a test)
+ * GULFPOSDesktop DB Integrity Audit (diagnostic tool, not a test)
  *
  * Walks the SQLite file(s) and reports:
  *   - SQLite built-in integrity_check + foreign_key_check
@@ -32,7 +32,7 @@ const candidatePaths = [
   path.join(process.cwd(), '..', 'flo.db'),
 ].filter(Boolean) as string[];
 
-console.log('🔍 FloDesktop DB Integrity Audit');
+console.log('🔍 GULFPOSDesktop DB Integrity Audit');
 console.log('='.repeat(60));
 
 const targets: string[] = [];

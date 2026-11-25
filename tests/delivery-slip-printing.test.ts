@@ -34,7 +34,7 @@ const fe = loadFrontendPrintModules();
 
 const GOLDEN_PATH = path.join(__dirname, 'fixtures/delivery-slip/golden-delivery-slip-v1.txt');
 const GOLDEN_HEADER = [
-  '# FloCafe delivery slip column golden fixture v1',
+  '# GULF POS delivery slip column golden fixture v1',
   '#',
   '# Every block is a measurement of emitted ESC/POS output, walked the way a',
   '# printer parses it, exactly as tests/receipt-column-oracle.test.ts does for',

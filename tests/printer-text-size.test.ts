@@ -1188,7 +1188,7 @@ test('frontend WebUSB byte encoders apply capabilities.textSize across 58mm and 
     order: webusbOrder,
   };
   const webusbTenant: any = {
-    business_name: 'FloCafe Test',
+    business_name: 'GULF POS Test',
     currency: 'USD',
     country: 'US',
     timezone: 'UTC',

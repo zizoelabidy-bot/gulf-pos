@@ -116,7 +116,7 @@ function createCa(
   const suffix = crypto.randomBytes(3).toString('hex').toUpperCase();
   const issued: IssuedCertificate = issueCaCertificate(
     keys,
-    { commonName: `FloCafe Local CA ${hostLabel()} ${suffix}`, organization: 'FloCafe' },
+    { commonName: `GULF POS Local CA ${hostLabel()} ${suffix}`, organization: 'GULF POS' },
     options.now?.() ?? new Date(),
   );
 

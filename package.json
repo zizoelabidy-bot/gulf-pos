@@ -1,7 +1,7 @@
 {
-  "name": "flo-desktop",
-  "version": "3.14.2",
-  "description": "Free, open-source, offline-first restaurant POS with KDS, SQLite, and thermal printer support.",
+  "name": "gulf-pos",
+  "version": "1.0.0",
+  "description": "GULF POS - Enterprise Restaurant Point of Sale & Management System. Powered by GULF CCTV - Smart Systems Solutions. Built on the open-source FloCafe project (MIT).",
   "engines": {
     "node": ">=22.12.0"
   },
@@ -464,8 +464,8 @@
     "ws": "^8.23.0"
   },
   "build": {
-    "appId": "com.flo.desktop",
-    "productName": "Flo Cafe",
+    "appId": "com.gulfcctv.gulfpos",
+    "productName": "GULF POS",
     "icon": "assets/icon-512.png",
     "afterPack": "scripts/afterPack.js",
     "asar": true,
@@ -480,8 +480,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "FreeOpenSourcePOS",
-      "repo": "FloCafe",
+      "owner": "zizoelabidy-bot",
+      "repo": "gulf-pos",
       "releaseType": "release",
       "channel": "latest"
     },
@@ -504,28 +504,10 @@
           "arch": [
             "x64"
           ]
-        },
-        {
-          "target": "appx",
-          "arch": [
-            "x64",
-            "arm64"
-          ]
         }
       ],
       "icon": "assets/icon.ico",
-      "artifactName": "flocafe-${version}-win-${arch}.${ext}"
-    },
-    "appx": {
-      "applicationId": "FloCafe",
-      "backgroundColor": "#1e1e2e",
-      "publisherDisplayName": "Codify Apps Private Limited",
-      "identityName": "CodifyAppsPrivateLimited.FloCafe",
-      "publisher": "CN=34AFD24D-EC88-44B8-B309-08BB8A6BB5F7",
-      "displayName": "Flo Cafe",
-      "languages": [
-        "en-US"
-      ]
+      "artifactName": "GULF-POS-Setup.${ext}"
     },
     "mac": {
       "target": [
@@ -693,5 +675,6 @@
     "electron-winstaller@5.4.0": true,
     "protobufjs@7.6.5": true,
     "@whiskeysockets/baileys@7.0.0-rc14": true
-  }
+  },
+  "productName": "GULF POS"
 }

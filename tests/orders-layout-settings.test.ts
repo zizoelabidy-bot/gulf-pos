@@ -35,7 +35,7 @@ const registered = new Map<string, (...args: any[]) => any>();
 const mockApp = {
   isPackaged: true,
   getPath: (name: string) => testDir,
-  getName: () => 'FloCafe',
+  getName: () => 'GULF POS',
   getVersion: () => '0.0.0-test',
 };
 const mainFrame = { frameToken: 'frame-main', detached: false };

@@ -1,7 +1,7 @@
 /**
  * Translation integrity test (repository-native validation, Issue #382).
  *
- * FloCafe manages translations directly in Git — no Crowdin/Weblate/Tolgee.
+ * GULF POS manages translations directly in Git — no Crowdin/Weblate/Tolgee.
  * This suite is the safety gate for every component migration and community
  * translation contribution. It verifies, on every run:
  *
@@ -627,8 +627,8 @@ const TR_INTENTIONAL_IDENTICAL = new Set<string>([
   'dashboard.exportXlsx', // format label "Excel (.xlsx)"
   'settings.paymentMethodUpi', // technical acronym (payment rail name)
   'common.appTitle', // brand name "Flo"
-  'common.brandName', // brand name "Flo Cafe"
-  'common.logoAlt', // brand name "Flo Cafe"
+  'common.brandName', // brand name "GULF POS"
+  'common.logoAlt', // brand name "GULF POS"
   'nav.portLabel', // technical term "Port"
   'nav.whatsapp', // product name "WhatsApp"
   'pos.addonPrice', // pure format "+{currency}{price}"
@@ -1044,7 +1044,7 @@ const DE_INTENTIONAL_IDENTICAL = new Set<string>([
   'settings.whatsapp',
   'setup.demoLabel',
   'setup.expressLabel',
-  'setup.finedineLabel', // FloCafe product flow name
+  'setup.finedineLabel', // GULF POS product flow name
   'setup.pinLabel',
   'staff.roleManager',
   'support.menuLabel', // same loanword in German
@@ -1167,7 +1167,7 @@ const IT_INTENTIONAL_IDENTICAL = new Set<string>([
   'settings.whatsapp', // brand
   'setup.demoLabel', // Italian uses "Demo"
   'setup.expressLabel', // Italian uses "Express"
-  'setup.finedineLabel', // FloCafe product flow name
+  'setup.finedineLabel', // GULF POS product flow name
   'setup.password', // Italian uses "Password"
   'setup.pinLabel', // technical acronym
   'setup.qsrLabel', // industry acronym
@@ -2511,8 +2511,8 @@ function jvFallbackErrors(
 const MR_INTENTIONAL_IDENTICAL = new Set<string>([
   'auth.emailPlaceholder', // sample email address placeholder
   'common.appTitle', // Flo brand name
-  'common.brandName', // Flo Cafe brand name
-  'common.logoAlt', // Flo Cafe logo alt text
+  'common.brandName', // GULF POS brand name
+  'common.logoAlt', // GULF POS logo alt text
   'dashboard.exportCsv', // file format label CSV (.csv)
   'dashboard.exportPdf', // file format label PDF (.pdf)
   'dashboard.exportXlsx', // file format label Excel (.xlsx)
@@ -2596,8 +2596,8 @@ function mrFallbackErrors(
 const SW_INTENTIONAL_IDENTICAL = new Set<string>([
   'auth.emailPlaceholder', // example email "you@business.com"
   'common.appTitle', // brand name "Flo"
-  'common.brandName', // brand name "Flo Cafe"
-  'common.logoAlt', // brand name "Flo Cafe"
+  'common.brandName', // brand name "GULF POS"
+  'common.logoAlt', // brand name "GULF POS"
   'dashboard.exportCsv', // format label "CSV (.csv)"
   'dashboard.exportPdf', // format label "PDF (.pdf)"
   'dashboard.exportXlsx', // format label "Excel (.xlsx)"
@@ -2684,8 +2684,8 @@ function swFallbackErrors(
 const PA_INTENTIONAL_IDENTICAL = new Set<string>([
   'auth.emailPlaceholder', // technical sample email literal
   'common.appTitle', // product brand name "Flo"
-  'common.brandName', // product brand name "Flo Cafe"
-  'common.logoAlt', // product brand logo alt text "Flo Cafe"
+  'common.brandName', // product brand name "GULF POS"
+  'common.logoAlt', // product brand logo alt text "GULF POS"
   'dashboard.exportCsv', // file format literal "CSV (.csv)"
   'dashboard.exportPdf', // file format literal "PDF (.pdf)"
   'dashboard.exportXlsx', // file format literal "Excel (.xlsx)"
@@ -2888,7 +2888,7 @@ function taFallbackErrors(
 /** Ukrainian translation safeguards. */
 const UK_INTENTIONAL_IDENTICAL = new Set<string>([
   'common.appTitle', // brand name: Flo
-  'common.brandName', // brand name: Flo Cafe
+  'common.brandName', // brand name: GULF POS
   'dashboard.exportCsv', // file format label: CSV (.csv)
   'dashboard.exportPdf', // file format label: PDF (.pdf)
   'dashboard.exportXlsx', // file format label: Excel (.xlsx)
@@ -2920,7 +2920,7 @@ const UK_INTENTIONAL_IDENTICAL = new Set<string>([
   'settings.tabWhatsapp', // brand name: WhatsApp
   'settings.unicode', // technical standard: Unicode
   'settings.whatsapp', // brand name: WhatsApp
-  'setup.finedineLabel', // FloCafe flow name: FineDine
+  'setup.finedineLabel', // GULF POS flow name: FineDine
   'setup.ownerEmailPlaceholder', // example email: owner@restaurant.com
   'setup.qsrLabel', // industry acronym: QSR
   'tax.auditCreateOverride', // pure format: {entityType} {entityId} → {categoryId}

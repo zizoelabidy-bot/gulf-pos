@@ -120,7 +120,7 @@ function isNativeAbiMismatch(error: any): boolean {
 }
 
 function main() {
-  console.log('🧪 FloDesktop Upgrade-Path Regression Test');
+  console.log('🧪 GULFPOSDesktop Upgrade-Path Regression Test');
   console.log('='.repeat(60));
 
   const {

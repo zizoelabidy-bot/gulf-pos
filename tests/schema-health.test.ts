@@ -55,7 +55,7 @@ function isNativeAbiMismatch(error: any): boolean {
 }
 
 function main() {
-  console.log('🧪 FloDesktop Schema Health Check Tests');
+  console.log('🧪 GULFPOSDesktop Schema Health Check Tests');
   console.log('='.repeat(60));
 
   try {

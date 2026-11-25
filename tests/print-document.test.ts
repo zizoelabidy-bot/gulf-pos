@@ -1371,7 +1371,7 @@ console.log('\n▶ Large bold Order Number banner on customer receipts');
   };
   const feTenant: any = {
     id: 1,
-    business_name: 'FloCafe Test',
+    business_name: 'GULF POS Test',
     country: 'IN',
     currency: 'INR',
     timezone: 'Asia/Kolkata',

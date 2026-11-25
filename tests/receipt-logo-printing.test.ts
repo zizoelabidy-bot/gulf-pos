@@ -336,7 +336,7 @@ async function run() {
     dummyOrder,
     dummyBill,
     {
-      name: 'Flo Cafe',
+      name: 'GULF POS',
       show_logo: true,
       receipt_logo: logoUrl,
       receipt_logo_raster: rasterJson,
@@ -360,7 +360,7 @@ async function run() {
     dummyOrder,
     dummyBill,
     {
-      name: 'Flo Cafe',
+      name: 'GULF POS',
       show_logo: false,
       receipt_logo: logoUrl,
       receipt_logo_raster: rasterJson,
@@ -389,7 +389,7 @@ async function run() {
     dummyOrder,
     dummyBill,
     {
-      name: 'Flo Cafe',
+      name: 'GULF POS',
       country: 'US',
       currency: 'USD',
       show_logo: true,
@@ -423,7 +423,7 @@ async function run() {
     dummyOrder,
     dummyBill,
     {
-      name: 'Flo Cafe',
+      name: 'GULF POS',
       country: 'US',
       currency: 'USD',
       show_logo: false,
@@ -457,7 +457,7 @@ async function run() {
     dummyOrder,
     dummyBill,
     {
-      name: 'Flo Cafe',
+      name: 'GULF POS',
       country: 'US',
       currency: 'USD',
       show_logo: true,
@@ -489,7 +489,7 @@ async function run() {
     dummyOrder,
     dummyBill,
     {
-      name: 'Flo Cafe',
+      name: 'GULF POS',
       country: 'US',
       currency: 'USD',
       show_logo: false,

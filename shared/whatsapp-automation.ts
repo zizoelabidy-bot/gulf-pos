@@ -212,7 +212,7 @@ export const SAMPLE_WHATSAPP_TEMPLATE_CONTEXT: Record<WhatsAppPlaceholderKey, st
   points_earned: '36',
   points_balance: '180',
   points_value: '180.00',
-  store_name: 'Flo Cafe',
+  store_name: 'GULF POS',
   store_phone: '+919800000000',
   feedback_link: 'https://flocafe.example.com/feedback',
   instagram: '@flocafe',

@@ -26,7 +26,7 @@ Module._load = function (request: string, parent: any, isMain: boolean) {
       app: {
         isPackaged: true,
         getPath: () => testDir,
-        getName: () => 'FloCafe',
+        getName: () => 'GULF POS',
         getVersion: () => '0.0.0-test',
       },
       ipcMain: { on: () => {}, handle: () => {} },

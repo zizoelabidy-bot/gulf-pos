@@ -1,5 +1,5 @@
 /**
- * FloDesktop Printer Tests
+ * GULFPOSDesktop Printer Tests
  *
  * Usage:
  *   npm run test:printer            # format tests only (no hardware)
@@ -304,7 +304,7 @@ const fixtureBusiness = {
   currency: 'INR',
 };
 
-console.log('🧪 FloDesktop Printer Tests');
+console.log('🧪 GULFPOSDesktop Printer Tests');
 console.log('='.repeat(60));
 
 console.log('\n✅ Test 1: buildEscPos emits correct control bytes');
@@ -1813,7 +1813,7 @@ console.log(
   assert('real production IR setup produces ریال currency symbol', realIrCurrencySymbol === 'ریال');
 
   const irBusiness = {
-    name: 'Flo Cafe Tehran',
+    name: 'GULF POS Tehran',
     country: 'IR',
     currency: 'IRR',
     currency_symbol: realIrCurrencySymbol,
@@ -2051,7 +2051,7 @@ console.log(
   const { generateBillHtml } = frontendModules.webPrint;
 
   const frontendTenant = {
-    business_name: 'Flo Cafe Tehran',
+    business_name: 'GULF POS Tehran',
     country: 'IR',
     currency: 'IRR',
   };

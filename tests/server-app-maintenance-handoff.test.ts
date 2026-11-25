@@ -1,5 +1,5 @@
 /**
- * Regression and integration tests for FloCafe Issue #1174:
+ * Regression and integration tests for GULF POS Issue #1174:
  * Server App loopback proxy admission reservation handoff and maintenance synchronization.
  */
 import assert from 'node:assert/strict';

@@ -199,7 +199,7 @@ async function main() {
     'SNAP reports snap',
   );
   assert.deepEqual(
-    detect({ platform: 'linux', env: { APPIMAGE: '/opt/FloCafe.AppImage' } }),
+    detect({ platform: 'linux', env: { APPIMAGE: '/opt/GULF POS.AppImage' } }),
     { runMode: 'packaged', installSource: 'appimage' },
     'APPIMAGE reports appimage',
   );

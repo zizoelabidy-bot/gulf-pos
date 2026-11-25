@@ -4,7 +4,7 @@ import type { FirewallState } from './secure-network';
 /** Waiting on a human answering the UAC prompt, so far longer than a normal command. */
 const ELEVATION_TIMEOUT_MS = 180_000;
 
-export const FIREWALL_RULE_NAME = 'FloCafe Secure Network';
+export const FIREWALL_RULE_NAME = 'GULF POS Secure Network';
 
 /** Every HTTPS port the ladders can land on: 443 for the main surface, then 3441-3470. */
 export const FIREWALL_LOCAL_PORTS = '443,3441-3470';

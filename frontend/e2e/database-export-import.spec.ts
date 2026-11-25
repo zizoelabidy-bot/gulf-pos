@@ -146,7 +146,7 @@ test.describe('Database Settings JSON Export and Import', () => {
     const rawExport = fs.readFileSync(tmpExportPath, 'utf8');
     const exportData = JSON.parse(rawExport);
 
-    expect(exportData.app).toBe('FloDesktop');
+    expect(exportData.app).toBe('GULFPOSDesktop');
     expect(exportData.schema_version).toBeDefined();
     expect(exportData.data).toBeDefined();
 
@@ -210,7 +210,7 @@ test.describe('Database Settings JSON Export and Import', () => {
     const fixtureTimestamp = '2020-01-01 00:00:00';
 
     const contaminatedPayload = {
-      app: 'FloDesktop',
+      app: 'GULFPOSDesktop',
       schema_version: '125',
       data: {
         settings: [],

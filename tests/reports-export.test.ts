@@ -93,7 +93,7 @@ Module._load = function (request: string, parent: unknown, isMain: boolean) {
           isPackaged: true,
           getPath: () => testDir,
           getVersion: () => 'test',
-          getName: () => 'FloCafe',
+          getName: () => 'GULF POS',
           whenReady: () => rawElectron.app.whenReady(),
           isReady: () => rawElectron.app.isReady(),
           quit: () => rawElectron.app.quit(),
@@ -111,7 +111,7 @@ Module._load = function (request: string, parent: unknown, isMain: boolean) {
         },
         printToPDF: async (opts?: Record<string, unknown>) =>
           Buffer.from(
-            `%PDF-1.4\n%FloCafe test PDF pageSize=${String(opts?.pageSize ?? '')} preferCSSPageSize=${String(opts?.preferCSSPageSize ?? '')}\n${lastLoadedHtmlContent}\n%%EOF\n`,
+            `%PDF-1.4\n%GULF POS test PDF pageSize=${String(opts?.pageSize ?? '')} preferCSSPageSize=${String(opts?.preferCSSPageSize ?? '')}\n${lastLoadedHtmlContent}\n%%EOF\n`,
           ),
       });
       constructor() {
@@ -138,7 +138,7 @@ Module._load = function (request: string, parent: unknown, isMain: boolean) {
         isPackaged: true,
         getPath: () => testDir,
         getVersion: () => 'test',
-        getName: () => 'FloCafe',
+        getName: () => 'GULF POS',
       },
       BrowserWindow: FakePrintWindow,
       ipcMain: {

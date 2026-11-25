@@ -74,7 +74,7 @@ function menuDocument(name = 'Seasonal beverage with a longer printed name') {
       },
     ],
     {
-      businessName: 'Flo Cafe',
+      businessName: 'GULF POS',
       printedAt: 'Sep 30, 2026, 10:00 AM',
       baseDirection: 'ltr',
       formatPrice: (price) => `$${price.toFixed(2)}`,
@@ -84,7 +84,7 @@ function menuDocument(name = 'Seasonal beverage with a longer printed name') {
 
 test('menu document sorts categories and excludes inactive, unavailable, and hidden items by default', () => {
   const menu = buildMenuDocument(categories, products, {
-    businessName: 'Flo Cafe',
+    businessName: 'GULF POS',
     printedAt: 'Sep 30, 2026, 10:00 AM',
     baseDirection: 'ltr',
     formatPrice: (price) => `$${price.toFixed(2)}`,
@@ -101,7 +101,7 @@ test('menu document sorts categories and excludes inactive, unavailable, and hid
   assert.equal(menu.itemCount, 2);
 
   const allItems = buildMenuDocument(categories, products, {
-    businessName: 'Flo Cafe',
+    businessName: 'GULF POS',
     printedAt: 'Sep 30, 2026, 10:00 AM',
     baseDirection: 'ltr',
     formatPrice: (price) => `$${price.toFixed(2)}`,
@@ -605,7 +605,7 @@ test('PrintMenuModal preserves the reserved popup when browser printing starts a
     },
     '@/store/auth': {
       useAuthStore: (selector: (s: any) => unknown) =>
-        selector({ currentTenant: { business_name: 'Flo Cafe', country: 'US', timezone: 'UTC' } }),
+        selector({ currentTenant: { business_name: 'GULF POS', country: 'US', timezone: 'UTC' } }),
     },
     '@/hooks/usePrinter': {
       usePrinterStore: (selector: (s: any) => unknown) =>
@@ -1144,7 +1144,7 @@ test('printed menus group subcategories beneath their parent categories in therm
   ];
 
   const doc = buildMenuDocument(treeCategories, treeProducts, {
-    businessName: 'FloCafe',
+    businessName: 'GULF POS',
     printedAt: '',
     baseDirection: 'ltr',
     formatPrice: (value: number) => `$${value.toFixed(2)}`,
@@ -1209,7 +1209,7 @@ test('printed menus group subcategories beneath their parent categories in therm
     (row: { item: { name: string; price: string; details: string[] } }) => row.item,
   );
   const webHtml = buildMenuWebPrintHtml({
-    businessName: 'FloCafe',
+    businessName: 'GULF POS',
     printedAt: '',
     pageSize: 'A4',
     menuTitle: 'Menu',
@@ -1271,7 +1271,7 @@ test('printed menus group subcategories beneath their parent categories in therm
     },
   ];
   const dupDoc = buildMenuDocument(duplicateRootCategories, duplicateRootProducts, {
-    businessName: 'FloCafe',
+    businessName: 'GULF POS',
     printedAt: '',
     baseDirection: 'ltr',
     formatPrice: (value: number) => `$${value.toFixed(2)}`,
@@ -1299,7 +1299,7 @@ test('printed menus group subcategories beneath their parent categories in therm
     (row: { item: { name: string; price: string } }) => row.item,
   );
   const dupWebHtml = buildMenuWebPrintHtml({
-    businessName: 'FloCafe',
+    businessName: 'GULF POS',
     printedAt: '',
     pageSize: 'A4',
     menuTitle: 'Menu',
@@ -1343,7 +1343,7 @@ test('printed menus group subcategories beneath their parent categories in therm
     },
   ];
   const deepDoc = buildMenuDocument(deepAndCyclicCategories, deepAndCyclicProducts, {
-    businessName: 'FloCafe',
+    businessName: 'GULF POS',
     printedAt: '',
     baseDirection: 'ltr',
     formatPrice: (value: number) => `$${value.toFixed(2)}`,
@@ -1380,7 +1380,7 @@ test('printed menus group subcategories beneath their parent categories in therm
     'HTML/QR menu section builder preserves depth >= 2 and cyclic category items',
   );
   const deepWebHtml = buildMenuWebPrintHtml({
-    businessName: 'FloCafe',
+    businessName: 'GULF POS',
     printedAt: '',
     pageSize: 'A4',
     menuTitle: 'Menu',

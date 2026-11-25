@@ -637,7 +637,7 @@ export interface CurrencyUnitAdapter {
 // Resolves ISO 4217 decimal fraction digits for a currency code, falling back to 2.
 export function getCurrencyFractionDigits(currency: string): number {
   if (!currency || typeof currency !== 'string') return 2;
-  // FloCafe treats COP as a whole-peso currency in tenant arithmetic and display.
+  // GULF POS treats COP as a whole-peso currency in tenant arithmetic and display.
   if (currency === 'COP') return 0;
   if (currency === 'IRR') return 2;
   try {

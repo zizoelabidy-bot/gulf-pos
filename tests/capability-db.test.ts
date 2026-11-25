@@ -94,7 +94,7 @@ for (const page of pages) {
   assertOrThrow(isEncoderCodePage(page), `encoder supports snapshot code page ${page}`);
 }
 
-// 5. Code page numbers: a kept page must sit at FloCafe's own ESC t number in the DB.
+// 5. Code page numbers: a kept page must sit at GULF POS's own ESC t number in the DB.
 for (const id of ['TM-T88V', 'CT-S651']) {
   const pages = Object.entries(dbProfiles[id].codePages);
   assertOrThrow(pages.length > 0, `${id} keeps at least one code page`);
@@ -102,7 +102,7 @@ for (const id of ['TM-T88V', 'CT-S651']) {
     assertEqualOrThrow(
       escPosCodePageId(name as ThermalCodePage),
       Number(index),
-      `${id} keeps ${name} only at its FloCafe ESC t number`,
+      `${id} keeps ${name} only at its GULF POS ESC t number`,
     );
   }
 }

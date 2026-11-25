@@ -691,7 +691,7 @@ async function main() {
         message: 'Database busy while creating order',
         category: 'bug',
       },
-      subject: 'FloCafe order problem',
+      subject: 'GULF POS order problem',
       ticketCorrelationId: posHelpCorrelationId,
       clientTicketId: posHelpTicketId,
       attachLog: true,
@@ -723,7 +723,7 @@ async function main() {
         message: 'Database busy while creating order',
         category: 'bug',
       },
-      subject: 'FloCafe order problem',
+      subject: 'GULF POS order problem',
       ticketCorrelationId: require('crypto').randomUUID(),
       clientTicketId: posHelpNoLogTicketId,
       attachLog: false,
@@ -771,7 +771,7 @@ async function main() {
       headers: owner.authHeader,
       body: {
         client_ticket_id: printerTicketId,
-        subject: 'FloCafe printer problem',
+        subject: 'GULF POS printer problem',
         message: receiptPrintFailure.detail,
         category: 'printer',
         event_code: receiptPrintFailure.code,
@@ -838,7 +838,7 @@ async function main() {
       headers: owner.authHeader,
       body: {
         client_ticket_id: fallbackPrinterTicketId,
-        subject: 'FloCafe printer problem',
+        subject: 'GULF POS printer problem',
         message: clientFallbackPrintFailure.detail,
         category: 'printer',
         event_code: clientFallbackPrintFailure.code,
@@ -891,7 +891,7 @@ async function main() {
     assertEqual(stockMetadata.category, 'general', 'stock rejection uses non-bug category');
     assertEqual(
       stockMetadata.subject,
-      'FloCafe inventory or stock validation help',
+      'GULF POS inventory or stock validation help',
       'stock rejection uses inventory validation subject',
     );
     assertEqual(
@@ -947,7 +947,7 @@ async function main() {
     );
     assertEqual(
       appendStockMetadata.subject,
-      'FloCafe inventory or stock validation help',
+      'GULF POS inventory or stock validation help',
       'order.append stock rejection uses inventory validation subject',
     );
 
@@ -1060,8 +1060,8 @@ async function main() {
     assertEqual(unexpectedMetadata.category, 'bug', 'unexpected failure keeps bug category');
     assertEqual(
       unexpectedMetadata.subject,
-      'FloCafe order problem',
-      'unexpected failure keeps FloCafe order problem subject',
+      'GULF POS order problem',
+      'unexpected failure keeps GULF POS order problem subject',
     );
 
     const validationTicketId = require('crypto').randomUUID();
@@ -1098,7 +1098,7 @@ async function main() {
     );
     assertEqual(
       storedValidationTicket.subject,
-      'FloCafe inventory or stock validation help',
+      'GULF POS inventory or stock validation help',
       'validation help ticket preserves inventory validation subject',
     );
   } finally {

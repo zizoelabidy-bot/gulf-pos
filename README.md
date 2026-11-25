@@ -1,3 +1,18 @@
+# GULF POS
+
+**Enterprise Restaurant Point of Sale & Management System**
+
+**Powered by GULF CCTV — Smart Systems Solutions**
+
+Windows desktop, offline-first POS for restaurants, cafes and fast food.
+Arabic/English with full RTL support, Kuwaiti Dinar (3-decimal) ready, thermal
+printing, KDS, tables, inventory, loyalty, LAN multi-device mode.
+
+GULF POS is built on the open-source FloCafe project (MIT License).
+See [OPEN_SOURCE_LICENSES.md](OPEN_SOURCE_LICENSES.md) and [LICENSE](LICENSE).
+
+---
+
 <div align="center">
   <h1>FloCafe</h1>
   <p><a href="README.es.md">Español</a> · <a href="README.pt.md">Português</a> · <a href="README.fr.md">Français</a> · <a href="README.tr.md">Türkçe</a> · <a href="README.fil.md">Filipino</a> · <a href="README.de.md">Deutsch</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.ar.md">العربية</a> · <a href="README.ur.md">اردو</a></p>

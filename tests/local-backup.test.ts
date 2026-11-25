@@ -96,12 +96,12 @@ const HOUR = 60 * 60_000;
 
 async function main(): Promise<void> {
   const backupDir = getLocalBackupDir();
-  assert.equal(backupDir, path.join(documentsDir, 'FloCafe', 'Backups'));
+  assert.equal(backupDir, path.join(documentsDir, 'GULF POS', 'Backups'));
   documentsThrows = true;
   try {
     assert.equal(
       getLocalBackupDir(),
-      path.join(userDataDir, 'FloCafe', 'Backups'),
+      path.join(userDataDir, 'GULF POS', 'Backups'),
       'falls back to userData when documents path is unavailable',
     );
   } finally {

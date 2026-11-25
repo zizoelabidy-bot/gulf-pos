@@ -59,7 +59,7 @@ export function scrubPrinterErrorText(text: unknown, printerName?: string): stri
       const inner = match.slice(1, -1);
       return !inner.includes('<') && !SAFE_QUOTE.test(inner) ? '<queue>' : match;
     })
-    // Only a queue-shaped token after the word: "the printer in FloCafe" keeps its words.
+    // Only a queue-shaped token after the word: "the printer in GULF POS" keeps its words.
     .replace(AFTER_QUEUE_WORD, (match, word: string, token: string) =>
       /[A-Z0-9_-]/.test(token) ? `${word} <queue>` : match,
     )

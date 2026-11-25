@@ -23,7 +23,7 @@ resetCounters();
 // The helper is the single normaliser every static audit depends on.
 assertEqualOrThrow(toPosixPath('main\\routes\\bills.ts'), 'main/routes/bills.ts', 'a win32 path normalises to forward slashes');
 assertEqualOrThrow(toPosixPath('main/routes/bills.ts'), 'main/routes/bills.ts', 'a posix path is already canonical and is left alone');
-assertEqualOrThrow(toPosixPath('C:\\src\\FloCafe\\main\\kds-server.ts'), 'C:/src/FloCafe/main/kds-server.ts', 'a win32 absolute path normalises to forward slashes');
+assertEqualOrThrow(toPosixPath('C:\\src\\GULF POS\\main\\kds-server.ts'), 'C:/src/GULF POS/main/kds-server.ts', 'a win32 absolute path normalises to forward slashes');
 assertEqualOrThrow(toPosixPath('main\\services\\kds.ts\\..\\refund.ts'), 'main/services/kds.ts/../refund.ts', 'only separators change, never the path segments');
 
 /**

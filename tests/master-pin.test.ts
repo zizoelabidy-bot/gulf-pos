@@ -47,7 +47,7 @@ const {
 const { requireMasterPin } = require('../main/middleware/master-pin');
 
 function main() {
-  console.log('🧪 FloDesktop Master PIN Tests');
+  console.log('🧪 GULFPOSDesktop Master PIN Tests');
   console.log('='.repeat(60));
 
   assert.equal(isMasterPinAvailable(), true, 'encryption is available in this mock');

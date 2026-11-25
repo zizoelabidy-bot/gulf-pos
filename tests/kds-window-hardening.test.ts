@@ -91,7 +91,7 @@ Module._load = function (request: string, parent: unknown, isMain: boolean) {
       app: {
         getPath: () => '/tmp/flo-kds-test',
         getVersion: () => '3.2.0',
-        getName: () => 'FloCafe',
+        getName: () => 'GULF POS',
       },
       BrowserWindow: FakeBrowserWindow,
       shell: {
@@ -106,7 +106,7 @@ Module._load = function (request: string, parent: unknown, isMain: boolean) {
       prepare: (sql: string) => ({
         all: () =>
           sql.includes('settings')
-            ? [{ key: 'business_name', value: 'Flo Cafe' }]
+            ? [{ key: 'business_name', value: 'GULF POS' }]
             : [{ id: 1, name: 'Thermal Kitchen' }],
         get: () => ({ bill_count: 5, revenue: 120.5, covers: 12, count: 2 }),
         run: () => ({ changes: 1 }),

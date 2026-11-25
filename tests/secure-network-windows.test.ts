@@ -27,7 +27,7 @@ function portAllowed(port: number): boolean {
 console.log('Secure Network Windows integration suite');
 
 // Firewall command construction.
-const exe = 'C:\\Program Files\\Flo Cafe\\Flo Cafe.exe';
+const exe = 'C:\\Program Files\\GULF POS\\GULF POS.exe';
 const add = buildAddRuleArgs(exe);
 assert.deepEqual(add.slice(0, 4), ['advfirewall', 'firewall', 'add', 'rule']);
 for (const expected of [
@@ -140,7 +140,7 @@ assert.match(
 );
 assert.match(
   nsis,
-  /!macro customUnInstall[\s\S]*delete rule name="FloCafe Secure Network"[\s\S]*!macroend/,
+  /!macro customUnInstall[\s\S]*delete rule name="GULF POS Secure Network"[\s\S]*!macroend/,
   'uninstall removes the rule by name',
 );
 assert.ok(
