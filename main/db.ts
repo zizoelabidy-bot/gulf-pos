@@ -10393,6 +10393,67 @@ export const MIGRATIONS: { version: number; name: string; up: () => void }[] = [
       }
     },
   },
+  {
+    version: 126,
+    name: 'delivery_management',
+    up: () => {
+      db.exec(`
+        CREATE TABLE IF NOT EXISTS delivery_zones (
+          id TEXT PRIMARY KEY,
+          name_ar TEXT NOT NULL,
+          name_en TEXT,
+          fee REAL NOT NULL DEFAULT 0,
+          active INTEGER NOT NULL DEFAULT 1,
+          created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+        CREATE TABLE IF NOT EXISTS delivery_drivers (
+          id TEXT PRIMARY KEY,
+          name TEXT NOT NULL,
+          phone TEXT,
+          active INTEGER NOT NULL DEFAULT 1,
+          notes TEXT,
+          created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+        CREATE TABLE IF NOT EXISTS delivery_settlements (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          driver_id TEXT NOT NULL REFERENCES delivery_drivers(id),
+          business_date TEXT NOT NULL,
+          expected_cash REAL NOT NULL DEFAULT 0,
+          collected_cash REAL NOT NULL DEFAULT 0,
+          difference REAL NOT NULL DEFAULT 0,
+          status TEXT NOT NULL DEFAULT 'settled',
+          settled_by TEXT,
+          created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          UNIQUE(driver_id, business_date)
+        );
+        CREATE TABLE IF NOT EXISTS delivery_assignments (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          order_id INTEGER NOT NULL REFERENCES orders(id),
+          driver_id TEXT NOT NULL REFERENCES delivery_drivers(id),
+          zone_id TEXT REFERENCES delivery_zones(id),
+          status TEXT NOT NULL DEFAULT 'assigned' CHECK (status IN ('assigned','out_for_delivery','delivered','returned','cancelled')),
+          cod_amount REAL NOT NULL DEFAULT 0,
+          collected_amount REAL NOT NULL DEFAULT 0,
+          note TEXT,
+          assigned_by TEXT,
+          assigned_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          out_at TEXT,
+          delivered_at TEXT,
+          closed_at TEXT,
+          settlement_id INTEGER REFERENCES delivery_settlements(id),
+          created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+        CREATE INDEX IF NOT EXISTS idx_delivery_assignments_status ON delivery_assignments(status, id);
+        CREATE INDEX IF NOT EXISTS idx_delivery_assignments_driver ON delivery_assignments(driver_id, id);
+        CREATE INDEX IF NOT EXISTS idx_delivery_assignments_order ON delivery_assignments(order_id, id);
+        CREATE INDEX IF NOT EXISTS idx_delivery_assignments_settlement ON delivery_assignments(settlement_id);
+      `);
+    },
+  },
+
 ];
 
 export function backfillWhatsAppMessageAttempts(

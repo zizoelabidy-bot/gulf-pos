@@ -673,7 +673,8 @@
     "user": "Người dùng",
     "whatsapp": "WhatsApp",
     "inventory": "Kho",
-    "tables": "Bàn"
+    "tables": "Bàn",
+    "delivery": "Giao hàng"
   },
   "orders": {
     "active": "Đang hoạt động",

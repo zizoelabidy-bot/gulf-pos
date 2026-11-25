@@ -673,7 +673,8 @@
     "user": "ব্যবহারকারী",
     "whatsapp": "হোয়াটসঅ্যাপ",
     "inventory": "ইনভেন্টরি",
-    "tables": "টেবিল"
+    "tables": "টেবিল",
+    "delivery": "ডেলিভারি"
   },
   "orders": {
     "active": "সক্রিয়",

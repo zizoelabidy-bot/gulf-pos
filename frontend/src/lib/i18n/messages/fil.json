@@ -673,7 +673,8 @@
     "uptimeLabel": "Uptime",
     "user": "Gumagamit",
     "whatsapp": "WhatsApp",
-    "inventory": "Imbentaryo"
+    "inventory": "Imbentaryo",
+    "delivery": "Paghahatid"
   },
   "orders": {
     "active": "Aktibo",

@@ -673,7 +673,8 @@
     "uptimeLabel": "Çalışma Süresi",
     "user": "Kullanıcı",
     "whatsapp": "WhatsApp",
-    "inventory": "Stok"
+    "inventory": "Stok",
+    "delivery": "Teslimat"
   },
   "orders": {
     "active": "Aktif",

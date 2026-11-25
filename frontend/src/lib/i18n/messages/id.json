@@ -673,7 +673,8 @@
     "user": "Pengguna",
     "whatsapp": "WhatsApp",
     "inventory": "Persediaan",
-    "tables": "Meja"
+    "tables": "Meja",
+    "delivery": "Pengiriman"
   },
   "orders": {
     "active": "Aktif",

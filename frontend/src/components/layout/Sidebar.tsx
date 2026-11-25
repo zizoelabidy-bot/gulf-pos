@@ -23,6 +23,7 @@ import {
   Monitor,
   Boxes,
   Receipt,
+  Bike,
   Lock,
   KeyRound,
   type LucideIcon,
@@ -117,6 +118,13 @@ const ALL_NAV_ITEMS: NavItem[] = [
     labelKey: 'expenses',
     icon: Receipt,
     permission: 'expenses.view',
+    businessTypes: null,
+  },
+  {
+    href: '/delivery',
+    labelKey: 'delivery',
+    icon: Bike,
+    permission: 'delivery.view',
     businessTypes: null,
   },
   {

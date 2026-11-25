@@ -673,7 +673,8 @@
     "user": "Utente",
     "whatsapp": "WhatsApp",
     "inventory": "Scorte",
-    "tables": "Tavoli"
+    "tables": "Tavoli",
+    "delivery": "Consegna"
   },
   "orders": {
     "active": "Attivo",

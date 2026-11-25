@@ -673,7 +673,8 @@
     "user": "کاربر",
     "whatsapp": "واتساپ",
     "inventory": "موجودی",
-    "tables": "میزها"
+    "tables": "میزها",
+    "delivery": "تحویل"
   },
   "orders": {
     "active": "فعال",

@@ -673,7 +673,8 @@
     "user": "Gebruiker",
     "whatsapp": "WhatsApp",
     "inventory": "Voorraad",
-    "tables": "Tafels"
+    "tables": "Tafels",
+    "delivery": "Bezorging"
   },
   "orders": {
     "active": "Actief",

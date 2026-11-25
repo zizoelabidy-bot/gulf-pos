@@ -673,7 +673,8 @@
     "user": "Користувач",
     "whatsapp": "WhatsApp",
     "inventory": "Склад",
-    "tables": "Столи"
+    "tables": "Столи",
+    "delivery": "Доставка"
   },
   "orders": {
     "active": "Активні",

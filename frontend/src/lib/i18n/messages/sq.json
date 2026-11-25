@@ -673,7 +673,8 @@
     "uptimeLabel": "Lart: ",
     "user": "Përdoruesi",
     "whatsapp": "WhatsApp",
-    "inventory": "Inventari"
+    "inventory": "Inventari",
+    "delivery": "Dërgesa"
   },
   "orders": {
     "active": "Aktive",

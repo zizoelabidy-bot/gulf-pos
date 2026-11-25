@@ -673,7 +673,8 @@
     "user": "Panganggo",
     "whatsapp": "WhatsApp",
     "inventory": "Pasokan",
-    "tables": "Meja"
+    "tables": "Meja",
+    "delivery": "Kiriman"
   },
   "orders": {
     "active": "Aktif",

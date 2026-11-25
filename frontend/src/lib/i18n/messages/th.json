@@ -673,7 +673,8 @@
     "uptimeLabel": "ทำงานมา: ",
     "user": "ผู้ใช้",
     "whatsapp": "WhatsApp",
-    "inventory": "สินค้าคงคลัง"
+    "inventory": "สินค้าคงคลัง",
+    "delivery": "การจัดส่ง"
   },
   "orders": {
     "active": "ดำเนินการอยู่",

@@ -673,7 +673,8 @@
     "user": "사용자",
     "whatsapp": "WhatsApp",
     "inventory": "재고",
-    "tables": "테이블"
+    "tables": "테이블",
+    "delivery": "배달"
   },
   "orders": {
     "active": "진행 중",

@@ -673,7 +673,8 @@
     "user": "User",
     "whatsapp": "WhatsApp",
     "inventory": "Inventory",
-    "tables": "Tables"
+    "tables": "Tables",
+    "delivery": "Delivery"
   },
   "orders": {
     "active": "Active",

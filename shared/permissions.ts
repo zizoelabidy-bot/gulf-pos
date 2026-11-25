@@ -361,6 +361,35 @@ export const PERMISSION_DEFINITIONS = [
   },
 
   {
+    id: 'delivery.view',
+    area: 'orders',
+    defaultRoles: SALES,
+    configurable: true,
+    risk: 'standard',
+  },
+  {
+    id: 'delivery.manage',
+    area: 'orders',
+    defaultRoles: OWNER_MANAGER,
+    configurable: true,
+    risk: 'standard',
+  },
+  {
+    id: 'delivery.assign',
+    area: 'orders',
+    defaultRoles: OWNER_MANAGER_CASHIER,
+    configurable: true,
+    risk: 'standard',
+  },
+  {
+    id: 'delivery.settle',
+    area: 'orders',
+    defaultRoles: OWNER_MANAGER,
+    configurable: true,
+    risk: 'sensitive',
+  },
+
+  {
     id: 'kitchen.use',
     area: 'kitchen',
     defaultRoles: KITCHEN,

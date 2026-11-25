@@ -673,7 +673,8 @@
     "user": "उपयोगकर्ता",
     "whatsapp": "WhatsApp",
     "inventory": "इन्वेंटरी",
-    "tables": "टेबल"
+    "tables": "टेबल",
+    "delivery": "डिलीवरी"
   },
   "orders": {
     "active": "सक्रिय",

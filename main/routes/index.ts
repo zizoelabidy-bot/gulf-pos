@@ -15,6 +15,7 @@ import { inventoryRoutes } from './inventory';
 import { supplyRoutes } from './supplies';
 import { expenseRoutes } from './expenses';
 import { recipeRoutes } from './recipes';
+import { deliveryRoutes } from './delivery';
 import { tableRoutes } from './tables';
 import { kitchenStationRoutes } from './kitchen-stations';
 import { kitchenRoutes } from './kitchen';
@@ -126,6 +127,7 @@ export function registerRoutes(app: Express): void {
   app.use('/api/supplies', supplyRoutes);
   app.use('/api/expenses', expenseRoutes);
   app.use('/api/recipes', recipeRoutes);
+  app.use('/api/delivery', deliveryRoutes);
   app.use('/api/tables', tableRoutes);
   app.use('/api/kitchen-stations', kitchenStationRoutes);
   app.use('/api/customers', customerRoutes);

@@ -673,7 +673,8 @@
     "uptimeLabel": "माथि: ",
     "user": "प्रयोगकर्ता",
     "whatsapp": "व्हाट्सएप",
-    "inventory": "सूची"
+    "inventory": "सूची",
+    "delivery": "डेलिभरी"
   },
   "orders": {
     "active": "सक्रिय",

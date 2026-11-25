@@ -673,7 +673,8 @@
     "uptimeLabel": "运行：",
     "user": "用户",
     "whatsapp": "WhatsApp",
-    "inventory": "库存"
+    "inventory": "库存",
+    "delivery": "外送"
   },
   "orders": {
     "active": "进行中",

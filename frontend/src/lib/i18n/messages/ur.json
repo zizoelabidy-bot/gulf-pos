@@ -673,7 +673,8 @@
     "user": "صارف",
     "whatsapp": "WhatsApp",
     "inventory": "اسٹاک",
-    "tables": "میزیں"
+    "tables": "میزیں",
+    "delivery": "ڈیلیوری"
   },
   "orders": {
     "active": "فعال",
