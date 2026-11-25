@@ -302,7 +302,7 @@ function LoginContent() {
           <h1 className="text-2xl font-bold tracking-tight text-[#075985] dark:text-sky-200">GULF POS</h1>
           <div className="mt-1 inline-flex items-center gap-2 rounded-lg bg-white/90 px-3 py-1 shadow-sm">
             <span className="text-[10px] font-medium uppercase tracking-wide text-[#0284C7]">Powered by</span>
-            <img src="/gulfcctv-logo.png" alt="GULF CCTV" height={26} style={{ height: 26, width: 'auto' }} />
+            <img suppressHydrationWarning src={typeof document !== 'undefined' && (document.documentElement.lang || navigator.language || '').toLowerCase().startsWith('ar') ? '/gulfcctv-logo-ar.png' : '/gulfcctv-logo.png'} alt="GULF CCTV" style={{ height: 34, width: 'auto' }} />
           </div>
           <p className="text-muted-foreground mt-2">{t('signInTitle')}</p>
         </div>
