@@ -115,6 +115,7 @@ import { SettingsTabShell } from '@/components/settings/SettingsTabShell';
 import { QrMenuSettingsTab } from '@/components/settings/QrMenuSettingsTab';
 import { CountersSettingsTab } from '@/components/settings/CountersSettingsTab';
 import { LicenseSettingsTab } from '@/components/settings/LicenseSettingsTab';
+import { AggregatorIntegrationsTab } from '@/components/settings/AggregatorIntegrationsTab';
 import type { HealthCheckReport } from '@/types/electron';
 import { useTranslations, useLocale } from 'use-intl';
 import { Ltr } from '@/components/layout/Ltr';
@@ -433,6 +434,7 @@ export default function SettingsPage() {
   const settingsLocale = useLocale();
   // GULF POS commercial licensing label lives outside the 32-locale gate.
   const licenseLabel = settingsLocale.startsWith('ar') ? 'الترخيص' : 'License';
+  const integrationsLabel = settingsLocale.startsWith('ar') ? 'التكاملات' : 'Integrations';
   const tWhatsappSettings = useTranslations('whatsapp.settings');
   const tCustomerDisplay = useTranslations('customerDisplay');
   const tSecureNetwork = useTranslations('secureNetwork');
@@ -4809,6 +4811,12 @@ export default function SettingsPage() {
               active={activeTab}
               onClick={handleSettingsTabChange}
             />
+            <SettingsNavItem
+              label={integrationsLabel}
+              value="integrations"
+              active={activeTab}
+              onClick={handleSettingsTabChange}
+            />
           </nav>
         </div>
 
@@ -7511,6 +7519,10 @@ export default function SettingsPage() {
           {/* Software Updates tab */}
           <TabsContent value="license">
             <LicenseSettingsTab />
+          </TabsContent>
+
+          <TabsContent value="integrations">
+            <AggregatorIntegrationsTab isAdmin={isAdmin} />
           </TabsContent>
 
           <TabsContent value="updates">
