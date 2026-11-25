@@ -55,11 +55,11 @@ const db = getDatabase();
 
 // 1. Schema.
 const lastMigration = MIGRATIONS[MIGRATIONS.length - 1];
-assertEqualOrThrow(lastMigration.version, 127, 'purchasing is the last registered migration');
+assertEqualOrThrow(lastMigration.version, 128, 'recipe cost history is the last registered migration');
 const tables = (
   db.prepare(`SELECT name FROM sqlite_master WHERE type = 'table'`).all() as { name: string }[]
 ).map((r) => r.name);
-for (const t of ['suppliers', 'purchase_orders', 'purchase_order_items', 'supplier_payments']) {
+for (const t of ['suppliers', 'purchase_orders', 'purchase_order_items', 'supplier_payments', 'recipe_cost_history']) {
   assertOrThrow(tables.includes(t), `table ${t} exists after init`);
 }
 

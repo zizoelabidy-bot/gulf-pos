@@ -15,6 +15,7 @@ import {
 import { cloudSync } from '../services/cloud-sync';
 import { serializeOperationFailure } from '../lib/operation-failure';
 import { UnitConversionError } from '../services/units';
+import { touchRecipeCostHistoryForSupply } from '../services/food-cost';
 
 const router = Router();
 const MANUAL_MOVEMENT_TYPES: Array<'receive' | 'count' | 'adjustment' | 'waste'> = [
@@ -244,6 +245,13 @@ router.post(
         reason: body.reason,
         actorUserId: actorId,
       });
+      if (movementType === 'receive' && (body.unit_cost !== undefined || body.total_cost !== undefined)) {
+        try {
+          touchRecipeCostHistoryForSupply(getDatabase(), String(req.params.id));
+        } catch {
+          // cost history is audit metadata; never fail a stock receive on it
+        }
+      }
       res.status(201).json({ movement });
     } catch (error: unknown) {
       sendError(res, error);

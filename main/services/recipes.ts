@@ -325,6 +325,15 @@ export function saveRecipe(
 
   const recipe = getRecipe(db, recipeId);
   if (!recipe) throw new RecipeServiceError(500, 'Failed to save recipe');
+  // Recipe cost history (directive §11): keep a cost snapshot on every save.
+  try {
+    db.prepare(
+      `INSERT INTO recipe_cost_history (id, recipe_id, total_cost, unit_cost, cost_known, trigger, recorded_at)
+       VALUES (?, ?, ?, ?, ?, 'save', ?)`,
+    ).run(newId('rch'), recipeId, recipe.total_cost, recipe.unit_cost, recipe.cost_known ? 1 : 0, now());
+  } catch {
+    // history is audit metadata; never block a recipe save on it
+  }
   return recipe;
 }
 

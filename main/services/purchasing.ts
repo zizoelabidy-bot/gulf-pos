@@ -12,6 +12,7 @@ import { getDatabase, now, withTxn } from '../db';
 import { getCurrencyFractionDigits } from '../countries';
 import { getTenantCurrency } from './refund';
 import { recordSupplyMovementInTxn } from './supplies';
+import { touchRecipeCostHistoryForSupply } from './food-cost';
 
 export class PurchasingServiceError extends Error {
   statusCode: number;
@@ -338,6 +339,13 @@ export function receivePurchaseOrderItems(
       db.prepare(
         'UPDATE purchase_order_items SET received_quantity = received_quantity + ? WHERE id = ?',
       ).run(r.quantity, r.item_id);
+      if (item.supply_id) {
+        try {
+          touchRecipeCostHistoryForSupply(db, item.supply_id);
+        } catch {
+          // cost history is audit metadata; never fail a goods receipt on it
+        }
+      }
     }
     const totals = db
       .prepare(

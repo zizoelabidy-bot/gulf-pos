@@ -10510,7 +10510,25 @@ export const MIGRATIONS: { version: number; name: string; up: () => void }[] = [
       `);
     },
   },
-
+  {
+    version: 128,
+    name: 'add_recipe_cost_history',
+    up: () => {
+      db.exec(`
+        CREATE TABLE IF NOT EXISTS recipe_cost_history (
+          id TEXT PRIMARY KEY,
+          recipe_id TEXT NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
+          total_cost REAL,
+          unit_cost REAL,
+          cost_known INTEGER NOT NULL DEFAULT 0,
+          trigger TEXT NOT NULL CHECK (trigger IN ('save', 'supply_cost')),
+          recorded_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+        CREATE INDEX IF NOT EXISTS idx_recipe_cost_history_recipe
+          ON recipe_cost_history(recipe_id, recorded_at);
+      `);
+    },
+  },
 ];
 
 export function backfillWhatsAppMessageAttempts(
