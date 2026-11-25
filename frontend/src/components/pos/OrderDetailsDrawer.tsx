@@ -110,7 +110,7 @@ export function OrderDetailsDrawer({
                   type="button"
                   aria-label={t('decreasePax')}
                   onClick={() => cart.setGuestCount(Math.max(1, cart.guestCount - 1))}
-                  className="relative touch-target h-7 w-7 min-h-7 min-w-7 rounded-full text-muted-foreground transition-colors after:content-[''] after:absolute after:-inset-1.5 hover:bg-muted hover:text-foreground active:bg-muted"
+                  className="relative touch-target h-7 w-7 min-h-7 min-w-7 relative before:absolute before:-inset-2 before:content-[''] rounded-full text-muted-foreground transition-colors after:content-[''] after:absolute after:-inset-1.5 hover:bg-muted hover:text-foreground active:bg-muted"
                 >
                   <Minus size={14} />
                 </button>
@@ -130,7 +130,7 @@ export function OrderDetailsDrawer({
                   type="button"
                   aria-label={t('increasePax')}
                   onClick={() => cart.setGuestCount(Math.min(99, cart.guestCount + 1))}
-                  className="relative touch-target h-7 w-7 min-h-7 min-w-7 rounded-full text-muted-foreground transition-colors after:content-[''] after:absolute after:-inset-1.5 hover:bg-muted hover:text-foreground active:bg-muted"
+                  className="relative touch-target h-7 w-7 min-h-7 min-w-7 relative before:absolute before:-inset-2 before:content-[''] rounded-full text-muted-foreground transition-colors after:content-[''] after:absolute after:-inset-1.5 hover:bg-muted hover:text-foreground active:bg-muted"
                 >
                   <Plus size={14} />
                 </button>

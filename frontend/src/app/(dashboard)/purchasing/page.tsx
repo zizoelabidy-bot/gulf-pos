@@ -152,7 +152,7 @@ export default function PurchasingPage() {
   const [payForm, setPayForm] = useState({ supplier_id: '', amount: '', payment_date: new Date().toISOString().slice(0, 10), method: '', reference: '' });
 
   const inputCls =
-    'rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring';
+    'rounded-md border border-border bg-background px-3 py-2 min-h-11 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring';
 
   const err = (e: unknown) =>
     setError((e as { response?: { data?: { error?: string } } }).response?.data?.error ?? t('errorGeneric'));
@@ -281,7 +281,7 @@ export default function PurchasingPage() {
   };
 
   return (
-    <div className="p-4 md:p-6 space-y-4">
+    <div className="p-4 md:p-6 space-y-4 [&_button]:min-h-11">
       <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
       <div className="flex gap-2 flex-wrap">
         {(['orders', 'suppliers', 'payments'] as const).map((k) => (
