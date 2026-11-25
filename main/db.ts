@@ -10560,6 +10560,49 @@ export const MIGRATIONS: { version: number; name: string; up: () => void }[] = [
       `);
     },
   },
+  {
+    version: 130,
+    name: 'add_aggregator_integrations',
+    up: () => {
+      db.exec(`
+        CREATE TABLE IF NOT EXISTS aggregator_integrations (
+          platform TEXT PRIMARY KEY,
+          enabled INTEGER NOT NULL DEFAULT 0,
+          client_id TEXT,
+          client_secret_enc TEXT,
+          store_id TEXT,
+          branch_id TEXT,
+          webhook_secret_enc TEXT,
+          branch_mapping TEXT,
+          auto_accept INTEGER NOT NULL DEFAULT 0,
+          status TEXT NOT NULL DEFAULT 'disabled',
+          last_error TEXT,
+          updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+        CREATE TABLE IF NOT EXISTS aggregator_events (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          platform TEXT NOT NULL,
+          kind TEXT NOT NULL,
+          external_order_id TEXT,
+          detail TEXT,
+          created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+        CREATE INDEX IF NOT EXISTS idx_aggregator_events_created
+          ON aggregator_events(created_at DESC);
+        CREATE TABLE IF NOT EXISTS aggregator_item_map (
+          platform TEXT NOT NULL,
+          external_item_id TEXT NOT NULL,
+          product_id TEXT NOT NULL,
+          external_name TEXT,
+          UNIQUE(platform, external_item_id)
+        );
+      `);
+      const seed = db.prepare(
+        `INSERT OR IGNORE INTO aggregator_integrations (platform) VALUES (?)`
+      );
+      for (const p of ['talabat', 'keeta', 'deliveroo', 'jahez']) seed.run(p);
+    },
+  },
 ];
 
 export function backfillWhatsAppMessageAttempts(

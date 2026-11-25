@@ -55,7 +55,7 @@ const db = getDatabase();
 
 // 1. Schema.
 const lastMigration = MIGRATIONS[MIGRATIONS.length - 1];
-assertEqualOrThrow(lastMigration.version, 129, 'add_licensing is the last registered migration');
+assertEqualOrThrow(lastMigration.version, 130, 'add_aggregator_integrations is the last registered migration');
 const tables = (
   db.prepare(`SELECT name FROM sqlite_master WHERE type = 'table'`).all() as { name: string }[]
 ).map((r) => r.name);
