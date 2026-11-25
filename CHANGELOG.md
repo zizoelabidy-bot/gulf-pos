@@ -2,6 +2,14 @@
 
 All notable changes to Flo Cafe are documented here. Dates are release dates, not commit dates. Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.4.0] - 2026-11-26
+
+### Added
+
+- GULF POS commercial licensing: Ed25519-signed license keys (perpetual / annual / trial), offline activation, device binding, max devices/branches, enabled modules, 7-day expiry grace, license transfer receipts, and a separate GULF CCTV License Admin CLI (admin-app/) for issuing keys. The private signing key never ships with the client.
+- Settings -> License tab (Arabic + English): status, fingerprint, activation, deactivation/transfer, license history.
+- Global license banner for trial-ending / grace / expired states. Expired licenses never lock away data: reports, viewing and export stay available while new sales are blocked.
+
 ## [3.8.6] - 2026-09-13
 
 ### Added

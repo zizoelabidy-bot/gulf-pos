@@ -114,8 +114,9 @@ import { Toggle } from '@/components/settings/Toggle';
 import { SettingsTabShell } from '@/components/settings/SettingsTabShell';
 import { QrMenuSettingsTab } from '@/components/settings/QrMenuSettingsTab';
 import { CountersSettingsTab } from '@/components/settings/CountersSettingsTab';
+import { LicenseSettingsTab } from '@/components/settings/LicenseSettingsTab';
 import type { HealthCheckReport } from '@/types/electron';
-import { useTranslations } from 'use-intl';
+import { useTranslations, useLocale } from 'use-intl';
 import { Ltr } from '@/components/layout/Ltr';
 import { useFormatDate } from '@/hooks/useFormatDate';
 import { useUpdateStatus } from '@/hooks/useUpdateStatus';
@@ -429,6 +430,9 @@ export default function SettingsPage() {
   const tCommon = useTranslations('common');
   const tRestore = useTranslations('restore');
   const tUpdate = useTranslations('update');
+  const settingsLocale = useLocale();
+  // GULF POS commercial licensing label lives outside the 32-locale gate.
+  const licenseLabel = settingsLocale.startsWith('ar') ? 'الترخيص' : 'License';
   const tWhatsappSettings = useTranslations('whatsapp.settings');
   const tCustomerDisplay = useTranslations('customerDisplay');
   const tSecureNetwork = useTranslations('secureNetwork');
@@ -4799,6 +4803,12 @@ export default function SettingsPage() {
               active={activeTab}
               onClick={handleSettingsTabChange}
             />
+            <SettingsNavItem
+              label={licenseLabel}
+              value="license"
+              active={activeTab}
+              onClick={handleSettingsTabChange}
+            />
           </nav>
         </div>
 
@@ -7499,6 +7509,10 @@ export default function SettingsPage() {
           </TabsContent>
 
           {/* Software Updates tab */}
+          <TabsContent value="license">
+            <LicenseSettingsTab />
+          </TabsContent>
+
           <TabsContent value="updates">
             <SettingsTabShell>
               <div

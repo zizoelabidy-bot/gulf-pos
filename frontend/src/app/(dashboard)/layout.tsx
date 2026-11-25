@@ -6,6 +6,7 @@ import AppSidebar from '@/components/layout/Sidebar';
 import AuthGuard from '@/components/layout/AuthGuard';
 import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar';
 import StatusBar from '@/components/layout/StatusBar';
+import LicenseBanner from '@/components/layout/LicenseBanner';
 import GlobalNotifications from '@/components/layout/GlobalNotifications';
 import TitleBar from '@/components/layout/TitleBar';
 import UpdateAvailableDialog from '@/components/updates/UpdateAvailableDialog';
@@ -102,6 +103,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <SidebarTrigger className="size-8" aria-label="Open navigation" />
             </div>
             {!isPos && <GlobalNotifications />}
+            <LicenseBanner />
             <div
               className={
                 isPos

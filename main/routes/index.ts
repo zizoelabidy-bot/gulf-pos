@@ -18,6 +18,8 @@ import { recipeRoutes } from './recipes';
 import { deliveryRoutes } from './delivery';
 import { purchasingRoutes } from './purchasing';
 import { foodCostRoutes } from './food-cost';
+import { licenseRoutes } from './license';
+import { LicenseError, requireActiveLicense } from '../services/licensing';
 import { tableRoutes } from './tables';
 import { kitchenStationRoutes } from './kitchen-stations';
 import { kitchenRoutes } from './kitchen';
@@ -118,8 +120,21 @@ export function registerRoutes(app: Express): void {
   app.use('/api/categories', categoryRoutes);
   app.use('/api/products', productRoutes);
   app.use('/api/addon-groups', addonGroupRoutes);
-  app.use('/api/orders', orderRoutes);
-  app.use('/api/order-items', orderItemRoutes);
+  // License enforcement: expired licenses keep reads/reports/exports open
+  // but block new sales (per product directive, data is never locked away).
+  const licenseWriteGuard = (req: Request, res: any, next: any) => {
+    if (req.method === 'GET' || req.method === 'HEAD' || req.method === 'OPTIONS') return next();
+    try {
+      requireActiveLicense(getDatabase());
+      next();
+    } catch (error) {
+      const statusCode = error instanceof LicenseError ? error.statusCode : 500;
+      res.status(statusCode).json({ error: (error as Error).message, code: 'LICENSE_EXPIRED' });
+    }
+  };
+  app.use('/api/orders', licenseWriteGuard, orderRoutes);
+  app.use('/api/order-items', licenseWriteGuard, orderItemRoutes);
+  app.use('/api/license', licenseRoutes);
   app.use('/api/kitchen', kitchenRoutes);
   app.use('/api/bills', billRoutes);
   app.use('/api/refunds', refundRoutes);

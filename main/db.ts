@@ -10529,6 +10529,37 @@ export const MIGRATIONS: { version: number; name: string; up: () => void }[] = [
       `);
     },
   },
+  {
+    version: 129,
+    name: 'add_licensing',
+    up: () => {
+      db.exec(`
+        CREATE TABLE IF NOT EXISTS license_meta (
+          key TEXT PRIMARY KEY,
+          value TEXT NOT NULL
+        );
+        CREATE TABLE IF NOT EXISTS license_activations (
+          id TEXT PRIMARY KEY,
+          lic_id TEXT NOT NULL,
+          token TEXT NOT NULL,
+          payload TEXT NOT NULL,
+          device_fingerprint TEXT,
+          status TEXT NOT NULL CHECK (status IN ('active', 'replaced', 'deactivated')),
+          activated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          deactivated_at TEXT
+        );
+        CREATE INDEX IF NOT EXISTS idx_license_activations_status
+          ON license_activations(status, activated_at);
+        CREATE TABLE IF NOT EXISTS license_events (
+          id TEXT PRIMARY KEY,
+          kind TEXT NOT NULL,
+          lic_id TEXT,
+          detail TEXT,
+          created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+      `);
+    },
+  },
 ];
 
 export function backfillWhatsAppMessageAttempts(
