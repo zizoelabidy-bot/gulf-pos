@@ -38,7 +38,7 @@ jobs:
           (Get-FileHash $exe -Algorithm SHA256).Hash
 
       - name: Upload installer artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: GULF-POS-Setup
           path: release/GULF-POS-Setup.exe
