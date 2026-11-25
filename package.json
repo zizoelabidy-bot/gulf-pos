@@ -485,7 +485,7 @@
       "provider": "github",
       "owner": "zizoelabidy-bot",
       "repo": "gulf-pos",
-      "releaseType": "release",
+      "releaseType": "prerelease",
       "channel": "latest"
     },
     "detectUpdateChannel": false,

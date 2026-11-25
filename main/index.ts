@@ -18,6 +18,7 @@ import { Bonjour } from 'bonjour-service';
 import {
   getDatabase,
   getBackupDir,
+  createBackup,
   getDbPath,
   initDatabase,
   autoRepairSchemaDrift,
@@ -45,7 +46,7 @@ import { isOfflineMode, onOfflineModeEnabled } from './services/offline-mode';
 import { telemetry } from './services/telemetry';
 import { capturePostHogException, startPostHog, stopPostHog } from './services/posthog';
 import { googleDrive } from './services/google-drive';
-import { localBackup, SESSION_BACKUP_MIN_AGE_MS } from './services/local-backup';
+import { localBackup, getLocalBackupDir, SESSION_BACKUP_MIN_AGE_MS } from './services/local-backup';
 import {
   closeStatus,
   closeStatusWhenSeen,
@@ -1678,6 +1679,18 @@ async function initialize(): Promise<void> {
           isInstallReady: () => isInstallReady(storedUpdateStatus, stagedUpdateReady),
           authorize: (pin) => authorizeMasterPin(pin, 'ipc:restart-and-install'),
           runCleanup,
+          // GULF POS: always take a pre-update database backup so a failed
+          // update can be rolled back without data loss.
+          beforeInstall: async () => {
+            const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+            const target = path.join(
+              getLocalBackupDir(),
+              `flo-pre-update-v${app.getVersion()}-${stamp}.db`,
+            );
+            fs.mkdirSync(getLocalBackupDir(), { recursive: true });
+            const result = await createBackup(target);
+            log.info(`[Update] Pre-update backup written to ${result.path}`);
+          },
           quitAndInstall: (isSilent, isForceRunAfter) =>
             autoUpdater.quitAndInstall(isSilent, isForceRunAfter),
           updateState: updateShutdownState,

@@ -19,6 +19,8 @@ type RestartAndInstallOptions = {
   isInstallReady: () => boolean;
   authorize: (pin: string | undefined) => UpdateAuthorizationResult;
   runCleanup: () => Promise<void>;
+  /** Best-effort hook before the installer runs (e.g. pre-update DB backup). Failures are non-fatal. */
+  beforeInstall?: () => Promise<unknown> | unknown;
   quitAndInstall: (isSilent: boolean, isForceRunAfter: boolean) => void;
   updateState: UpdateShutdownState;
   onInstallFailure: (error: unknown) => void;
@@ -203,6 +205,7 @@ export function createRestartAndInstallHandler({
   isInstallReady,
   authorize,
   runCleanup,
+  beforeInstall,
   quitAndInstall,
   updateState,
   onInstallFailure,
@@ -225,6 +228,13 @@ export function createRestartAndInstallHandler({
       await runCleanup();
     } catch (cleanupError) {
       error('[Update] Pre-install cleanup failed (proceeding with install):', cleanupError);
+    }
+    if (beforeInstall) {
+      try {
+        await beforeInstall();
+      } catch (beforeInstallError) {
+        error('[Update] Pre-install step failed (proceeding with install):', beforeInstallError);
+      }
     }
     try {
       quitAndInstall(false, true);
