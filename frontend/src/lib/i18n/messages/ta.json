@@ -674,7 +674,8 @@
     "whatsapp": "வாட்ஸ்அப் (WhatsApp)",
     "inventory": "சரக்கு இருப்பு",
     "tables": "மேசைகள்",
-    "delivery": "டெலிவரி"
+    "delivery": "டெலிவரி",
+    "purchasing": "கொள்முதல்"
   },
   "orders": {
     "active": "செயலில்",

@@ -1,6 +1,6 @@
 {
   "name": "gulf-pos",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "GULF POS - Enterprise Restaurant Point of Sale & Management System. Powered by GULF CCTV - Smart Systems Solutions. Built on the open-source FloCafe project (MIT).",
   "engines": {
     "node": ">=22.12.0"
@@ -377,7 +377,8 @@
     "test:variant-pos-surface": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/variant-pos-surface.test.ts",
     "test:product-variants-screen": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/product-variants-screen.test.ts",
     "test:printer-text-size": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/printer-text-size.test.ts && node tests/run-electron-node-test.cjs tests/migration-printer-text-size.test.ts",
-    "test:delivery-management": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/delivery-management.test.ts"
+    "test:delivery-management": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/delivery-management.test.ts",
+    "test:purchasing": "node tests/run-electron-node-test.cjs tests/purchasing.test.ts"
   },
   "author": {
     "name": "Flo",

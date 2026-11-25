@@ -674,7 +674,8 @@
     "user": "Kullanıcı",
     "whatsapp": "WhatsApp",
     "inventory": "Stok",
-    "delivery": "Teslimat"
+    "delivery": "Teslimat",
+    "purchasing": "Satınalma"
   },
   "orders": {
     "active": "Aktif",

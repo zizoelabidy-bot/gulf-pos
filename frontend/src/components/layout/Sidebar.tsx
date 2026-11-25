@@ -24,6 +24,7 @@ import {
   Boxes,
   Receipt,
   Bike,
+  Truck,
   Lock,
   KeyRound,
   type LucideIcon,
@@ -125,6 +126,13 @@ const ALL_NAV_ITEMS: NavItem[] = [
     labelKey: 'delivery',
     icon: Bike,
     permission: 'delivery.view',
+    businessTypes: null,
+  },
+  {
+    href: '/purchasing',
+    labelKey: 'purchasing',
+    icon: Truck,
+    permission: 'purchasing.view',
     businessTypes: null,
   },
   {

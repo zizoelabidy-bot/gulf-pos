@@ -674,7 +674,8 @@
     "user": "المستخدم",
     "whatsapp": "واتساب",
     "inventory": "المخزون",
-    "delivery": "التوصيل"
+    "delivery": "التوصيل",
+    "purchasing": "المشتريات"
   },
   "orders": {
     "active": "نشط",

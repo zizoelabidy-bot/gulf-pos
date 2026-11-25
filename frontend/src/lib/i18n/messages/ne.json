@@ -674,7 +674,8 @@
     "user": "प्रयोगकर्ता",
     "whatsapp": "व्हाट्सएप",
     "inventory": "सूची",
-    "delivery": "डेलिभरी"
+    "delivery": "डेलिभरी",
+    "purchasing": "खरिद"
   },
   "orders": {
     "active": "सक्रिय",

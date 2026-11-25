@@ -674,7 +674,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "Bestand",
     "tables": "Tische",
-    "delivery": "Lieferung"
+    "delivery": "Lieferung",
+    "purchasing": "Einkauf"
   },
   "orders": {
     "active": "Aktiv",

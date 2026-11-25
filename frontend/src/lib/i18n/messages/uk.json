@@ -674,7 +674,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "Склад",
     "tables": "Столи",
-    "delivery": "Доставка"
+    "delivery": "Доставка",
+    "purchasing": "Закупівлі"
   },
   "orders": {
     "active": "Активні",

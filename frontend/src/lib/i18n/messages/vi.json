@@ -674,7 +674,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "Kho",
     "tables": "Bàn",
-    "delivery": "Giao hàng"
+    "delivery": "Giao hàng",
+    "purchasing": "Mua hàng"
   },
   "orders": {
     "active": "Đang hoạt động",

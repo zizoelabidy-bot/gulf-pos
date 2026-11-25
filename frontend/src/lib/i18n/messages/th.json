@@ -674,7 +674,8 @@
     "user": "ผู้ใช้",
     "whatsapp": "WhatsApp",
     "inventory": "สินค้าคงคลัง",
-    "delivery": "การจัดส่ง"
+    "delivery": "การจัดส่ง",
+    "purchasing": "การจัดซื้อ"
   },
   "orders": {
     "active": "ดำเนินการอยู่",

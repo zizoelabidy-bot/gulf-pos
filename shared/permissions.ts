@@ -390,6 +390,35 @@ export const PERMISSION_DEFINITIONS = [
   },
 
   {
+    id: 'purchasing.view',
+    area: 'inventory',
+    defaultRoles: OWNER_MANAGER,
+    configurable: true,
+    risk: 'standard',
+  },
+  {
+    id: 'purchasing.manage',
+    area: 'inventory',
+    defaultRoles: OWNER_MANAGER,
+    configurable: true,
+    risk: 'standard',
+  },
+  {
+    id: 'purchasing.receive',
+    area: 'inventory',
+    defaultRoles: OWNER_MANAGER,
+    configurable: true,
+    risk: 'standard',
+  },
+  {
+    id: 'purchasing.pay',
+    area: 'inventory',
+    defaultRoles: OWNER_MANAGER,
+    configurable: true,
+    risk: 'sensitive',
+  },
+
+  {
     id: 'kitchen.use',
     area: 'kitchen',
     defaultRoles: KITCHEN,

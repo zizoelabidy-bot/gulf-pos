@@ -449,7 +449,7 @@ export function applySupplyStockChange(
   return { stockBefore, stockAfter, movementId: Number(movement.lastInsertRowid) };
 }
 
-function recordSupplyMovementInTxn(
+export function recordSupplyMovementInTxn(
   db: ReturnType<typeof getDatabase>,
   input: RecordMovementInput,
 ): SupplyMovement | null {

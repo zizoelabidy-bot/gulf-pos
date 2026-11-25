@@ -674,7 +674,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "在庫",
     "tables": "テーブル",
-    "delivery": "デリバリー"
+    "delivery": "デリバリー",
+    "purchasing": "仕入れ"
   },
   "orders": {
     "active": "有効",

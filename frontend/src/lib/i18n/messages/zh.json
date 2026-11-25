@@ -674,7 +674,8 @@
     "user": "用户",
     "whatsapp": "WhatsApp",
     "inventory": "库存",
-    "delivery": "外送"
+    "delivery": "外送",
+    "purchasing": "采购"
   },
   "orders": {
     "active": "进行中",

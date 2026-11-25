@@ -10454,6 +10454,63 @@ export const MIGRATIONS: { version: number; name: string; up: () => void }[] = [
     },
   },
 
+  {
+    version: 127,
+    name: 'purchasing',
+    up: () => {
+      db.exec(`
+        CREATE TABLE IF NOT EXISTS suppliers (
+          id TEXT PRIMARY KEY,
+          name TEXT NOT NULL,
+          phone TEXT,
+          email TEXT,
+          address TEXT,
+          notes TEXT,
+          active INTEGER NOT NULL DEFAULT 1,
+          created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+        CREATE TABLE IF NOT EXISTS purchase_orders (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          po_number TEXT UNIQUE NOT NULL,
+          supplier_id TEXT NOT NULL REFERENCES suppliers(id),
+          status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft','sent','partially_received','received','cancelled')),
+          expected_date TEXT,
+          notes TEXT,
+          total REAL NOT NULL DEFAULT 0,
+          created_by TEXT,
+          created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+        CREATE INDEX IF NOT EXISTS idx_purchase_orders_supplier ON purchase_orders(supplier_id, id);
+        CREATE INDEX IF NOT EXISTS idx_purchase_orders_status ON purchase_orders(status, id);
+        CREATE TABLE IF NOT EXISTS purchase_order_items (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          po_id INTEGER NOT NULL REFERENCES purchase_orders(id),
+          supply_id TEXT REFERENCES supplies(id),
+          description TEXT NOT NULL,
+          quantity REAL NOT NULL,
+          unit TEXT,
+          unit_cost REAL NOT NULL DEFAULT 0,
+          received_quantity REAL NOT NULL DEFAULT 0
+        );
+        CREATE INDEX IF NOT EXISTS idx_purchase_order_items_po ON purchase_order_items(po_id, id);
+        CREATE TABLE IF NOT EXISTS supplier_payments (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          supplier_id TEXT NOT NULL REFERENCES suppliers(id),
+          amount REAL NOT NULL,
+          payment_date TEXT NOT NULL,
+          method TEXT,
+          reference TEXT,
+          notes TEXT,
+          created_by TEXT,
+          created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+        CREATE INDEX IF NOT EXISTS idx_supplier_payments_supplier ON supplier_payments(supplier_id, id);
+      `);
+    },
+  },
+
 ];
 
 export function backfillWhatsAppMessageAttempts(

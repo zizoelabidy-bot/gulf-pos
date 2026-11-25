@@ -674,7 +674,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "재고",
     "tables": "테이블",
-    "delivery": "배달"
+    "delivery": "배달",
+    "purchasing": "구매"
   },
   "orders": {
     "active": "진행 중",

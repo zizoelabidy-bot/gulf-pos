@@ -674,7 +674,8 @@
     "user": "Gumagamit",
     "whatsapp": "WhatsApp",
     "inventory": "Imbentaryo",
-    "delivery": "Paghahatid"
+    "delivery": "Paghahatid",
+    "purchasing": "Pagbili"
   },
   "orders": {
     "active": "Aktibo",

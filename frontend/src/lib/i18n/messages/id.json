@@ -674,7 +674,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "Persediaan",
     "tables": "Meja",
-    "delivery": "Pengiriman"
+    "delivery": "Pengiriman",
+    "purchasing": "Pembelian"
   },
   "orders": {
     "active": "Aktif",

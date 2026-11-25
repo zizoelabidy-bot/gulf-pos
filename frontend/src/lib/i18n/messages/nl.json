@@ -674,7 +674,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "Voorraad",
     "tables": "Tafels",
-    "delivery": "Bezorging"
+    "delivery": "Bezorging",
+    "purchasing": "Inkoop"
   },
   "orders": {
     "active": "Actief",

@@ -674,7 +674,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "Stock",
     "tables": "Tables",
-    "delivery": "Livraison"
+    "delivery": "Livraison",
+    "purchasing": "Achats"
   },
   "orders": {
     "active": "Actives",

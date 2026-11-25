@@ -674,7 +674,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "इन्व्हेंटरी",
     "tables": "टेबल्स",
-    "delivery": "डिलिव्हरी"
+    "delivery": "डिलिव्हरी",
+    "purchasing": "खरेदी"
   },
   "orders": {
     "active": "सक्रिय",

@@ -674,7 +674,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "Inventario",
     "tables": "Mesas",
-    "delivery": "Entrega a domicilio"
+    "delivery": "Entrega a domicilio",
+    "purchasing": "Compras"
   },
   "orders": {
     "active": "Activos",
