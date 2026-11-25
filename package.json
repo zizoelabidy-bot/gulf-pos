@@ -1,6 +1,6 @@
 {
   "name": "gulf-pos",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "GULF POS - Enterprise Restaurant Point of Sale & Management System. Powered by GULF CCTV - Smart Systems Solutions. Built on the open-source FloCafe project (MIT).",
   "engines": {
     "node": ">=22.12.0"
