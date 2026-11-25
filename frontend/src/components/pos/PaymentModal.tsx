@@ -2792,10 +2792,10 @@ export default function PaymentModal({
                     aria-expanded={showDiscount}
                     className={`inline-flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-xs font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
                       showDiscount
-                        ? 'border-brand bg-brand-light text-brand shadow-2xs dark:border-indigo-400/50 dark:bg-[var(--color-brand-light)] dark:text-indigo-300'
+                        ? 'border-brand bg-brand-light text-brand shadow-2xs dark:border-sky-400/50 dark:bg-[var(--color-brand-light)] dark:text-sky-300'
                         : Number(bill.discount_amount) > 0
                           ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-700 hover:border-emerald-500/60 dark:text-emerald-300'
-                          : 'border-border bg-card text-foreground shadow-2xs hover:border-brand/45 hover:text-brand dark:border-white/10 dark:hover:text-indigo-300'
+                          : 'border-border bg-card text-foreground shadow-2xs hover:border-brand/45 hover:text-brand dark:border-white/10 dark:hover:text-sky-300'
                     }`}
                   >
                     <Tag className="size-3.5 shrink-0" />
@@ -2906,7 +2906,7 @@ export default function PaymentModal({
                         : 'border-border focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 dark:border-white/10'
                     }`}
                   >
-                    <span className="shrink-0 ps-3 pe-2 text-sm font-semibold text-brand dark:text-indigo-300">
+                    <span className="shrink-0 ps-3 pe-2 text-sm font-semibold text-brand dark:text-sky-300">
                       {discountType === 'percentage' ? '%' : inputCurrencyLabel}
                     </span>
                     <input
@@ -3128,7 +3128,7 @@ export default function PaymentModal({
                                     }
                                   }}
                                   aria-pressed={charge.waived}
-                                  className="rounded-md border border-border bg-muted/60 px-2 py-0.5 text-[11px] font-semibold text-brand transition-colors hover:border-brand/40 hover:bg-brand-light/50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:text-indigo-300"
+                                  className="rounded-md border border-border bg-muted/60 px-2 py-0.5 text-[11px] font-semibold text-brand transition-colors hover:border-brand/40 hover:bg-brand-light/50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:text-sky-300"
                                 >
                                   {charge.waived ? t('applyCharge') : t('waiveCharge')}
                                 </button>
@@ -3159,7 +3159,7 @@ export default function PaymentModal({
                               type="button"
                               disabled={Boolean(updatingChargeId)}
                               onClick={() => void updateCharge(charge.id, { applied: true })}
-                              className="rounded-md border border-border bg-muted/60 px-2 py-0.5 text-[11px] font-semibold text-brand transition-colors hover:border-brand/40 hover:bg-brand-light/50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:text-indigo-300"
+                              className="rounded-md border border-border bg-muted/60 px-2 py-0.5 text-[11px] font-semibold text-brand transition-colors hover:border-brand/40 hover:bg-brand-light/50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:text-sky-300"
                             >
                               {t('addCharge')}
                             </button>
@@ -3269,7 +3269,7 @@ export default function PaymentModal({
                 <span className="text-xs font-semibold text-muted-foreground">{t('totalDue')}</span>
                 {cartCustomer && (
                   <p className="mt-0.5 flex items-center gap-1 truncate text-xs font-medium text-foreground">
-                    <User size={12} className="shrink-0 text-brand dark:text-indigo-300" />
+                    <User size={12} className="shrink-0 text-brand dark:text-sky-300" />
                     <span className="truncate">{cartCustomer.name}</span>
                   </p>
                 )}
@@ -3331,7 +3331,7 @@ export default function PaymentModal({
                       </div>
                     </div>
                     {isAppliedShare && (
-                      <p className="px-1 text-[11px] font-semibold text-brand dark:text-indigo-300">
+                      <p className="px-1 text-[11px] font-semibold text-brand dark:text-sky-300">
                         {t('equalShareBadge')}
                       </p>
                     )}
@@ -3431,7 +3431,7 @@ export default function PaymentModal({
                           </div>
                         </div>
                         {isAppliedShare && (
-                          <p className="px-1 text-[11px] font-semibold text-brand dark:text-indigo-300">
+                          <p className="px-1 text-[11px] font-semibold text-brand dark:text-sky-300">
                             {t('equalShareBadge')}
                           </p>
                         )}
@@ -3547,7 +3547,7 @@ export default function PaymentModal({
                       className="touch-target w-full shrink-0 justify-between gap-3 bg-muted/45 px-3 text-start transition-colors hover:bg-muted/70 dark:bg-muted/25"
                     >
                       <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                        <Users size={15} className="text-brand dark:text-indigo-300" />
+                        <Users size={15} className="text-brand dark:text-sky-300" />
                         {t('splitPayment')}
                       </span>
                       <ChevronDown
@@ -3651,7 +3651,7 @@ export default function PaymentModal({
                                       className={`min-h-11 min-w-11 rounded-lg border px-2.5 py-1.5 text-xs font-semibold tabular-nums transition-colors disabled:opacity-40 ${
                                         activePreset
                                           ? 'border-brand bg-brand text-white shadow-xs'
-                                          : 'border-border bg-card text-foreground shadow-2xs hover:border-brand/45 hover:text-brand dark:border-white/10 dark:hover:text-indigo-300'
+                                          : 'border-border bg-card text-foreground shadow-2xs hover:border-brand/45 hover:text-brand dark:border-white/10 dark:hover:text-sky-300'
                                       }`}
                                     >
                                       {preset}
@@ -3717,14 +3717,14 @@ export default function PaymentModal({
                                     key={index}
                                     className={`flex items-center justify-between gap-2 rounded-md px-1.5 py-0.5 ${
                                       index === 0
-                                        ? 'bg-brand-light/55 font-medium text-brand dark:bg-[var(--color-brand-light)] dark:text-indigo-300'
+                                        ? 'bg-brand-light/55 font-medium text-brand dark:bg-[var(--color-brand-light)] dark:text-sky-300'
                                         : ''
                                     }`}
                                   >
                                     <span
                                       className={
                                         index === 0
-                                          ? 'text-brand dark:text-indigo-300'
+                                          ? 'text-brand dark:text-sky-300'
                                           : 'text-muted-foreground'
                                       }
                                     >
@@ -3771,7 +3771,7 @@ export default function PaymentModal({
                                     data-testid={`equal-share-apply-${idx}`}
                                     variant="outline"
                                     size="sm"
-                                    className="min-h-10 border-brand/35 bg-brand-light/40 font-semibold text-brand hover:border-brand hover:bg-brand-light/80 dark:border-indigo-400/40 dark:bg-[var(--color-brand-light)] dark:text-indigo-300 dark:hover:bg-indigo-500/25"
+                                    className="min-h-10 border-brand/35 bg-brand-light/40 font-semibold text-brand hover:border-brand hover:bg-brand-light/80 dark:border-sky-400/40 dark:bg-[var(--color-brand-light)] dark:text-sky-300 dark:hover:bg-sky-500/25"
                                     disabled={controlsDisabled}
                                     onClick={() => void applyEqualShare(idx)}
                                   >
@@ -3827,7 +3827,7 @@ export default function PaymentModal({
                                       Boolean(updatingChargeId) ||
                                       chargeStateUncertain
                                     }
-                                    className="w-full border-brand/35 bg-brand-light/40 font-semibold text-brand hover:border-brand hover:bg-brand-light/75 dark:border-indigo-400/40 dark:bg-[var(--color-brand-light)] dark:text-indigo-300 dark:hover:bg-indigo-500/25"
+                                    className="w-full border-brand/35 bg-brand-light/40 font-semibold text-brand hover:border-brand hover:bg-brand-light/75 dark:border-sky-400/40 dark:bg-[var(--color-brand-light)] dark:text-sky-300 dark:hover:bg-sky-500/25"
                                     size="lg"
                                   >
                                     <Users size={16} className="me-2" />

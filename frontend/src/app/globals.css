@@ -4,11 +4,21 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* GULF POS brand typeface: Cairo (OFL), bundled for offline use. */
+@font-face {
+  font-family: 'Cairo';
+  src: url('/fonts/Cairo-Variable.ttf') format('truetype-variations');
+  font-weight: 200 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --font-sans: "Geist", "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", "Devanagari Sangam MN", "Noto Sans Gurmukhi", "Raavi", "Kohinoor Gurmukhi", "Gurmukhi Sangam MN", "Noto Sans Telugu", "Kohinoor Telugu", "Telugu Sangam MN", system-ui, sans-serif;
+
+  --font-sans: "Cairo", "Geist", "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", "Devanagari Sangam MN", "Noto Sans Gurmukhi", "Raavi", "Kohinoor Gurmukhi", "Gurmukhi Sangam MN", "Noto Sans Telugu", "Kohinoor Telugu", "Telugu Sangam MN", system-ui, sans-serif;
   --font-mono: "Geist Mono", monospace;
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --radius: 0.875rem;
+  --background: oklch(0.972 0.01 230);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -38,12 +48,12 @@
   --chart-5: oklch(0.769 0.188 70.08);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: #3248FF;
+  --sidebar-primary: #0284C7;
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: #e8ebff;
-  --sidebar-accent-foreground: #3248FF;
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: #3248FF;
+  --sidebar-accent: #E0F2FE;
+  --sidebar-accent-foreground: #075985;
+  --sidebar-border: oklch(0.922 0.008 230);
+  --sidebar-ring: #0284C7;
 
   /* Hoisted to :root so fixed app chrome can offset below the title bar;
    * consumed by both .flo-title-bar and the sidebar inset rules below. */
@@ -355,7 +365,7 @@ html[dir='rtl'] .flo-display-page-timer-bar {
   inset-inline-start: 0;
   inline-size: 100%;
   block-size: 2.5px;
-  background-color: var(--sidebar-primary, #3248FF);
+  background-color: var(--sidebar-primary, #0284C7);
   transform-origin: left center;
   animation-name: flo-toast-drain;
   animation-timing-function: linear;
@@ -382,7 +392,7 @@ div:hover > .flo-toast-drain,
 }
 
 .flo-toast-drain--blank {
-  background-color: var(--sidebar-primary, #3248FF);
+  background-color: var(--sidebar-primary, #0284C7);
 }
 
 
@@ -448,19 +458,19 @@ div:hover > .flo-toast-drain,
   --color-sidebar-ring: var(--sidebar-ring);
 
   /* Brand colors */
-  --color-brand: #3248FF;
-  --color-brand-light: #e8ebff;
-  --color-brand-hover: #2538d4;
-  --color-brand-ring: #3248FF80;
+  --color-brand: #0284C7;
+  --color-brand-light: #E0F2FE;
+  --color-brand-hover: #0369A1;
+  --color-brand-ring: #0284C780;
   --color-success: #00cc61;
   --color-success-light: #dcfce7;
   --color-success-hover: #00b355;
 }
 
 .dark {
-  --background: oklch(0.17 0 0);
+  --background: oklch(0.19 0.015 250);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.22 0 0);
+  --card: oklch(0.235 0.015 250);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.22 0 0);
   --popover-foreground: oklch(0.985 0 0);
@@ -483,19 +493,19 @@ div:hover > .flo-toast-drain,
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
+  --sidebar: oklch(0.22 0.02 250);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: #6366f1;
+  --sidebar-primary: #0EA5E9;
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.28 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 12%);
-  --sidebar-ring: #6366f1;
+  --sidebar-ring: #0EA5E9;
 
   /* Brand surface for bg-brand-light in dark mode. Note: text-brand (#3248FF)
    * has limited contrast on this surface; components using bg-brand-light with
-   * text-brand should add dark:text-indigo-300 for legibility. */
-  --color-brand-light: oklch(0.20 0.03 270);
+   * text-brand should add dark:text-sky-300 for legibility. */
+  --color-brand-light: oklch(0.27 0.045 245);
 }
 
 html.dark::-webkit-scrollbar-thumb,

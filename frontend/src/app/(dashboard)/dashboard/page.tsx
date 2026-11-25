@@ -1062,7 +1062,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div className="flex items-center gap-3 border-t border-border p-4 sm:border-s sm:border-t-0 sm:p-5">
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-sky-300">
                   <BarChart3 size={18} />
                 </span>
                 <div className="min-w-0">

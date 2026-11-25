@@ -1472,10 +1472,10 @@ export default function PrepaidCheckoutModal({
                   onClick={() => setDiscountOpen((open) => !open)}
                   className={`inline-flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-xs font-semibold transition-colors ${
                     discountOpen
-                      ? 'border-brand bg-brand-light text-brand shadow-2xs dark:border-indigo-400/50 dark:bg-[var(--color-brand-light)] dark:text-indigo-300'
+                      ? 'border-brand bg-brand-light text-brand shadow-2xs dark:border-sky-400/50 dark:bg-[var(--color-brand-light)] dark:text-sky-300'
                       : preview?.discountAmount
                         ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-700 hover:border-emerald-500/60 dark:text-emerald-300'
-                        : 'border-border bg-card text-foreground shadow-2xs hover:border-brand/45 hover:text-brand dark:border-white/10 dark:hover:text-indigo-300'
+                        : 'border-border bg-card text-foreground shadow-2xs hover:border-brand/45 hover:text-brand dark:border-white/10 dark:hover:text-sky-300'
                   }`}
                   aria-expanded={discountOpen}
                 >
@@ -1540,7 +1540,7 @@ export default function PrepaidCheckoutModal({
                         : 'border-border focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 dark:border-white/10'
                     }`}
                   >
-                    <span className="shrink-0 ps-3 pe-2 text-sm font-semibold text-brand dark:text-indigo-300">
+                    <span className="shrink-0 ps-3 pe-2 text-sm font-semibold text-brand dark:text-sky-300">
                       {discountType === 'percentage' ? '%' : inputCurrencyLabel}
                     </span>
                     <input
@@ -1753,7 +1753,7 @@ export default function PrepaidCheckoutModal({
                                     }
                                   }}
                                   aria-pressed={charge.waived}
-                                  className="rounded-md border border-border bg-muted/60 px-2 py-0.5 text-[11px] font-semibold text-brand transition-colors hover:border-brand/40 hover:bg-brand-light/50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:text-indigo-300"
+                                  className="rounded-md border border-border bg-muted/60 px-2 py-0.5 text-[11px] font-semibold text-brand transition-colors hover:border-brand/40 hover:bg-brand-light/50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:text-sky-300"
                                 >
                                   {charge.waived ? t('applyCharge') : t('waiveCharge')}
                                 </button>
@@ -1792,7 +1792,7 @@ export default function PrepaidCheckoutModal({
                                 cart.toggleOptedInCharge(charge.id);
                               }
                             }}
-                            className="rounded-md border border-border bg-muted/60 px-2 py-0.5 text-[11px] font-semibold text-brand transition-colors hover:border-brand/40 hover:bg-brand-light/50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:text-indigo-300"
+                            className="rounded-md border border-border bg-muted/60 px-2 py-0.5 text-[11px] font-semibold text-brand transition-colors hover:border-brand/40 hover:bg-brand-light/50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:text-sky-300"
                           >
                             {t('addCharge')}
                           </button>

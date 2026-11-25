@@ -78,7 +78,7 @@ export function OrdersMasterList({
                     className={`px-2 py-0.5 rounded-full text-[11px] font-medium shrink-0 ${
                       order.release_status === 'blocked'
                         ? 'bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-300'
-                        : 'bg-indigo-100 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300'
+                        : 'bg-indigo-100 text-indigo-700 dark:bg-indigo-950/40 dark:text-sky-300'
                     }`}
                   >
                     {order.release_status === 'blocked'

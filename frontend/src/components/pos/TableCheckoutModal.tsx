@@ -462,7 +462,7 @@ export default function TableCheckoutModal({
               />
               <div className="flex justify-between border-t border-border/80 pt-2 text-lg font-bold dark:border-white/10">
                 <span>{t('total')}</span>
-                <span className="text-brand dark:text-indigo-300">{fmt(Number(order.total))}</span>
+                <span className="text-brand dark:text-sky-300">{fmt(Number(order.total))}</span>
               </div>
               {order.bill &&
                 order.bill.payment_status !== 'paid' &&

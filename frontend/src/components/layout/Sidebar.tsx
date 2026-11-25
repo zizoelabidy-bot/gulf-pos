@@ -288,13 +288,14 @@ export default function AppSidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link href={homeHref}>
-                <div className="flex aspect-square size-8 shrink-0 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground font-semibold">
+                <div className="flex aspect-square size-8 shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-[#38BDF8] to-[#0369A1] text-white font-semibold shadow-[0_2px_8px_rgba(2,132,199,0.35)]">
                   {(currentTenant?.business_name || tCommon('brandName')).charAt(0).toUpperCase()}
                 </div>
                 <div className="flex flex-col gap-0.5 min-w-0 leading-none">
                   <span className="font-semibold truncate">
                     {currentTenant?.business_name || tCommon('brandName')}
                   </span>
+                  <span className="text-[10px] font-medium text-sidebar-foreground/55 truncate">Powered by GULF CCTV</span>
                 </div>
               </Link>
             </SidebarMenuButton>

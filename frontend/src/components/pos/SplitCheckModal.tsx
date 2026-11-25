@@ -318,7 +318,7 @@ export function SplitCheckModal({
 
   const allSelected = selectedUnits > 0 && remainingUnits === 0;
   const stepperBtnClass =
-    'size-11 min-h-11 min-w-11 rounded-lg border border-border bg-card text-foreground shadow-2xs flex items-center justify-center transition-[color,background-color,border-color,box-shadow,transform] hover:border-brand/40 hover:bg-brand-light/25 active:scale-[0.98] disabled:opacity-40 dark:border-white/10 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] dark:hover:border-indigo-400/45 dark:hover:bg-[var(--color-brand-light)]';
+    'size-11 min-h-11 min-w-11 rounded-lg border border-border bg-card text-foreground shadow-2xs flex items-center justify-center transition-[color,background-color,border-color,box-shadow,transform] hover:border-brand/40 hover:bg-brand-light/25 active:scale-[0.98] disabled:opacity-40 dark:border-white/10 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] dark:hover:border-sky-400/45 dark:hover:bg-[var(--color-brand-light)]';
 
   const headerChips: CheckoutHeaderChipItem[] = [
     { key: 'bill', label: t('billNumber', { number: bill.bill_number }) },
@@ -441,7 +441,7 @@ export function SplitCheckModal({
               <span
                 className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium ${
                   selectedUnits > 0
-                    ? 'border-brand/30 bg-brand-light text-brand dark:border-indigo-400/40 dark:bg-[var(--color-brand-light)] dark:text-indigo-300'
+                    ? 'border-brand/30 bg-brand-light text-brand dark:border-sky-400/40 dark:bg-[var(--color-brand-light)] dark:text-sky-300'
                     : 'border-border/80 bg-card text-muted-foreground dark:border-white/10'
                 }`}
               >
@@ -552,7 +552,7 @@ export function SplitCheckModal({
                                 }
                                 className={`min-h-11 w-12 rounded-lg border px-1 py-1 text-center font-semibold tabular-nums outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/20 ${
                                   cellQty > 0
-                                    ? 'border-brand/40 bg-brand-light/35 text-brand dark:border-indigo-400/45 dark:bg-[var(--color-brand-light)] dark:text-indigo-300'
+                                    ? 'border-brand/40 bg-brand-light/35 text-brand dark:border-sky-400/45 dark:bg-[var(--color-brand-light)] dark:text-sky-300'
                                     : 'border-border bg-card text-foreground dark:border-white/10'
                                 }`}
                               />
@@ -582,7 +582,7 @@ export function SplitCheckModal({
                   {totals.map((total, i) => (
                     <td
                       key={i}
-                      className="p-3 text-center tabular-nums text-brand dark:text-indigo-300"
+                      className="p-3 text-center tabular-nums text-brand dark:text-sky-300"
                     >
                       {fmt(total)}
                     </td>
@@ -668,7 +668,7 @@ export function SplitCheckModal({
                               onChange={(e) => setQuantity(item, Number(e.target.value))}
                               className={`min-h-11 w-16 rounded-lg border px-2 py-1 text-center font-semibold tabular-nums outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/20 ${
                                 selectedQty > 0
-                                  ? 'border-brand/40 bg-brand-light/35 text-brand dark:border-indigo-400/45 dark:bg-[var(--color-brand-light)] dark:text-indigo-300'
+                                  ? 'border-brand/40 bg-brand-light/35 text-brand dark:border-sky-400/45 dark:bg-[var(--color-brand-light)] dark:text-sky-300'
                                   : 'border-border bg-card text-foreground dark:border-white/10'
                               }`}
                             />
@@ -729,7 +729,7 @@ export function SplitCheckModal({
               <div className="mt-4 space-y-1.5 rounded-xl border border-border bg-muted/35 p-3.5 text-sm tabular-nums dark:border-white/10 dark:bg-muted/20">
                 <div className="flex justify-between font-semibold text-foreground">
                   <span>{t('estimatedLeavingGuestTotal')}</span>
-                  <strong className="text-brand dark:text-indigo-300">{fmt(guestEstimate)}</strong>
+                  <strong className="text-brand dark:text-sky-300">{fmt(guestEstimate)}</strong>
                 </div>
                 <div className="flex justify-between text-muted-foreground">
                   <span>{t('remainingCheckLabel')}</span>

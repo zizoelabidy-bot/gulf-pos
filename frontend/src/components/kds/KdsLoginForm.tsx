@@ -57,7 +57,7 @@ export function KdsLoginForm({ conn }: { conn: UseKdsConnectionResult }) {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="bg-card rounded-2xl shadow-xl p-8 w-full max-w-md">
         <div className="text-center mb-6">
-          <ChefHat size={48} className="mx-auto text-brand dark:text-indigo-300 mb-4" />
+          <ChefHat size={48} className="mx-auto text-brand dark:text-sky-300 mb-4" />
           <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
           <p className="text-slate-700 dark:text-slate-300 mt-2">{t('loginSubtitle')}</p>
         </div>
@@ -115,7 +115,7 @@ export function KdsLoginForm({ conn }: { conn: UseKdsConnectionResult }) {
         {activeSignInMode === 'pin' ? (
           <div data-testid="pin-user-picker" className="space-y-4">
             <div className="flex items-center gap-2">
-              <KeyRound size={18} className="text-brand dark:text-indigo-300" />
+              <KeyRound size={18} className="text-brand dark:text-sky-300" />
               <div>
                 <h2 className="text-sm font-semibold text-foreground">
                   {tAuth('quickSwitchTitle')}
@@ -147,7 +147,7 @@ export function KdsLoginForm({ conn }: { conn: UseKdsConnectionResult }) {
                         : 'border-border hover:border-brand/50 hover:bg-muted/60'
                     }`}
                   >
-                    <div className="w-8 h-8 rounded-full bg-brand/15 text-brand dark:text-indigo-300 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-brand/15 text-brand dark:text-sky-300 flex items-center justify-center shrink-0">
                       <UserRound size={16} />
                     </div>
                     <div className="min-w-0 flex-1">

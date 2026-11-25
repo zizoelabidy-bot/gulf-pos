@@ -239,7 +239,7 @@ const CATEGORY_COLORS: Record<
   },
   indigo: {
     bg: 'bg-indigo-50 dark:bg-indigo-950/40',
-    text: 'text-indigo-700 dark:text-indigo-300',
+    text: 'text-indigo-700 dark:text-sky-300',
     border: 'border-indigo-200 dark:border-indigo-800/40',
     activeBg: 'bg-indigo-500',
     activeText: 'text-white',

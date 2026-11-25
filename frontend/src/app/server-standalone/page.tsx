@@ -1399,7 +1399,7 @@ export default function ServerStandalonePage() {
                           : 'border-border hover:border-brand/50 hover:bg-muted/60'
                       }`}
                     >
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand dark:text-indigo-300">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand dark:text-sky-300">
                         <UserRound size={16} />
                       </div>
                       <div className="min-w-0 flex-1">

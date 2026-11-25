@@ -250,7 +250,7 @@ function LoginContent() {
 
   if (shouldShowTenantSelect) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background px-4">
+      <div className="min-h-screen flex items-center justify-center px-4 bg-[radial-gradient(1100px_560px_at_50%_-8%,#BAE6FD_0%,#E0F2FE_38%,#F3F8FC_100%)] dark:bg-[radial-gradient(1100px_560px_at_50%_-8%,#0C4A6E_0%,#082F49_45%,#0A1622_100%)]">
         <div className="w-full max-w-md">
           <Card>
             <CardContent className="pt-6">
@@ -295,10 +295,12 @@ function LoginContent() {
       : 'password';
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-[radial-gradient(1100px_560px_at_50%_-8%,#BAE6FD_0%,#E0F2FE_38%,#F3F8FC_100%)] dark:bg-[radial-gradient(1100px_560px_at_50%_-8%,#0C4A6E_0%,#082F49_45%,#0A1622_100%)]">
       <div className="w-full max-w-md">
         <div className="text-center mb-6">
-          <img src="/logo.svg" alt="GULF POS" width={96} height={96} className="mx-auto mb-3" />
+          <img src="/logo.svg" alt="GULF POS" width={112} height={112} className="mx-auto mb-3 drop-shadow-[0_6px_16px_rgba(2,132,199,0.25)]" />
+          <h1 className="text-2xl font-bold tracking-tight text-[#075985] dark:text-sky-200">GULF POS</h1>
+          <p className="text-xs font-medium tracking-wide text-[#0284C7] dark:text-sky-400 uppercase">Powered by GULF CCTV</p>
           <p className="text-muted-foreground mt-2">{t('signInTitle')}</p>
         </div>
         {dbError && (

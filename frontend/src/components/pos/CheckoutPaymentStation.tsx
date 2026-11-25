@@ -67,7 +67,7 @@ export function CheckoutPaymentStation({
       : statusBanner?.tone === 'warning'
         ? 'border-amber-500/45 bg-amber-500/8 shadow-2xs'
         : readout.isDiscountTarget
-          ? 'border-brand/55 bg-brand-light/45 shadow-2xs ring-1 ring-inset ring-brand/20 dark:border-indigo-400/45 dark:bg-[var(--color-brand-light)]'
+          ? 'border-brand/55 bg-brand-light/45 shadow-2xs ring-1 ring-inset ring-brand/20 dark:border-sky-400/45 dark:bg-[var(--color-brand-light)]'
           : readout.statusTone === 'settled'
             ? 'border-emerald-500/40 bg-emerald-500/8 shadow-2xs'
             : 'border-brand/35 bg-card shadow-2xs ring-1 ring-inset ring-brand/10 dark:border-white/12 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]';
@@ -76,7 +76,7 @@ export function CheckoutPaymentStation({
     readout.statusTone === 'settled' || readout.statusTone === 'change'
       ? 'border border-emerald-500/35 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
       : readout.statusTone === 'ready'
-        ? 'border border-brand/30 bg-brand-light text-brand dark:border-indigo-400/40 dark:bg-[var(--color-brand-light)] dark:text-indigo-300'
+        ? 'border border-brand/30 bg-brand-light text-brand dark:border-sky-400/40 dark:bg-[var(--color-brand-light)] dark:text-sky-300'
         : readout.statusTone === 'partial'
           ? 'border border-amber-500/35 bg-amber-500/15 text-amber-700 dark:text-amber-300'
           : 'border border-border bg-muted text-muted-foreground';
@@ -92,7 +92,7 @@ export function CheckoutPaymentStation({
         : statusBanner?.tone === 'idle-settled'
           ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300'
           : statusBanner?.tone === 'idle-ready'
-            ? 'border-brand/35 bg-brand-light/60 text-brand dark:border-indigo-400/35 dark:bg-[var(--color-brand-light)] dark:text-indigo-300'
+            ? 'border-brand/35 bg-brand-light/60 text-brand dark:border-sky-400/35 dark:bg-[var(--color-brand-light)] dark:text-sky-300'
             : isPartialBanner
               ? 'border-amber-500/35 bg-amber-500/10 text-amber-800 dark:border-amber-400/30 dark:bg-amber-500/12 dark:text-amber-300'
               : 'border-border/75 bg-card/75 text-foreground dark:border-white/10 dark:bg-card/50';
@@ -116,7 +116,7 @@ export function CheckoutPaymentStation({
         )}
       >
         <div className="flex h-5 items-center justify-between gap-2">
-          <span className="inline-flex min-w-0 items-center gap-1.5 truncate text-xs font-semibold text-brand dark:text-indigo-300">
+          <span className="inline-flex min-w-0 items-center gap-1.5 truncate text-xs font-semibold text-brand dark:text-sky-300">
             {readout.isDiscountTarget ? (
               <Tag className="size-3.5 shrink-0" />
             ) : (
@@ -168,7 +168,7 @@ export function CheckoutPaymentStation({
                 'flex h-full min-h-10 flex-col items-center justify-center rounded-xl border px-1.5 text-center leading-tight transition-[color,background-color,border-color,box-shadow,transform] select-none active:scale-[0.985] sm:min-h-11 [@media(max-height:660px)]:min-h-9',
                 item.active
                   ? 'border-brand bg-brand text-white shadow-xs'
-                  : 'border-border bg-card text-foreground shadow-2xs hover:border-brand/45 hover:bg-brand-light/25 dark:border-white/10 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] dark:hover:border-indigo-400/45 dark:hover:bg-[var(--color-brand-light)]',
+                  : 'border-border bg-card text-foreground shadow-2xs hover:border-brand/45 hover:bg-brand-light/25 dark:border-white/10 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] dark:hover:border-sky-400/45 dark:hover:bg-[var(--color-brand-light)]',
                 item.disabled && 'cursor-not-allowed opacity-50',
               )}
             >
@@ -179,7 +179,7 @@ export function CheckoutPaymentStation({
                 <span
                   className={cn(
                     'mt-0.5 max-w-full truncate text-[9px] font-medium leading-none',
-                    item.active ? 'text-white/85' : 'text-brand dark:text-indigo-300',
+                    item.active ? 'text-white/85' : 'text-brand dark:text-sky-300',
                   )}
                 >
                   {item.subLabel}

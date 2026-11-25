@@ -111,7 +111,7 @@ export default function KdsPage() {
         </p>
         <Link
           href="/settings?tab=kds"
-          className="text-sm text-brand dark:text-indigo-300 hover:underline mt-1"
+          className="text-sm text-brand dark:text-sky-300 hover:underline mt-1"
         >
           {t('goToSettings')}
         </Link>

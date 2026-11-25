@@ -60,7 +60,7 @@ export default function TouchNumberPad({
   const digitKeyClass = cn(
     'touch-target rounded-xl border border-border bg-card text-lg font-bold tabular-nums text-foreground shadow-2xs transition-[color,background-color,border-color,box-shadow,transform] select-none',
     'hover:border-brand/40 hover:bg-brand-light/15 active:scale-[0.985] active:border-brand/60 active:bg-brand-light/40',
-    'dark:border-white/10 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] dark:hover:border-indigo-400/45 dark:hover:bg-[var(--color-brand-light)] dark:active:bg-indigo-500/25',
+    'dark:border-white/10 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] dark:hover:border-sky-400/45 dark:hover:bg-[var(--color-brand-light)] dark:active:bg-indigo-500/25',
     fillHeight && 'h-full min-h-11',
   );
 
@@ -115,7 +115,7 @@ export default function TouchNumberPad({
               className={cn(
                 'touch-target row-span-2 rounded-xl border border-brand/30 bg-brand-light/45 px-2 text-sm font-semibold text-brand transition-[color,background-color,border-color,box-shadow,transform] select-none',
                 'hover:border-brand/50 hover:bg-brand-light/75 active:scale-[0.985]',
-                'dark:border-indigo-400/35 dark:bg-[var(--color-brand-light)] dark:text-indigo-300 dark:hover:bg-indigo-500/25',
+                'dark:border-sky-400/35 dark:bg-[var(--color-brand-light)] dark:text-sky-300 dark:hover:bg-indigo-500/25',
                 fillHeight && 'h-full min-h-11',
               )}
             >

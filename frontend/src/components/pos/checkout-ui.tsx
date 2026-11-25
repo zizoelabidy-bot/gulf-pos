@@ -36,7 +36,7 @@ export function CheckoutHeaderChips({
             className={cn(
               'inline-flex h-5 max-w-48 shrink-0 items-center gap-1 rounded-md border px-2 text-[11px] font-medium leading-none',
               variant === 'brand' &&
-                'border-brand/25 bg-brand-light text-brand dark:border-indigo-400/35 dark:bg-[var(--color-brand-light)] dark:text-indigo-300',
+                'border-brand/25 bg-brand-light text-brand dark:border-sky-400/35 dark:bg-[var(--color-brand-light)] dark:text-sky-300',
               variant === 'customer' &&
                 'border-border/80 bg-card text-foreground shadow-2xs dark:border-white/10 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]',
               variant === 'neutral' &&
@@ -96,8 +96,8 @@ export function getTenderRowClasses({
     return {
       buttonClass: 'border-brand bg-brand text-white shadow-xs',
       inputBoxClass:
-        'border-brand bg-brand-light/35 ring-2 ring-brand/20 dark:border-indigo-400/70 dark:bg-[var(--color-brand-light)] dark:ring-indigo-400/25',
-      currencyClass: 'text-brand font-semibold dark:text-indigo-300',
+        'border-brand bg-brand-light/35 ring-2 ring-brand/20 dark:border-sky-400/70 dark:bg-[var(--color-brand-light)] dark:ring-indigo-400/25',
+      currencyClass: 'text-brand font-semibold dark:text-sky-300',
       inputClass: 'text-foreground font-bold',
     };
   }
@@ -105,10 +105,10 @@ export function getTenderRowClasses({
   if (isAllocated) {
     return {
       buttonClass:
-        'border-brand/40 bg-brand-light/75 text-brand hover:bg-brand-light dark:border-indigo-400/40 dark:bg-[var(--color-brand-light)] dark:text-indigo-300 dark:hover:bg-indigo-500/25',
+        'border-brand/40 bg-brand-light/75 text-brand hover:bg-brand-light dark:border-sky-400/40 dark:bg-[var(--color-brand-light)] dark:text-sky-300 dark:hover:bg-indigo-500/25',
       inputBoxClass:
-        'border-brand/40 bg-card shadow-2xs dark:border-indigo-400/40 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]',
-      currencyClass: 'text-brand/80 font-medium dark:text-indigo-300/80',
+        'border-brand/40 bg-card shadow-2xs dark:border-sky-400/40 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]',
+      currencyClass: 'text-brand/80 font-medium dark:text-sky-300/80',
       inputClass: 'text-foreground font-semibold',
     };
   }

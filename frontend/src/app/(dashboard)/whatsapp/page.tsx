@@ -869,7 +869,7 @@ export default function WhatsAppPage() {
                           <div className="grid gap-4 md:grid-cols-2">
                             <div className="rounded-lg border bg-card p-4 flex flex-col gap-3">
                               <div className="flex items-center gap-2">
-                                <div className="flex items-center justify-center size-9 rounded-md bg-brand-light dark:bg-[var(--color-brand-light)] text-brand dark:text-indigo-300">
+                                <div className="flex items-center justify-center size-9 rounded-md bg-brand-light dark:bg-[var(--color-brand-light)] text-brand dark:text-sky-300">
                                   <QrCode className="size-5" />
                                 </div>
                                 <h3 className="font-semibold text-sm">
@@ -892,7 +892,7 @@ export default function WhatsAppPage() {
 
                             <div className="rounded-lg border bg-card p-4 flex flex-col gap-3">
                               <div className="flex items-center gap-2">
-                                <div className="flex items-center justify-center size-9 rounded-md bg-brand-light dark:bg-[var(--color-brand-light)] text-brand dark:text-indigo-300">
+                                <div className="flex items-center justify-center size-9 rounded-md bg-brand-light dark:bg-[var(--color-brand-light)] text-brand dark:text-sky-300">
                                   <KeyRound className="size-5" />
                                 </div>
                                 <h3 className="font-semibold text-sm">
