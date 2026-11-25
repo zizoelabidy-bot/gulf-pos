@@ -3039,7 +3039,11 @@
       "inventoryManage": "Menaxhoni furnizimet dhe recetat",
       "orderItemPriceOverride": "Ndrysho çmimet e artikujve të porosisë",
       "offlineMode": "Ndez ose fik modalitetin pa internet",
-      "staffCredentialsReset": "Rivendosni fjalëkalimet dhe PIN-et e stafit pa kredencialet aktuale"
+      "staffCredentialsReset": "Rivendosni fjalëkalimet dhe PIN-et e stafit pa kredencialet aktuale",
+      "delivery": "Menaxho zonat dhe korrierët e dërgesave",
+      "deliverySettle": "Shlyej arkëtimet e korrierëve",
+      "purchasing": "Menaxho furnitorët dhe porositë e blerjes",
+      "purchasingPay": "Regjistro pagesat te furnitorët"
     },
     "editorSubtitle": "Konfiguroni vlerat e parazgjedhura të rolit ose bëni një përjashtim për një staf. Ndryshimet zbatohen në veprimin e tij të ardhshëm.",
     "roleDefaultsTab": "Vlerat e parazgjedhura të rolit",

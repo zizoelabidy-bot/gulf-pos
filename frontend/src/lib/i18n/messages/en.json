@@ -3039,7 +3039,11 @@
       "inventoryManage": "Manage supplies and recipes",
       "orderItemPriceOverride": "Override order item prices",
       "offlineMode": "Turn Offline mode on or off",
-      "staffCredentialsReset": "Reset staff passwords and PINs without their current credentials"
+      "staffCredentialsReset": "Reset staff passwords and PINs without their current credentials",
+      "delivery": "Manage delivery zones and drivers",
+      "deliverySettle": "Settle driver cash collections",
+      "purchasing": "Manage suppliers and purchase orders",
+      "purchasingPay": "Record payments to suppliers"
     },
     "editorSubtitle": "Configure role defaults or make an exception for one staff member. Changes apply to their next action.",
     "roleDefaultsTab": "Role defaults",

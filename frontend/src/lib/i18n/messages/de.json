@@ -3039,7 +3039,11 @@
       "inventoryManage": "Vorräte und Rezepte verwalten",
       "orderItemPriceOverride": "Preise von Bestellartikeln ändern",
       "offlineMode": "Offline-Modus ein- oder ausschalten",
-      "staffCredentialsReset": "Passwörter und PINs von Mitarbeitenden ohne aktuelle Zugangsdaten zurücksetzen"
+      "staffCredentialsReset": "Passwörter und PINs von Mitarbeitenden ohne aktuelle Zugangsdaten zurücksetzen",
+      "delivery": "Lieferzonen und Fahrer verwalten",
+      "deliverySettle": "Fahrer-Barabrechnung",
+      "purchasing": "Lieferanten und Bestellungen verwalten",
+      "purchasingPay": "Lieferantenzahlungen erfassen"
     },
     "editorSubtitle": "Konfigurieren Sie Rollenvorgaben oder legen Sie eine Ausnahme für ein Teammitglied fest. Änderungen gelten ab der nächsten Aktion.",
     "roleDefaultsTab": "Rollenvorgaben",

@@ -3039,7 +3039,11 @@
       "inventoryManage": "Gestionar insumos y recetas",
       "orderItemPriceOverride": "Cambiar precios de artículos del pedido",
       "offlineMode": "Activar o desactivar el modo sin conexión",
-      "staffCredentialsReset": "Restablecer contraseñas y PIN del personal sin sus credenciales actuales"
+      "staffCredentialsReset": "Restablecer contraseñas y PIN del personal sin sus credenciales actuales",
+      "delivery": "Gestionar zonas y repartidores",
+      "deliverySettle": "Liquidar cobros en efectivo de repartidores",
+      "purchasing": "Gestionar proveedores y órdenes de compra",
+      "purchasingPay": "Registrar pagos a proveedores"
     },
     "editorSubtitle": "Configura los valores predeterminados de los roles o crea una excepción para un miembro del personal. Los cambios se aplican en su próxima acción.",
     "roleDefaultsTab": "Valores del rol",

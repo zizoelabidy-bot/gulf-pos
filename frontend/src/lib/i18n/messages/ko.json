@@ -3039,7 +3039,11 @@
       "support": "지원팀 문의 및 진단 정보 보기",
       "orderItemPriceOverride": "주문 품목 가격 변경",
       "offlineMode": "오프라인 모드 켜기 또는 끄기",
-      "staffCredentialsReset": "현재 자격 증명 없이 직원 비밀번호 및 PIN 재설정"
+      "staffCredentialsReset": "현재 자격 증명 없이 직원 비밀번호 및 PIN 재설정",
+      "delivery": "배달 구역 및 기사 관리",
+      "deliverySettle": "기사 현금 수금 정산",
+      "purchasing": "공급업체 및 구매 주문 관리",
+      "purchasingPay": "공급업체 결제 기록"
     },
     "editorSubtitle": "역할 기본값을 구성하거나 특정 직원에 대한 예외를 만드세요. 변경 사항은 다음 작업부터 적용됩니다.",
     "roleDefaultsTab": "역할 기본값",

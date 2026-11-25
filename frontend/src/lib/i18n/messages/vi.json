@@ -3039,7 +3039,11 @@
       "inventoryManage": "Quản lý vật tư và công thức",
       "orderItemPriceOverride": "Đổi giá món trong đơn hàng",
       "offlineMode": "Bật hoặc tắt chế độ ngoại tuyến",
-      "staffCredentialsReset": "Đặt lại mật khẩu và mã PIN của nhân viên mà không cần thông tin xác thực hiện tại"
+      "staffCredentialsReset": "Đặt lại mật khẩu và mã PIN của nhân viên mà không cần thông tin xác thực hiện tại",
+      "delivery": "Quản lý khu vực và tài xế giao hàng",
+      "deliverySettle": "Quyết toán tiền thu hộ của tài xế",
+      "purchasing": "Quản lý nhà cung cấp và đơn đặt hàng",
+      "purchasingPay": "Ghi nhận thanh toán cho nhà cung cấp"
     },
     "editorSubtitle": "Cấu hình mặc định theo vai trò hoặc tạo ngoại lệ cho một nhân viên. Thay đổi sẽ áp dụng từ hành động tiếp theo của họ.",
     "roleDefaultsTab": "Mặc định vai trò",

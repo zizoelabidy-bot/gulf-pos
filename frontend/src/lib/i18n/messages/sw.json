@@ -3039,7 +3039,11 @@
       "inventoryManage": "Simamia malighafi na mapishi",
       "orderItemPriceOverride": "Badilisha bei za bidhaa za oda",
       "offlineMode": "Washa au uzime Hali ya nje ya mtandao",
-      "staffCredentialsReset": "Weka upya manenosiri na PIN za wafanyakazi bila vitambulisho vyao vya sasa"
+      "staffCredentialsReset": "Weka upya manenosiri na PIN za wafanyakazi bila vitambulisho vyao vya sasa",
+      "delivery": "Dhibiti maeneo na madereva wa usafirishaji",
+      "deliverySettle": "Lipia makusanyo ya pesa taslimu ya madereva",
+      "purchasing": "Dhibiti wasambazaji na maagizo ya ununuzi",
+      "purchasingPay": "Rekodi malipo kwa wasambazaji"
     },
     "editorSubtitle": "Sanidi chaguomsingi za majukumu au weka ubaguzi kwa mfanyakazi mmoja. Mabadiliko yanatumika kwa hatua yake inayofuata.",
     "roleDefaultsTab": "Chaguomsingi za jukumu",

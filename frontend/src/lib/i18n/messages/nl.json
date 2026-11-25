@@ -3039,7 +3039,11 @@
       "inventoryManage": "Voorraadartikelen en recepten beheren",
       "orderItemPriceOverride": "Prijzen van bestelde artikelen aanpassen",
       "offlineMode": "Offlinemodus aan- of uitzetten",
-      "staffCredentialsReset": "Wachtwoorden en pincodes van medewerkers resetten zonder huidige inloggegevens"
+      "staffCredentialsReset": "Wachtwoorden en pincodes van medewerkers resetten zonder huidige inloggegevens",
+      "delivery": "Bezorgzones en bezorgers beheren",
+      "deliverySettle": "Contante incasso bezorgers afrekenen",
+      "purchasing": "Leveranciers en inkooporders beheren",
+      "purchasingPay": "Betalingen aan leveranciers registreren"
     },
     "editorSubtitle": "Standaardinstellingen per rol configureren of een uitzondering maken voor één medewerker. Wijzigingen gelden vanaf diens volgende actie.",
     "roleDefaultsTab": "Rolstandaarden",

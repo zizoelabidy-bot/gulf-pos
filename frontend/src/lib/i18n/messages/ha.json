@@ -3039,7 +3039,11 @@
       "inventoryManage": "Sarrafa kayan aiki da girke-girke",
       "orderItemPriceOverride": "Sauya farashin kayan oda",
       "offlineMode": "Kunna ko kashe Yanayin ba a kan layi ba",
-      "staffCredentialsReset": "Sake saita kalmomin sirri da PIN na ma’aikata ba tare da bayanan su na yanzu ba"
+      "staffCredentialsReset": "Sake saita kalmomin sirri da PIN na ma’aikata ba tare da bayanan su na yanzu ba",
+      "delivery": "Sarrafa yankunan isarwa da direbobi",
+      "deliverySettle": "Yana biya direbobi kuɗin da suka tattara",
+      "purchasing": "Sarrafa masu sayarwa da umarnin saye",
+      "purchasingPay": "Rubuta biya ga masu sayarwa"
     },
     "editorSubtitle": "Saita izinin asali na matsayi ko yi keɓancewa ga ma'aikaci ɗaya. Sauye-sauye suna aiki a matakinsu na gaba.",
     "roleDefaultsTab": "Asalin matsayi",

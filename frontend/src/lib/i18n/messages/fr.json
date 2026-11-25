@@ -3039,7 +3039,11 @@
       "inventoryManage": "Gérer les approvisionnements et les recettes",
       "orderItemPriceOverride": "Modifier les prix des articles de commande",
       "offlineMode": "Activer ou désactiver le mode hors ligne",
-      "staffCredentialsReset": "Réinitialiser les mots de passe et codes PIN du personnel sans leurs identifiants actuels"
+      "staffCredentialsReset": "Réinitialiser les mots de passe et codes PIN du personnel sans leurs identifiants actuels",
+      "delivery": "Gérer les zones et livreurs",
+      "deliverySettle": "Régler les encaissements des livreurs",
+      "purchasing": "Gérer fournisseurs et bons de commande",
+      "purchasingPay": "Enregistrer les paiements aux fournisseurs"
     },
     "editorSubtitle": "Configurez les permissions par défaut d'un rôle ou créez une exception pour un membre du personnel. Les modifications s'appliquent à sa prochaine action.",
     "roleDefaultsTab": "Permissions du rôle",

@@ -3039,7 +3039,11 @@
       "inventoryManage": "Sarf malzemelerini ve tarifleri yönetme",
       "orderItemPriceOverride": "Sipariş ürün fiyatlarını değiştir",
       "offlineMode": "Çevrimdışı modu aç veya kapat",
-      "staffCredentialsReset": "Personel şifrelerini ve PIN kodlarını mevcut bilgileri olmadan sıfırlama"
+      "staffCredentialsReset": "Personel şifrelerini ve PIN kodlarını mevcut bilgileri olmadan sıfırlama",
+      "delivery": "Teslimat bölgelerini ve kuryeleri yönet",
+      "deliverySettle": "Kurye nakit tahsilatlarını kapat",
+      "purchasing": "Tedarikçileri ve satınalma siparişlerini yönet",
+      "purchasingPay": "Tedarikçilere ödemeleri kaydet"
     },
     "editorSubtitle": "Rol varsayılanlarını yapılandırın veya tek bir personel için istisna oluşturun. Değişiklikler bir sonraki işlemlerinde geçerli olur.",
     "roleDefaultsTab": "Rol varsayılanları",

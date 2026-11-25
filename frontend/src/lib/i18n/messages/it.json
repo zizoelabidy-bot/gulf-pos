@@ -3039,7 +3039,11 @@
       "support": "Contatta l'assistenza e visualizza le diagnostiche",
       "orderItemPriceOverride": "Modificare i prezzi degli articoli dell’ordine",
       "offlineMode": "Attiva o disattiva la modalità offline",
-      "staffCredentialsReset": "Reimposta password e PIN del personale senza le credenziali attuali"
+      "staffCredentialsReset": "Reimposta password e PIN del personale senza le credenziali attuali",
+      "delivery": "Gestisci zone e fattorini",
+      "deliverySettle": "Salda gli incassi dei fattorini",
+      "purchasing": "Gestisci fornitori e ordini di acquisto",
+      "purchasingPay": "Registra pagamenti ai fornitori"
     },
     "editorSubtitle": "Configura le impostazioni predefinite del ruolo o crea un'eccezione per un membro dello staff. Le modifiche si applicano alla prossima azione.",
     "roleDefaultsTab": "Impostazioni ruolo",

@@ -3039,7 +3039,11 @@
       "support": "サポートに連絡し診断情報を表示",
       "orderItemPriceOverride": "注文商品の価格を変更",
       "offlineMode": "オフラインモードの切り替え",
-      "staffCredentialsReset": "現在の認証情報なしでスタッフのパスワードとPINをリセット"
+      "staffCredentialsReset": "現在の認証情報なしでスタッフのパスワードとPINをリセット",
+      "delivery": "配送エリアとドライバーの管理",
+      "deliverySettle": "ドライバーの集金精算",
+      "purchasing": "仕入先と発注の管理",
+      "purchasingPay": "仕入先への支払いを記録"
     },
     "editorSubtitle": "役割の既定値を設定するか、特定のスタッフの例外を作成します。変更は次の操作から適用されます。",
     "roleDefaultsTab": "役割の既定値",

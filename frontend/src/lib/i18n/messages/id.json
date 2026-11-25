@@ -3039,7 +3039,11 @@
       "support": "Menghubungi dukungan dan melihat diagnostik",
       "orderItemPriceOverride": "Mengubah harga item pesanan",
       "offlineMode": "Aktifkan atau nonaktifkan mode offline",
-      "staffCredentialsReset": "Atur ulang kata sandi dan PIN staf tanpa kredensial saat ini"
+      "staffCredentialsReset": "Atur ulang kata sandi dan PIN staf tanpa kredensial saat ini",
+      "delivery": "Kelola zona dan kurir pengiriman",
+      "deliverySettle": "Selesaikan setoran tunai kurir",
+      "purchasing": "Kelola pemasok dan pesanan pembelian",
+      "purchasingPay": "Catat pembayaran ke pemasok"
     },
     "editorSubtitle": "Konfigurasikan default peran atau buat pengecualian untuk satu staf. Perubahan berlaku pada tindakan berikutnya.",
     "roleDefaultsTab": "Default peran",

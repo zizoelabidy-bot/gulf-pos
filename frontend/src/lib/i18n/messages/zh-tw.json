@@ -3039,7 +3039,11 @@
       "support": "聯絡支援並檢視診斷",
       "orderItemPriceOverride": "修改訂單商品價格",
       "offlineMode": "開啟或關閉離線模式",
-      "staffCredentialsReset": "無需目前憑證即可重設員工密碼與 PIN"
+      "staffCredentialsReset": "無需目前憑證即可重設員工密碼與 PIN",
+      "delivery": "管理配送區域與外送員",
+      "deliverySettle": "外送員現金收款結算",
+      "purchasing": "管理供應商與採購訂單",
+      "purchasingPay": "記錄供應商付款"
     },
     "editorSubtitle": "設定角色預設值，或為單一位員工建立例外。變更會從他的下一個操作開始生效。",
     "roleDefaultsTab": "角色預設值",

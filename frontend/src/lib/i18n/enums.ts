@@ -120,6 +120,15 @@ export const PERMISSION_LABEL_KEYS = {
   'inventory.manage': 'inventoryManage',
   'supplies.manage': 'inventoryManage',
 
+  'delivery.view': 'delivery',
+  'delivery.manage': 'delivery',
+  'delivery.assign': 'delivery',
+  'delivery.settle': 'deliverySettle',
+  'purchasing.view': 'purchasing',
+  'purchasing.manage': 'purchasing',
+  'purchasing.receive': 'purchasing',
+  'purchasing.pay': 'purchasingPay',
+
   'kitchen.use': 'kds',
   'kitchen.status.update': 'kitchenStatusUpdate',
   'kitchen.pair': 'kdsPairing',

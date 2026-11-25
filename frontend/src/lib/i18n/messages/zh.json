@@ -3039,7 +3039,11 @@
       "support": "联系支持并查看诊断",
       "orderItemPriceOverride": "修改订单商品价格",
       "offlineMode": "开启或关闭离线模式",
-      "staffCredentialsReset": "无需当前凭据即可重置员工密码和 PIN"
+      "staffCredentialsReset": "无需当前凭据即可重置员工密码和 PIN",
+      "delivery": "管理配送区域与骑手",
+      "deliverySettle": "骑手现金收款结算",
+      "purchasing": "管理供应商与采购订单",
+      "purchasingPay": "记录供应商付款"
     },
     "editorSubtitle": "配置角色默认权限，或为某位员工设置例外。更改将在其下次操作时生效。",
     "roleDefaultsTab": "角色默认值",
