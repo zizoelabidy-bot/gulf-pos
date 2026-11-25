@@ -300,7 +300,10 @@ function LoginContent() {
         <div className="text-center mb-6">
           <img src="/logo.svg" alt="GULF POS" width={112} height={112} className="mx-auto mb-3 drop-shadow-[0_6px_16px_rgba(2,132,199,0.25)]" />
           <h1 className="text-2xl font-bold tracking-tight text-[#075985] dark:text-sky-200">GULF POS</h1>
-          <p className="text-xs font-medium tracking-wide text-[#0284C7] dark:text-sky-400 uppercase">Powered by GULF CCTV</p>
+          <div className="mt-1 inline-flex items-center gap-2 rounded-lg bg-white/90 px-3 py-1 shadow-sm">
+            <span className="text-[10px] font-medium uppercase tracking-wide text-[#0284C7]">Powered by</span>
+            <img src="/gulfcctv-logo.png" alt="GULF CCTV" height={26} style={{ height: 26, width: 'auto' }} />
+          </div>
           <p className="text-muted-foreground mt-2">{t('signInTitle')}</p>
         </div>
         {dbError && (
