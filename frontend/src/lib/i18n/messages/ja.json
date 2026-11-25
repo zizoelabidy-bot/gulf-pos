@@ -675,7 +675,8 @@
     "inventory": "在庫",
     "tables": "テーブル",
     "delivery": "デリバリー",
-    "purchasing": "仕入れ"
+    "purchasing": "仕入れ",
+    "foodCost": "フードコスト"
   },
   "orders": {
     "active": "有効",

@@ -675,7 +675,8 @@
     "inventory": "Kho",
     "tables": "Bàn",
     "delivery": "Giao hàng",
-    "purchasing": "Mua hàng"
+    "purchasing": "Mua hàng",
+    "foodCost": "Chi phí thực phẩm"
   },
   "orders": {
     "active": "Đang hoạt động",

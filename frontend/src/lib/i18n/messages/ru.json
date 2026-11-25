@@ -675,7 +675,8 @@
     "inventory": "Склад",
     "tables": "Столы",
     "delivery": "Доставка",
-    "purchasing": "Закупки"
+    "purchasing": "Закупки",
+    "foodCost": "Себестоимость блюд"
   },
   "orders": {
     "active": "Активные",

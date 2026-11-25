@@ -675,7 +675,8 @@
     "inventory": "Persediaan",
     "tables": "Meja",
     "delivery": "Pengiriman",
-    "purchasing": "Pembelian"
+    "purchasing": "Pembelian",
+    "foodCost": "Biaya makanan"
   },
   "orders": {
     "active": "Aktif",

@@ -675,7 +675,8 @@
     "whatsapp": "व्हाट्सएप",
     "inventory": "सूची",
     "delivery": "डेलिभरी",
-    "purchasing": "खरिद"
+    "purchasing": "खरिद",
+    "foodCost": "खाना लागत"
   },
   "orders": {
     "active": "सक्रिय",

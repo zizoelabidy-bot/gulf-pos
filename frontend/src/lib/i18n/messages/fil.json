@@ -675,7 +675,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "Imbentaryo",
     "delivery": "Paghahatid",
-    "purchasing": "Pagbili"
+    "purchasing": "Pagbili",
+    "foodCost": "Gastos sa Pagkain"
   },
   "orders": {
     "active": "Aktibo",

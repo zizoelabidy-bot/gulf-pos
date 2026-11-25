@@ -675,7 +675,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "Inventari",
     "delivery": "Dërgesa",
-    "purchasing": "Blerjet"
+    "purchasing": "Blerjet",
+    "foodCost": "Kostoja e Ushqimit"
   },
   "orders": {
     "active": "Aktive",

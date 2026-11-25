@@ -675,7 +675,8 @@
     "inventory": "Stock",
     "tables": "Tables",
     "delivery": "Livraison",
-    "purchasing": "Achats"
+    "purchasing": "Achats",
+    "foodCost": "Coût alimentaire"
   },
   "orders": {
     "active": "Actives",

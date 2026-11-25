@@ -675,7 +675,8 @@
     "inventory": "موجودی",
     "tables": "میزها",
     "delivery": "تحویل",
-    "purchasing": "خرید"
+    "purchasing": "خرید",
+    "foodCost": "هزینه مواد غذایی"
   },
   "orders": {
     "active": "فعال",

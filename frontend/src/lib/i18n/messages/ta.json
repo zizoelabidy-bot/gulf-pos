@@ -675,7 +675,8 @@
     "inventory": "சரக்கு இருப்பு",
     "tables": "மேசைகள்",
     "delivery": "டெலிவரி",
-    "purchasing": "கொள்முதல்"
+    "purchasing": "கொள்முதல்",
+    "foodCost": "உணவு செலவு"
   },
   "orders": {
     "active": "செயலில்",

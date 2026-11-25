@@ -675,7 +675,8 @@
     "inventory": "इन्व्हेंटरी",
     "tables": "टेबल्स",
     "delivery": "डिलिव्हरी",
-    "purchasing": "खरेदी"
+    "purchasing": "खरेदी",
+    "foodCost": "अन्न खर्च"
   },
   "orders": {
     "active": "सक्रिय",

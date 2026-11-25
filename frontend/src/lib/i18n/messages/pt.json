@@ -675,7 +675,8 @@
     "inventory": "Estoque",
     "tables": "Mesas",
     "delivery": "Entrega",
-    "purchasing": "Compras"
+    "purchasing": "Compras",
+    "foodCost": "Custo alimentar"
   },
   "orders": {
     "active": "Ativos",

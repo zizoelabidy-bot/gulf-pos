@@ -675,7 +675,8 @@
     "inventory": "Voorraad",
     "tables": "Tafels",
     "delivery": "Bezorging",
-    "purchasing": "Inkoop"
+    "purchasing": "Inkoop",
+    "foodCost": "Voedselkosten"
   },
   "orders": {
     "active": "Actief",

@@ -675,7 +675,8 @@
     "inventory": "Kayan Ajiya",
     "tables": "Tebura",
     "delivery": "Isarwa",
-    "purchasing": "Sayayya"
+    "purchasing": "Sayayya",
+    "foodCost": "Kudin Abinci"
   },
   "orders": {
     "active": "Masu aiki",

@@ -675,7 +675,8 @@
     "inventory": "ইনভেন্টরি",
     "tables": "টেবিল",
     "delivery": "ডেলিভারি",
-    "purchasing": "ক্রয়"
+    "purchasing": "ক্রয়",
+    "foodCost": "খাদ্য খরচ"
   },
   "orders": {
     "active": "সক্রিয়",

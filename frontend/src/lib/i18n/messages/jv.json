@@ -675,7 +675,8 @@
     "inventory": "Pasokan",
     "tables": "Meja",
     "delivery": "Kiriman",
-    "purchasing": "Tumbas"
+    "purchasing": "Tumbas",
+    "foodCost": "Biaya Pangan"
   },
   "orders": {
     "active": "Aktif",

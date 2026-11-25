@@ -675,7 +675,8 @@
     "inventory": "재고",
     "tables": "테이블",
     "delivery": "배달",
-    "purchasing": "구매"
+    "purchasing": "구매",
+    "foodCost": "식품 원가"
   },
   "orders": {
     "active": "진행 중",

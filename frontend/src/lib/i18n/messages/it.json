@@ -675,7 +675,8 @@
     "inventory": "Scorte",
     "tables": "Tavoli",
     "delivery": "Consegna",
-    "purchasing": "Acquisti"
+    "purchasing": "Acquisti",
+    "foodCost": "Costo alimentare"
   },
   "orders": {
     "active": "Attivo",

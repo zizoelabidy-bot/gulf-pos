@@ -675,7 +675,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "Stok",
     "delivery": "Teslimat",
-    "purchasing": "Satınalma"
+    "purchasing": "Satınalma",
+    "foodCost": "Gıda maliyeti"
   },
   "orders": {
     "active": "Aktif",

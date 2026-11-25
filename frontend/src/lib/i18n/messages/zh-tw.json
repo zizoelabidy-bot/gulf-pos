@@ -675,7 +675,8 @@
     "whatsapp": "WhatsApp",
     "inventory": "庫存",
     "delivery": "外送",
-    "purchasing": "採購"
+    "purchasing": "採購",
+    "foodCost": "食品成本"
   },
   "orders": {
     "active": "進行中",

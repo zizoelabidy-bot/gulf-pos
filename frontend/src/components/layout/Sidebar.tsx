@@ -25,6 +25,7 @@ import {
   Receipt,
   Bike,
   Truck,
+  Percent,
   Lock,
   KeyRound,
   type LucideIcon,
@@ -134,6 +135,13 @@ const ALL_NAV_ITEMS: NavItem[] = [
     icon: Truck,
     permission: 'purchasing.view',
     businessTypes: null,
+  },
+  {
+    href: '/food-cost',
+    labelKey: 'foodCost',
+    icon: Percent,
+    permission: 'reports.view',
+    businessTypes: ['restaurant'],
   },
   {
     href: '/tables',

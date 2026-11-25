@@ -675,7 +675,8 @@
     "inventory": "Bestand",
     "tables": "Tische",
     "delivery": "Lieferung",
-    "purchasing": "Einkauf"
+    "purchasing": "Einkauf",
+    "foodCost": "Lebensmittelkosten"
   },
   "orders": {
     "active": "Aktiv",

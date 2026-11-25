@@ -675,7 +675,8 @@
     "inventory": "Akiba",
     "tables": "Meza",
     "delivery": "Uwasilishaji",
-    "purchasing": "Ununuzi"
+    "purchasing": "Ununuzi",
+    "foodCost": "Gharama ya chakula"
   },
   "orders": {
     "active": "Zinazoendelea",

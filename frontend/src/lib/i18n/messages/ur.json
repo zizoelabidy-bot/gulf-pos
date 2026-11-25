@@ -675,7 +675,8 @@
     "inventory": "اسٹاک",
     "tables": "میزیں",
     "delivery": "ڈیلیوری",
-    "purchasing": "خریداری"
+    "purchasing": "خریداری",
+    "foodCost": "فوڈ کاسٹ"
   },
   "orders": {
     "active": "فعال",

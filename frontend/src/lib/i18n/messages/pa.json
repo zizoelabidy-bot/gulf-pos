@@ -675,7 +675,8 @@
     "inventory": "ਇਨਵੈਂਟਰੀ",
     "tables": "ਟੇਬਲ",
     "delivery": "ਡਿਲੀਵਰੀ",
-    "purchasing": "ਖ਼ਰੀਦ"
+    "purchasing": "ਖ਼ਰੀਦ",
+    "foodCost": "ਭੋਜਨ ਲਾਗਤ"
   },
   "orders": {
     "active": "ਸਰਗਰਮ",

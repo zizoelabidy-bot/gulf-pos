@@ -675,7 +675,8 @@
     "inventory": "Склад",
     "tables": "Столи",
     "delivery": "Доставка",
-    "purchasing": "Закупівлі"
+    "purchasing": "Закупівлі",
+    "foodCost": "Собівартість страв"
   },
   "orders": {
     "active": "Активні",

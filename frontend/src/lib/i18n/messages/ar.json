@@ -675,7 +675,8 @@
     "whatsapp": "واتساب",
     "inventory": "المخزون",
     "delivery": "التوصيل",
-    "purchasing": "المشتريات"
+    "purchasing": "المشتريات",
+    "foodCost": "تكلفة الطعام"
   },
   "orders": {
     "active": "نشط",
