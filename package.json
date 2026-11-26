@@ -1,7 +1,7 @@
 {
   "name": "gulf-pos",
   "version": "1.6.1",
-  "description": "GULF POS - Enterprise Restaurant Point of Sale & Management System. Powered by GULF CCTV - Smart Systems Solutions. Built on the open-source FloCafe project (MIT).",
+  "description": "GULF POS - Enterprise Restaurant Point of Sale & Management System. Powered by GULF CCTV - Smart System Solutions.",
   "engines": {
     "node": ">=22.12.0"
   },
@@ -382,8 +382,7 @@
     "test:food-cost": "node tests/run-electron-node-test.cjs tests/food-cost.test.ts"
   },
   "author": {
-    "name": "Flo",
-    "email": "support@flo.local"
+    "name": "GULF CCTV"
   },
   "homepage": "https://gulfcctv.com",
   "repository": {
@@ -492,6 +491,10 @@
     "generateUpdatesFilesForAllChannels": true,
     "extraResources": [
       {
+        "from": "LICENSE",
+        "to": "licenses/LICENSE.txt"
+      },
+      {
         "from": "assets",
         "to": "assets"
       },
@@ -539,7 +542,7 @@
       "notarize": true,
       "artifactName": "flocafe-${version}-mac-${arch}.${ext}",
       "extendInfo": {
-        "NSLocalNetworkUsageDescription": "Flo Cafe connects to thermal printers, KDS displays, and the Waiter & Table Terminal on your local network.",
+        "NSLocalNetworkUsageDescription": "GULF POS connects to thermal printers, KDS displays, and the Waiter & Table Terminal on your local network.",
         "NSBonjourServices": [
           "_http._tcp",
           "_pdl-datastream._tcp",
@@ -560,7 +563,7 @@
       "type": "distribution",
       "extendInfo": {
         "ITSAppUsesNonExemptEncryption": false,
-        "NSLocalNetworkUsageDescription": "Flo Cafe connects to thermal printers, KDS displays, and the Waiter & Table Terminal on your local network.",
+        "NSLocalNetworkUsageDescription": "GULF POS connects to thermal printers, KDS displays, and the Waiter & Table Terminal on your local network.",
         "NSBonjourServices": [
           "_http._tcp",
           "_pdl-datastream._tcp",
@@ -581,7 +584,7 @@
     },
     "linux": {
       "synopsis": "Self-hosted Point of Sale for cafes and restaurants",
-      "description": "Flo is a free, open-source point-of-sale system for cafes, restaurants, and small kitchens. Local-first, offline-capable, no cloud lock-in, no per-seat fees.",
+      "description": "GULF POS is a restaurant management and point-of-sale system by GULF CCTV.",
       "target": [
         {
           "target": "AppImage",
@@ -628,7 +631,7 @@
       ],
       "desktop": {
         "entry": {
-          "Name": "Flo Cafe",
+          "Name": "GULF POS",
           "Comment": "Free, open-source POS for cafes and restaurants",
           "GenericName": "Point of Sale",
           "Keywords": "pos;point of sale;restaurant;cafe;billing;invoice;",
