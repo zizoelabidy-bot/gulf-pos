@@ -6516,6 +6516,7 @@ export default function SettingsPage() {
           </TabsContent>
 
           <TabsContent value="account">
+            <div role="status" className="gulf-panel mb-4 p-4 text-sm">{settingsLocale.startsWith("ar") ? "الخدمات السحابية القديمة متوقفة في هذا الإصدار. استخدم وسائل الاستعادة المحلية." : "Legacy cloud services are disabled in this release. Use local recovery methods."}</div>
             <SettingsTabShell>
               {/* Account */}
               <div
@@ -6960,6 +6961,7 @@ export default function SettingsPage() {
           </TabsContent>
 
           <TabsContent value="mobile-access">
+            <div role="status" className="gulf-panel mb-4 p-4 text-sm">{settingsLocale.startsWith("ar") ? "الاتصال السحابي بالتطبيقات المصاحبة غير متاح حاليًا." : "Cloud connectivity to companion applications is currently unavailable."}</div>
             {canManageMobileAccess ? (
               <SettingsTabShell title={t('tabMobileAccess')}>
                 {/* FloAdmin — reporting sync */}
