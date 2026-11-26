@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { SettingsTabShell } from '@/components/settings/SettingsTabShell';
 import { Toggle } from '@/components/settings/Toggle';
 import api from '@/lib/api';
+import { isAxiosError } from 'axios';
 import toast from 'react-hot-toast';
 
 // Inline en/ar dictionary (GULF-specific feature, not part of the upstream locale gate).
@@ -107,13 +108,13 @@ export function CardTerminalTab({ isAdmin }: { isAdmin: boolean }) {
       setCfg(r.data);
       setSecretKey('');
       toast.success(t('saved'));
-    } catch (e: any) { toast.error(e?.response?.data?.error || 'Error'); }
+    } catch (e: unknown) { toast.error((isAxiosError<{ error?: string }>(e) ? e.response?.data?.error : undefined) || 'Error'); }
     finally { setSaving(false); }
   };
 
-  const act = async (fn: () => Promise<any>) => {
+  const act = async (fn: () => Promise<{ data: Intent }>) => {
     try { const r = await fn(); if (r?.data?.intent_id) setIntent(r.data); else if (intent) { const g = await api.get(`/card-terminal/intents/${intent.intent_id}`); setIntent(g.data); } }
-    catch (e: any) { toast.error(e?.response?.data?.error || 'Error'); }
+    catch (e: unknown) { toast.error((isAxiosError<{ error?: string }>(e) ? e.response?.data?.error : undefined) || 'Error'); }
   };
 
   if (!cfg) return <SettingsTabShell><Loader2 className="h-5 w-5 animate-spin" /></SettingsTabShell>;

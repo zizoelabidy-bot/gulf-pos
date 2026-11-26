@@ -2179,12 +2179,12 @@ export default function OrdersPage() {
   // Every layout anchors its content to the page height so the title, status
   // tabs and filters stay on screen while the order content scrolls below them.
   return (
-    <div className="h-full min-h-0 flex flex-col gap-4">
+    <div className="gulf-management h-full min-h-0 flex flex-col gap-4">
       <Suspense fallback={null}>
         <OrdersTableQuerySync onFiltersChange={setFilters} />
       </Suspense>
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 shrink-0">
+      <div className="gulf-page-heading flex flex-wrap items-center justify-between gap-3 shrink-0">
         <h1 className="text-2xl font-bold text-foreground">{tNav('orders')}</h1>
         <div className="flex items-center gap-1 overflow-x-auto max-w-full rounded-xl border border-border bg-muted/50 p-1">
           {UNIFIED_ORDER_TABS.map((f) => (
@@ -2221,7 +2221,7 @@ export default function OrdersPage() {
 
       {/* Filter Bar */}
       {tabFilter !== 'held' && (
-        <div className="flex flex-wrap items-center gap-3 shrink-0">
+        <div className="gulf-toolbar flex flex-wrap items-center gap-3 shrink-0">
           {/* Search by order number, customer name, or phone */}
           <div className="relative w-full sm:max-w-xs">
             <Search
@@ -2315,9 +2315,9 @@ export default function OrdersPage() {
             {Object.values(heldOrdersStore.orders).map((heldOrder) => (
               <div
                 key={heldOrder.tableId}
-                className="bg-card rounded-xl border border-blue-200 overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-shadow"
+                className="gulf-panel bg-card rounded-xl border border-border overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="p-4 border-b border-border bg-blue-50/50 flex justify-between items-center">
+                <div className="p-4 border-b border-border bg-muted/50 flex justify-between items-center">
                   <div>
                     <p className="font-bold text-foreground">
                       {tables.find((t) => t.id === heldOrder.tableId)?.name ||

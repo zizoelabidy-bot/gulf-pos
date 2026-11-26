@@ -69,7 +69,7 @@ export function KdsTabsView({ orders, updating, updateItemStatus }: KdsTabsViewP
 
   return (
     <>
-      <div className="shrink-0 bg-muted/50 p-1 rounded-xl inline-flex flex-wrap items-center gap-1.5 mb-4">
+      <div className="gulf-toolbar shrink-0 inline-flex flex-wrap items-center gap-1.5 mb-3">
         {(Object.keys(STATUS_CONFIG) as KitchenStatus[]).map((status) => {
           const config = STATUS_CONFIG[status];
           const count = orderCounts(status);
@@ -78,7 +78,7 @@ export function KdsTabsView({ orders, updating, updateItemStatus }: KdsTabsViewP
             <button
               key={status}
               onClick={() => setActiveTab(status)}
-              className={`px-3 py-1.5 rounded-lg text-sm transition-all flex items-center gap-1.5 ${
+              className={`min-h-11 px-3 py-1.5 rounded-lg text-sm transition-all flex items-center gap-1.5 ${
                 isActive
                   ? `bg-card shadow-xs ring-1 ring-border/60 ${config.text} font-semibold`
                   : 'text-slate-700 dark:text-slate-200 hover:text-foreground hover:bg-card/60 font-medium'
@@ -105,7 +105,7 @@ export function KdsTabsView({ orders, updating, updateItemStatus }: KdsTabsViewP
           {filteredOrders.map((order) => (
             <div
               key={order.id}
-              className={`rounded-xl bg-card shadow-sm ring-1 ring-border/50 border-t-4 ${STATUS_CONFIG[activeTab].border} p-3 flex flex-col`}
+              className={`gulf-kds-ticket rounded-lg bg-card ring-1 ring-border/50 border-t-4 ${STATUS_CONFIG[activeTab].border} p-3 flex flex-col`}
             >
               <div className="flex justify-between items-center mb-2 gap-2">
                 <div className="flex items-center gap-1.5 min-w-0 flex-wrap">
@@ -148,7 +148,7 @@ export function KdsTabsView({ orders, updating, updateItemStatus }: KdsTabsViewP
                     <button
                       key={item.id}
                       onClick={() => setModalItem({ item, orderNumber: order.order_number })}
-                      className="w-full text-start px-2 py-2 first:pt-1.5 last:pb-1 hover:bg-muted/60 active:bg-muted/80 active:scale-[0.99] transition rounded-md"
+                      className="w-full min-h-11 text-start px-2 py-2 first:pt-1.5 last:pb-1 hover:bg-muted/60 active:bg-muted/80 active:scale-[0.99] transition rounded-md"
                     >
                       <div className="flex items-center gap-2">
                         <div className={`w-2.5 h-2.5 rounded-full shrink-0 ${config.color}`} />

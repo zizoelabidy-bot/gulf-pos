@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useTranslations } from 'use-intl';
+import { useLocale, useTranslations } from 'use-intl';
 import { useFormatNumber } from '@/hooks/useFormatNumber';
 import { useSupportTicketStatus } from '@/hooks/useSupportTicketStatus';
 import { useSupportDiagnosticsPreview } from '@/hooks/useSupportDiagnosticsPreview';
@@ -94,6 +94,7 @@ export function SupportTicketForm({
   initialDiagnostics,
 }: SupportTicketFormProps) {
   const t = useTranslations('support');
+  const locale = useLocale();
   const fmtNum = useFormatNumber();
   const [profile, setProfile] = useState<SupportProfile>(EMPTY_PROFILE);
   const [category, setCategory] = useState(initialCategory || 'general');
@@ -101,7 +102,7 @@ export function SupportTicketForm({
   const [subject, setSubject] = useState(initialSubject || '');
   const [message, setMessage] = useState(initialMessage || '');
   const [attachLog, setAttachLog] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [submittedId, setSubmittedId] = useState('');
   const submissionIdentityRef = useRef<{
@@ -199,6 +200,7 @@ export function SupportTicketForm({
 
   return (
     <div className="space-y-6">
+      <div className="gulf-support-brand flex items-center gap-3"><img src={locale.startsWith("ar") ? "/gulfcctv-logo-ar.png" : "/gulfcctv-logo.png"} alt="GULF CCTV" className="gulf-company-logo w-36" /><span dir="ltr" className="font-extrabold text-foreground">GULF POS</span></div>
       {submittedId && (
         <div className="flex gap-3 rounded-xl border border-green-200 bg-green-50 p-4 text-green-900">
           <CheckCircle2 className="mt-0.5 size-5 shrink-0" />
@@ -225,6 +227,10 @@ export function SupportTicketForm({
         </div>
       )}
 
+      <div className="gulf-panel p-4 text-sm" role="status">
+        <p>{locale.startsWith('ar') ? 'إرسال تذاكر الدعم عبر الإنترنت غير متاح حاليًا. تواصل مع جلف مباشرة من خلال موقع الشركة.' : 'Online ticket delivery is currently unavailable. Contact GULF directly through the company website.'}</p>
+        <a href="https://gulfcctv.com/" target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex font-medium text-brand dark:text-sky-300 underline">gulfcctv.com</a>
+      </div>
       <form onSubmit={submit} className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <Card>
           <CardHeader>
@@ -308,7 +314,7 @@ export function SupportTicketForm({
             </label>
             <Button
               type="submit"
-              disabled={loading || submitting || !subject.trim() || !message.trim()}
+              disabled={true}
               className="w-full sm:w-auto"
             >
               {submitting ? <Loader2 className="animate-spin" /> : <LifeBuoy />}

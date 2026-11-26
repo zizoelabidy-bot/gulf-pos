@@ -1279,8 +1279,8 @@ console.log('\n✅ Test 2: Compact receipt (80mm, 48 cols)');
   assert('renders UPI payment', text.includes('UPI') && text.includes('₹450.00'));
   assert('renders tax registration number', text.includes('TAXID-0001'));
   assert(
-    'renders non-configurable FloPOS footer',
-    text.includes('Powered by FloPOS') && text.includes('(flopos.com)'),
+    'renders GULF POS footer',
+    text.includes('GULF POS') && text.includes('(gulfcctv.com)') && !text.includes('FloPOS'),
   );
   const rowLines = visiblePreview(buf, 48).split('\n');
   const longRowIndex = rowLines.findIndex((l) => l.includes('Very Long Product Name That'));
@@ -1453,8 +1453,8 @@ console.log('\n✅ Test 4: Classic receipt template');
   assert('renders business name', text.includes('Flo Test Cafe'));
   assert('renders item and total', text.includes('Cheeseburger') && text.includes('₹950.00'));
   assert(
-    'renders non-configurable FloPOS footer',
-    text.includes('Powered by FloPOS') && text.includes('(flopos.com)'),
+    'renders GULF POS footer',
+    text.includes('GULF POS') && text.includes('(gulfcctv.com)') && !text.includes('FloPOS'),
   );
   assert('ends with cut', bytesContain(buf, [GS, 0x56, 0x00]));
 
@@ -1473,8 +1473,8 @@ console.log('\n✅ Test 5: Tax-specific labels fall back to the default template
     !text.includes('TAX INVOICE'),
   );
   assert(
-    'renders non-configurable FloPOS footer',
-    text.includes('Powered by FloPOS') && text.includes('(flopos.com)'),
+    'renders GULF POS footer',
+    text.includes('GULF POS') && text.includes('(gulfcctv.com)') && !text.includes('FloPOS'),
   );
 
   console.log('\n   — Rendered detailed fallback —');

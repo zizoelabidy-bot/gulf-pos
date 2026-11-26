@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { SettingsTabShell } from '@/components/settings/SettingsTabShell';
 import { Toggle } from '@/components/settings/Toggle';
 import api from '@/lib/api';
+import { isAxiosError } from 'axios';
 import toast from 'react-hot-toast';
 
 // Inline en/ar dictionary: aggregator integrations are an Arabic-first GULF POS
@@ -163,7 +164,7 @@ function draftFrom(p: PlatformView): DraftState {
 
 export function AggregatorIntegrationsTab({ isAdmin = true }: { isAdmin?: boolean }) {
   const locale = useLocale();
-  const t = (k: DictKey) => (locale.startsWith('ar') ? dict.ar[k] : dict.en[k]);
+  const t = useCallback((k: DictKey) => (locale.startsWith('ar') ? dict.ar[k] : dict.en[k]), [locale]);
 
   const [platforms, setPlatforms] = useState<PlatformView[]>([]);
   const [events, setEvents] = useState<EventRow[]>([]);
@@ -193,9 +194,9 @@ export function AggregatorIntegrationsTab({ isAdmin = true }: { isAdmin?: boolea
     } finally {
       setLoading(false);
     }
-  }, [locale]);
+  }, [t]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => { const timer = setTimeout(() => void load(), 0); return () => clearTimeout(timer); }, [load]);
 
   const patch = (platform: string, partial: Partial<DraftState>) =>
     setDrafts((d) => ({ ...d, [platform]: { ...d[platform], ...partial } }));
@@ -217,8 +218,8 @@ export function AggregatorIntegrationsTab({ isAdmin = true }: { isAdmin?: boolea
       });
       toast.success(t('saved'));
       await load();
-    } catch (e: any) {
-      toast.error(e?.response?.data?.error ?? t('loadFailed'));
+    } catch (e: unknown) {
+      toast.error((isAxiosError<{ error?: string }>(e) ? e.response?.data?.error : undefined) ?? t('loadFailed'));
     } finally {
       setSaving(null);
     }
@@ -230,8 +231,8 @@ export function AggregatorIntegrationsTab({ isAdmin = true }: { isAdmin?: boolea
       const res = await api.post(`/integrations/aggregators/${p.platform}/test`);
       if (res.data.ok) toast.success(res.data.message); else toast.error(res.data.message);
       await load();
-    } catch (e: any) {
-      toast.error(e?.response?.data?.error ?? t('loadFailed'));
+    } catch (e: unknown) {
+      toast.error((isAxiosError<{ error?: string }>(e) ? e.response?.data?.error : undefined) ?? t('loadFailed'));
     } finally {
       setTesting(null);
     }

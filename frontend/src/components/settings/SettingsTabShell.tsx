@@ -17,8 +17,8 @@ export function SettingsTabShell({
   return (
     <div className={`w-full space-y-6 ${widthClass}`}>
       {title && (
-        <div className="space-y-1">
-          <h2 className="text-lg font-semibold text-foreground">{title}</h2>
+        <div className="gulf-settings-section-heading space-y-1">
+          <h2 className="text-xl font-bold text-foreground">{title}</h2>
         </div>
       )}
       {children}

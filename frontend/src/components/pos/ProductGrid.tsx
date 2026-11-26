@@ -43,7 +43,7 @@ function CategoryChip({
     <button
       onClick={onSelect}
       title={categoryName}
-      className={`${wrap ? `${isSelected ? 'max-w-80' : 'max-w-56'} shrink-0 line-clamp-2 break-words text-start leading-tight` : 'max-w-56 truncate whitespace-nowrap'} px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+      className={`${wrap ? `${isSelected ? 'max-w-80' : 'max-w-56'} shrink-0 line-clamp-2 break-words text-start leading-tight` : 'max-w-56 truncate whitespace-nowrap'} min-h-11 px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
         isSelected
           ? colorClasses
             ? `${colorClasses.activeBg} ${colorClasses.activeText}`
@@ -83,7 +83,7 @@ function CategoryRow({
     <button
       onClick={() => setSelectedCategory(null)}
       title={collapse ? allLabel : undefined}
-      className={`${collapse ? 'min-w-0 truncate ' : ''}px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
+      className={`${collapse ? 'min-w-0 truncate ' : ''}min-h-11 px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-colors ${
         !selectedCategory
           ? 'bg-brand text-white'
           : 'bg-card text-foreground border border-border hover:bg-muted'
@@ -475,7 +475,7 @@ export default function ProductGrid({
             }}
             placeholder={searchPlaceholder ?? `${t('searchProducts')} [/]`}
             data-testid="pos-product-search"
-            className="w-full ps-9 pe-9 py-2 bg-card border border-border rounded-xl focus:border-brand outline-none transition-colors text-sm"
+            className="w-full min-h-11 ps-9 pe-9 py-2 bg-card border border-border rounded-xl focus:border-brand outline-none transition-colors text-sm"
           />
           {search ? (
             <button
@@ -558,7 +558,7 @@ export default function ProductGrid({
                   if (!validateSelectionQuantity(product, quantity)) return;
                   onProductClick(product, quantity);
                 }}
-                className="min-h-36 bg-card rounded-xl p-2.5 border border-border hover:border-brand/40 active:border-brand active:bg-muted/40 hover:shadow-md transition-all text-start relative cursor-pointer overflow-hidden touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand disabled:opacity-50 disabled:cursor-not-allowed"
+                className="gulf-product-tile min-h-32 bg-card rounded-lg p-2 border border-border hover:border-brand/40 active:border-brand active:bg-muted/40 hover:shadow-md transition-all text-start relative cursor-pointer overflow-hidden touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {!!product.track_inventory && (
                   <>
@@ -580,7 +580,7 @@ export default function ProductGrid({
                 )}
 
                 {showProductImages && (
-                  <div className="w-full aspect-square rounded-lg mb-3 relative overflow-hidden">
+                  <div className="w-full aspect-[16/10] rounded-md mb-2 relative overflow-hidden">
                     {/* Always-visible background tile — no flash when image loads */}
                     <div
                       className="absolute inset-0 flex items-center justify-center"
@@ -611,11 +611,11 @@ export default function ProductGrid({
                   </div>
                 )}
 
-                <h3 className="font-medium text-foreground text-sm line-clamp-2 leading-snug">
+                <h3 className="font-semibold text-foreground text-sm line-clamp-2 leading-snug">
                   {product.name}
                 </h3>
                 <div className="flex items-center justify-between mt-1">
-                  <p className="text-brand font-bold">{fmt(Number(product.price))}</p>
+                  <p className="text-brand font-extrabold tabular-nums">{fmt(Number(product.price))}</p>
                   <div className="flex items-center gap-1 shrink-0">
                     {!showProductImages && product.tags && product.tags.length > 0 && (
                       <TagBadge tag={product.tags[0]} />

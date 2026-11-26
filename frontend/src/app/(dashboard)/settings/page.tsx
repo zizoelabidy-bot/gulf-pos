@@ -268,11 +268,12 @@ function SettingsNavItem({
       <button
         onClick={() => onClick(value)}
         aria-describedby={attention ? attentionDescId : undefined}
+        aria-current={isActive ? "page" : undefined}
         className={[
           'flex items-center shrink-0 md:shrink w-auto md:w-full min-w-0 whitespace-nowrap md:whitespace-normal text-start text-sm rounded-md py-1.5 transition-colors',
           indent ? 'ps-5 pe-2 border-s-2 ms-1 text-xs md:ms-0' : 'px-3',
           isActive
-            ? 'bg-brand/10 text-brand font-semibold' + (indent ? ' border-brand' : '')
+            ? 'gulf-settings-active font-semibold' + (indent ? ' border-brand' : '')
             : 'text-muted-foreground hover:bg-muted hover:text-foreground' +
               (indent ? ' border-transparent' : ''),
         ].join(' ')}
@@ -1474,9 +1475,6 @@ export default function SettingsPage() {
     qr_data_url: string | null;
     available: boolean;
   };
-  const [moreApps, setMoreApps] = useState<MoreApp[]>([]);
-  // Starts true until the About tab performs its first load.
-  const [moreAppsLoading, setMoreAppsLoading] = useState(true);
   const [revflo, setRevflo] = useState<MoreApp | null>(null);
 
   // ── Updates ─────────────────────────────────────────────────────────────────
@@ -3281,20 +3279,7 @@ export default function SettingsPage() {
         if (isOwner) await fetchCloudAccount(signal);
         return;
       }
-      if (tab === 'about') {
-        setMoreAppsLoading(true);
-        try {
-          const moreAppsResponse = await get('/more-apps');
-          if (active()) {
-            setMoreApps(moreAppsResponse.data.apps || []);
-          }
-        } catch (error) {
-          if (isRequestCancelled(error)) throw error;
-        } finally {
-          if (active()) setMoreAppsLoading(false);
-        }
-        return;
-      }
+      if (tab === 'about') return;
       if (tab === 'mobile-access' || tab === 'orderflow') {
         if (tab === 'mobile-access' && includeStatusOnly && canManageMobileAccess) {
           try {
@@ -4477,8 +4462,8 @@ export default function SettingsPage() {
         className="flex flex-col md:flex-row gap-6 items-start md:h-full md:min-h-0"
       >
         {/* Settings sidebar nav */}
-        <div className="w-full md:w-40 md:min-w-[10rem] shrink-0 md:h-full md:min-h-0 md:flex md:flex-col">
-          <div className="flex items-center gap-3 mb-4 shrink-0">
+        <div className="gulf-settings-nav w-full md:w-52 md:min-w-[13rem] shrink-0 md:h-full md:min-h-0 md:flex md:flex-col">
+          <div className="gulf-settings-section-heading flex items-center gap-3 mb-4 shrink-0">
             <Settings size={28} className="text-brand" />
             <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
           </div>
@@ -6531,6 +6516,7 @@ export default function SettingsPage() {
           </TabsContent>
 
           <TabsContent value="account">
+            <div role="status" className="gulf-panel mb-4 p-4 text-sm">{settingsLocale.startsWith("ar") ? "الخدمات السحابية القديمة متوقفة في هذا الإصدار. استخدم وسائل الاستعادة المحلية." : "Legacy cloud services are disabled in this release. Use local recovery methods."}</div>
             <SettingsTabShell>
               {/* Account */}
               <div
@@ -6975,6 +6961,7 @@ export default function SettingsPage() {
           </TabsContent>
 
           <TabsContent value="mobile-access">
+            <div role="status" className="gulf-panel mb-4 p-4 text-sm">{settingsLocale.startsWith("ar") ? "الاتصال السحابي بالتطبيقات المصاحبة غير متاح حاليًا." : "Cloud connectivity to companion applications is currently unavailable."}</div>
             {canManageMobileAccess ? (
               <SettingsTabShell title={t('tabMobileAccess')}>
                 {/* FloAdmin — reporting sync */}
@@ -7386,7 +7373,7 @@ export default function SettingsPage() {
                 <p className="text-sm text-muted-foreground mb-6">{t('aboutDescription')}</p>
                 <div className="space-y-3">
                   <a
-                    href="https://github.com/FreeOpenSourcePOS/GULF POS"
+                    href="https://github.com/zizoelabidy-bot/gulf-pos"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-brand hover:underline"
@@ -7408,7 +7395,7 @@ export default function SettingsPage() {
                     {t('aboutGithub')}
                   </a>
                   <a
-                    href="https://flopos.com/"
+                    href="https://gulfcctv.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-brand hover:underline"
@@ -7441,85 +7428,10 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              {/* More Apps — moved here from the old Integrations tab */}
-              <div
-                data-setting-section="more-apps"
-                className="bg-card rounded-xl border border-border p-6"
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <Smartphone size={20} className="text-muted-foreground" />
-                  <h2 className="font-semibold text-foreground">{t('moreApps')}</h2>
-                </div>
-                <p className="text-sm text-muted-foreground mb-5">{t('moreAppsHint')}</p>
-
-                {moreAppsLoading && (
-                  <div className="flex items-center justify-center py-10">
-                    <div className="w-6 h-6 border-2 border-brand border-t-transparent rounded-full animate-spin" />
-                  </div>
-                )}
-
-                {!moreAppsLoading && (
-                  <div className="space-y-4">
-                    {moreApps.map((app) => (
-                      <div
-                        key={app.id}
-                        className="flex flex-col sm:flex-row gap-5 items-start border border-border rounded-xl p-5"
-                      >
-                        <div className="shrink-0">
-                          {app.qr_data_url ? (
-                            <img
-                              src={app.qr_data_url}
-                              alt={t('appQrAlt', { name: app.name })}
-                              className="w-32 h-32 rounded-lg border border-border"
-                            />
-                          ) : (
-                            <div className="w-32 h-32 rounded-lg border border-border flex items-center justify-center text-muted-foreground">
-                              <QrCode size={36} />
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-semibold text-foreground">{app.name}</h3>
-                            {!app.available && (
-                              <span className="text-xs font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
-                                {t('comingSoon')}
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-sm text-muted-foreground mb-3">{app.tagline}</p>
-                          <div className="flex gap-3 text-sm">
-                            {app.ios_url && (
-                              <a
-                                href={app.ios_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-brand hover:underline"
-                              >
-                                {t('downloadForIos')}
-                              </a>
-                            )}
-                            {app.android_url && (
-                              <a
-                                href={app.android_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-brand hover:underline"
-                              >
-                                {t('downloadForAndroid')}
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                    {moreApps.length === 0 && (
-                      <p className="text-sm text-muted-foreground text-center py-10">
-                        {t('noAppsToShow')}
-                      </p>
-                    )}
-                  </div>
-                )}
+              <div data-setting-section="more-apps" className="gulf-panel p-6">
+                <img src={settingsLocale.startsWith('ar') ? '/gulfcctv-logo-ar.png' : '/gulfcctv-logo.png'} alt="GULF CCTV" className="gulf-company-logo w-48 mb-4" />
+                <p className="font-bold text-foreground" dir="ltr">Smart System Solutions</p>
+                <a href="https://gulfcctv.com/" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex text-brand dark:text-sky-300 hover:underline">gulfcctv.com</a>
               </div>
             </SettingsTabShell>
           </TabsContent>

@@ -270,7 +270,7 @@ export default function ExpensesPage() {
       className="dashboard-scroll-shell flex h-full min-h-0 flex-col"
       data-testid="expenses-page"
     >
-      <div className="mb-4 flex shrink-0 items-center justify-between">
+      <div className="gulf-page-heading mb-4 flex shrink-0 flex-wrap gap-3 items-center justify-between">
         <h1 className="text-2xl font-bold text-foreground">{tNav('expenses')}</h1>
         {tenantCan(currentTenant, 'expenses.manage') && (
           <Button
@@ -286,7 +286,7 @@ export default function ExpensesPage() {
         )}
       </div>
 
-      <div className="mb-3 flex shrink-0 flex-wrap items-end gap-3" data-testid="expense-filters">
+      <div className="gulf-toolbar mb-3 flex shrink-0 flex-wrap items-end gap-3" data-testid="expense-filters">
         <div>
           <label
             className="mb-1 block text-xs font-medium text-muted-foreground"
@@ -395,7 +395,7 @@ export default function ExpensesPage() {
         {(currentSummary?.totals ?? []).map((total) => (
           <div key={total.currency_code} className="flex flex-wrap gap-3">
             <div
-              className="min-w-40 flex-1 rounded-xl border border-border bg-card p-3"
+              className="gulf-kpi-card min-w-40 flex-1 rounded-xl border border-border bg-card p-4"
               data-testid="expense-summary-incurred"
             >
               <p className="text-xs text-muted-foreground">
@@ -406,7 +406,7 @@ export default function ExpensesPage() {
               </p>
             </div>
             <div
-              className="min-w-40 flex-1 rounded-xl border border-border bg-card p-3"
+              className="gulf-kpi-card min-w-40 flex-1 rounded-xl border border-border bg-card p-4"
               data-testid="expense-summary-paid"
             >
               <p className="text-xs text-muted-foreground">{t('paidToDate')}</p>
@@ -415,7 +415,7 @@ export default function ExpensesPage() {
               </p>
             </div>
             <div
-              className="min-w-40 flex-1 rounded-xl border border-border bg-card p-3"
+              className="gulf-kpi-card min-w-40 flex-1 rounded-xl border border-border bg-card p-4"
               data-testid="expense-summary-due"
             >
               <p className="text-xs text-muted-foreground">{t('due')}</p>
@@ -444,7 +444,7 @@ export default function ExpensesPage() {
       </div>
 
       <div
-        className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto rounded-xl border border-border bg-card"
+        className="gulf-table-panel min-h-0 flex-1 overflow-x-hidden overflow-y-auto rounded-xl border border-border bg-card"
         data-testid="expenses-list-scroll"
       >
         <table className="w-full">

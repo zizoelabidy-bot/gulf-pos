@@ -50,7 +50,7 @@ export default function TitleBar() {
   return (
     <header
       data-testid="desktop-title-bar"
-      className="flo-title-bar flex shrink-0"
+      className="flo-title-bar gulf-title-bar flex shrink-0"
       aria-label={businessName}
     >
       <div className="flo-title-bar__safe-area pointer-events-none flex w-full items-center justify-between">
@@ -78,7 +78,7 @@ export default function TitleBar() {
           className="truncate text-xs font-semibold leading-tight text-foreground max-w-full"
           title={businessName}
         >
-          {businessName}
+          <bdi>GULF POS</bdi>{businessName !== "GULF POS" && <> · {businessName}</>}
         </span>
       </div>
     </header>

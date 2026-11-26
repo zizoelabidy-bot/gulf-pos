@@ -697,10 +697,10 @@ export default function TablesPage() {
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
+    <div className="gulf-management">
+      <div className="gulf-page-heading flex flex-wrap justify-between items-center gap-3 mb-4">
         <h1 className="text-2xl font-bold text-foreground">{tTables('title')}</h1>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-1 rounded-xl bg-muted p-1">
             <button
               onClick={() => {
@@ -756,6 +756,20 @@ export default function TablesPage() {
             </Button>
           )}
         </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 mb-4 lg:grid-cols-4" data-testid="gulf-table-status-overview">
+        {(['available', 'occupied', 'reserved', 'cleaning'] as const).map((status) => (
+          <div key={status} className="gulf-panel flex items-center gap-3 px-4 py-3" data-table-status={status}>
+            <span className={`size-3 shrink-0 rounded-full ${statusColors[status]}`} aria-hidden="true" />
+            <div className="min-w-0">
+              <p className="text-xs font-medium text-muted-foreground">{tTables(TABLE_STATUS_LABEL_KEYS[status])}</p>
+              <p className="text-2xl font-extrabold tabular-nums text-foreground">
+                {tables.filter((table) => Boolean(table.is_active) && table.status === status).length}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Plan view: floorplan editor stays mounted so unsaved drag edits
@@ -953,12 +967,13 @@ export default function TablesPage() {
                       <div
                         key={table.id}
                         data-testid={`table-card-${table.id}`}
-                        className={`bg-card rounded-xl border border-border flex flex-col justify-between hover:shadow-md transition-shadow ${
+                        data-table-status={table.status}
+                        className={`gulf-table-card bg-card rounded-xl border border-border flex flex-col justify-between hover:shadow-md transition-shadow ${
                           hasOrders ? 'border-s-4 border-s-brand' : ''
                         } ${!table.is_active ? 'opacity-60' : ''}`}
                       >
                         {/* Zone 1: Header */}
-                        <div className="px-4 py-3 border-b border-border flex items-center justify-between gap-2 flex-wrap">
+                        <div className="gulf-table-card-heading px-4 py-3 border-b border-border flex items-center justify-between gap-2 flex-wrap">
                           <div className="flex items-center gap-2 min-w-0 flex-wrap">
                             <h3 className="font-bold text-foreground truncate">{table.name}</h3>
                             <span className="text-xs text-muted-foreground whitespace-nowrap">

@@ -302,9 +302,9 @@ export default function DeliveryPage() {
     'rounded-md border border-border bg-background px-3 py-2 min-h-11 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring';
 
   return (
-    <div className="p-4 md:p-6 space-y-4 [&_button]:min-h-11">
-      <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
-      <div className="flex gap-2 flex-wrap">
+    <div className="gulf-management space-y-4 [&_button]:min-h-11">
+      <h1 className="gulf-page-heading text-2xl font-bold text-foreground">{t('title')}</h1>
+      <div className="gulf-toolbar flex gap-2 flex-wrap">
         {(['board', 'zones', 'drivers', 'settlements'] as const).map((k) => (
           <Button key={k} variant={tab === k ? 'default' : 'outline'} onClick={() => setTab(k)}>
             {t(k)}
@@ -324,7 +324,7 @@ export default function DeliveryPage() {
 
       {tab === 'board' && (
         <div className="space-y-4">
-          <div className="rounded-lg border border-border p-4 space-y-3">
+          <div className="gulf-panel rounded-lg border border-border bg-card p-4 space-y-3">
             <h2 className="font-semibold text-foreground">{t('assignOrder')}</h2>
             <div className="grid gap-2 md:grid-cols-5">
               <input className={inputCls} placeholder={t('orderNumber')} value={orderNumber} onChange={(e) => setOrderNumber(e.target.value)} />
@@ -346,7 +346,7 @@ export default function DeliveryPage() {
             <Button onClick={doAssign} disabled={!orderNumber.trim() || !assignDriver}>{t('assign')}</Button>
           </div>
 
-          <div className="overflow-x-auto rounded-lg border border-border">
+          <div className="gulf-table-panel overflow-x-auto rounded-lg border border-border bg-card">
             <table className="w-full text-sm">
               <thead className="bg-muted text-muted-foreground">
                 <tr>
@@ -404,7 +404,7 @@ export default function DeliveryPage() {
 
       {tab === 'zones' && (
         <div className="space-y-4">
-          <div className="rounded-lg border border-border p-4 space-y-3">
+          <div className="gulf-panel rounded-lg border border-border bg-card p-4 space-y-3">
             <h2 className="font-semibold text-foreground">{t('addZone')}</h2>
             <div className="grid gap-2 md:grid-cols-3">
               <input className={inputCls} placeholder={t('nameAr')} value={zoneForm.name_ar} onChange={(e) => setZoneForm({ ...zoneForm, name_ar: e.target.value })} />
@@ -413,7 +413,7 @@ export default function DeliveryPage() {
             </div>
             <Button onClick={addZone} disabled={!zoneForm.name_ar.trim()}>{t('save')}</Button>
           </div>
-          <div className="overflow-x-auto rounded-lg border border-border">
+          <div className="gulf-table-panel overflow-x-auto rounded-lg border border-border bg-card">
             <table className="w-full text-sm">
               <thead className="bg-muted text-muted-foreground">
                 <tr>
@@ -444,7 +444,7 @@ export default function DeliveryPage() {
 
       {tab === 'drivers' && (
         <div className="space-y-4">
-          <div className="rounded-lg border border-border p-4 space-y-3">
+          <div className="gulf-panel rounded-lg border border-border bg-card p-4 space-y-3">
             <h2 className="font-semibold text-foreground">{t('addDriver')}</h2>
             <div className="grid gap-2 md:grid-cols-3">
               <input className={inputCls} placeholder={t('name')} value={driverForm.name} onChange={(e) => setDriverForm({ ...driverForm, name: e.target.value })} />
@@ -453,7 +453,7 @@ export default function DeliveryPage() {
             </div>
             <Button onClick={addDriver} disabled={!driverForm.name.trim()}>{t('save')}</Button>
           </div>
-          <div className="overflow-x-auto rounded-lg border border-border">
+          <div className="gulf-table-panel overflow-x-auto rounded-lg border border-border bg-card">
             <table className="w-full text-sm">
               <thead className="bg-muted text-muted-foreground">
                 <tr>
@@ -482,7 +482,7 @@ export default function DeliveryPage() {
 
       {tab === 'settlements' && (
         <div className="space-y-4">
-          <div className="rounded-lg border border-border p-4 space-y-3">
+          <div className="gulf-panel rounded-lg border border-border bg-card p-4 space-y-3">
             <h2 className="font-semibold text-foreground">{t('settleDriver')}</h2>
             <div className="grid gap-2 md:grid-cols-3">
               <select className={inputCls} value={settleDriverId} onChange={(e) => setSettleDriverId(e.target.value)}>
@@ -505,7 +505,7 @@ export default function DeliveryPage() {
               </div>
             )}
           </div>
-          <div className="overflow-x-auto rounded-lg border border-border">
+          <div className="gulf-table-panel overflow-x-auto rounded-lg border border-border bg-card">
             <table className="w-full text-sm">
               <thead className="bg-muted text-muted-foreground">
                 <tr>

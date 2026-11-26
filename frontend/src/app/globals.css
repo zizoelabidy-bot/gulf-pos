@@ -17,43 +17,43 @@
 
   --font-sans: "Cairo", "Geist", "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", "Devanagari Sangam MN", "Noto Sans Gurmukhi", "Raavi", "Kohinoor Gurmukhi", "Gurmukhi Sangam MN", "Noto Sans Telugu", "Kohinoor Telugu", "Telugu Sangam MN", system-ui, sans-serif;
   --font-mono: "Geist Mono", monospace;
-  --radius: 0.875rem;
-  --background: oklch(0.972 0.01 230);
-  --foreground: oklch(0.145 0 0);
+  --radius: 0.625rem;
+  --background: #f2f5f9;
+  --foreground: #14253c;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: #0055ad;
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
+  --secondary: #eaf0f7;
   --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
+  --muted: #edf2f7;
+  --muted-foreground: #54657a;
+  --accent: #e5effa;
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: #d5e0ec;
+  --input: #c8d6e5;
+  --ring: #0068c8;
   /* Semantic surfaces: new UI uses these instead of raw gray or indigo
    * utilities. Existing raw-color usage migrates only when that page is
    * already being touched, not as a standalone sweep. */
   --panel: var(--card);
-  --selected-row: #e8ebff;
+  --selected-row: #e1efff;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: #0284C7;
+  --sidebar: #071b35;
+  --sidebar-foreground: #f0f6ff;
+  --sidebar-primary: #0059b7;
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: #E0F2FE;
-  --sidebar-accent-foreground: #075985;
-  --sidebar-border: oklch(0.922 0.008 230);
-  --sidebar-ring: #0284C7;
+  --sidebar-accent: #173c61;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #29445e;
+  --sidebar-ring: #39bdf2;
 
   /* Hoisted to :root so fixed app chrome can offset below the title bar;
    * consumed by both .flo-title-bar and the sidebar inset rules below. */
@@ -458,10 +458,10 @@ div:hover > .flo-toast-drain,
   --color-sidebar-ring: var(--sidebar-ring);
 
   /* Brand colors */
-  --color-brand: #0284C7;
-  --color-brand-light: #E0F2FE;
-  --color-brand-hover: #0369A1;
-  --color-brand-ring: #0284C780;
+  --color-brand: #005bb9;
+  --color-brand-light: #e4effb;
+  --color-brand-hover: #00468f;
+  --color-brand-ring: #005bb980;
   --color-success: #00cc61;
   --color-success-light: #dcfce7;
   --color-success-hover: #00b355;
@@ -493,11 +493,11 @@ div:hover > .flo-toast-drain,
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.22 0.02 250);
+  --sidebar: #07182c;
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: #0EA5E9;
+  --sidebar-primary: #0059b7;
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.28 0 0);
+  --sidebar-accent: #173c61;
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 12%);
   --sidebar-ring: #0EA5E9;
@@ -596,3 +596,187 @@ html.dark::-webkit-scrollbar-thumb:hover,
 [dir="rtl"] .rtl-flip {
   transform: scaleX(-1);
 }
+
+/* GULF enterprise workspace. Logical properties retain Arabic/English layout. */
+.gulf-login-shell {
+  min-block-size: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  background: var(--background);
+}
+.gulf-login-brand {
+  display: none;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2rem, 5vw, 5rem);
+  background: radial-gradient(ellipse at 100% 100%, #00549c 0%, transparent 60%), linear-gradient(150deg, #071b35, #0c3259);
+  color: #fff;
+}
+.gulf-login-brand::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: -7rem;
+  inset-block-end: -11rem;
+  inline-size: 32rem;
+  block-size: 32rem;
+  border: 2.5rem solid #00b7ed;
+  opacity: .13;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.gulf-login-form {
+  align-self: center;
+  justify-self: center;
+  inline-size: min(100%, 29rem);
+  padding: 1.5rem;
+}
+@media (min-width: 900px) {
+  .gulf-login-shell { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+  .gulf-login-brand { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+}
+.gulf-company-logo {
+  display: block;
+  object-fit: contain;
+  max-inline-size: 100%;
+  background: #fff;
+  border-radius: .5rem;
+  padding: .35rem .55rem;
+}
+[data-sidebar="sidebar"] {
+  background-image: linear-gradient(165deg, #071b35 15%, #0b2a4c 100%);
+}
+[data-sidebar="sidebar"] [data-sidebar="menu-button"] {
+  min-block-size: 2.5rem;
+  font-weight: 600;
+  border-radius: .45rem;
+}
+[data-sidebar="sidebar"] [data-sidebar="menu-button"][data-active="true"] {
+  background: #0059b7;
+  color: #fff;
+  box-shadow: inset 0 0 0 1px #3989d5;
+}
+[data-sidebar="sidebar"] [data-sidebar="menu-button"]:focus-visible {
+  outline: 2px solid #72d8ff;
+  outline-offset: 1px;
+}
+[data-sidebar="sidebar"] [data-sidebar="menu-button"] .text-muted-foreground {
+  color: #b9cce2;
+}
+[data-collapsible="icon"] .gulf-sidebar-company { display: none; }
+[data-collapsible="icon"] .gulf-sidebar-wordmark { display: none; }
+[data-collapsible="icon"] [data-sidebar="menu-button"] { min-block-size: 2rem; }
+.gulf-pos-topbar { box-shadow: 0 2px 8px #0a254010; border-radius: .625rem; border: 1px solid var(--border); }
+.gulf-product-tile { box-shadow: 0 2px 7px #0a254010; }
+.gulf-product-tile:focus-visible { outline: 2px solid var(--ring); outline-offset: -2px; }
+.gulf-cart-footer { background: var(--panel); box-shadow: 0 -3px 12px #0a25400a; }
+.gulf-cart-subtotal { background: #0a2b50; color: #fff; padding: .5rem .65rem; border-radius: .5rem; }
+.gulf-cart-subtotal .text-foreground, .gulf-cart-subtotal .text-brand, .gulf-cart-subtotal .text-muted-foreground { color: #fff; }
+.gulf-dashboard-heading { border-block-end: 2px solid var(--border); padding-block-end: 1rem; }
+.gulf-kpi-card { border-block-start: 3px solid #005bb9; font-variant-numeric: tabular-nums; }
+.gulf-status-bar { background: #071b35; color: #d9e7f6; border-color: #29445e; }
+.gulf-status-bar .text-muted-foreground, .gulf-status-bar .text-foreground { color: #e2edf9; }
+.gulf-status-bar .text-emerald-700, .gulf-status-bar .text-emerald-600 { color: #86efac; }
+.gulf-status-bar .text-amber-600 { color: #fcd34d; }
+
+/* Green is reserved for the real payment confirmation, not order creation. */
+.gulf-payment-cta:not(:disabled) { background: #08783e; color: #fff; }
+.gulf-payment-cta:not(:disabled):hover { background: #066333; }
+.dark .gulf-product-tile .text-brand { color: #7dd3fc; }
+.gulf-status-bar .text-muted-foreground\/80 { color: #b9cce2; }
+.gulf-status-bar button:hover { color: #fff; background: #173c61; }
+
+/* GULF management screens: local layout primitives, shared visual hierarchy. */
+.gulf-page-heading {
+  padding: .85rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-inline-start: 4px solid #005bb9;
+  border-radius: .625rem;
+}
+.gulf-page-heading h1 { font-weight: 800; }
+.gulf-toolbar {
+  padding: .65rem .8rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: .625rem;
+}
+.gulf-panel, .gulf-table-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: .625rem;
+  box-shadow: 0 2px 8px #0a25400a;
+}
+.gulf-table-panel thead th {
+  background: var(--muted);
+  color: var(--foreground);
+  font-weight: 700;
+  border-block-end: 1px solid var(--border);
+}
+.gulf-table-panel tbody tr:hover { background: var(--accent); }
+.gulf-table-panel td { font-variant-numeric: tabular-nums; }
+.gulf-table-card {
+  border-block-start: 3px solid var(--border);
+  box-shadow: 0 2px 8px #0a25400a;
+}
+.gulf-table-card[data-table-status="available"], .gulf-panel[data-table-status="available"] { border-block-start: 3px solid #16834b; }
+.gulf-table-card[data-table-status="occupied"], .gulf-panel[data-table-status="occupied"] { border-block-start: 3px solid #005bb9; }
+.gulf-table-card[data-table-status="reserved"], .gulf-panel[data-table-status="reserved"] { border-block-start: 3px solid #b7791f; }
+.gulf-table-card[data-table-status="cleaning"], .gulf-panel[data-table-status="cleaning"] { border-block-start: 3px solid #64748b; }
+.gulf-table-card-heading { background: var(--muted); border-start-start-radius: .5rem; border-start-end-radius: .5rem; }
+.gulf-staff-avatar {
+  display: grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  flex: none;
+  border-radius: .625rem;
+  background: #0a2b50;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+.gulf-settings-nav { background: var(--card); padding: .75rem; border: 1px solid var(--border); border-radius: .625rem; }
+.gulf-settings-active { background: #0055ad; color: #fff; }
+.gulf-settings-section-heading { border-block-end: 1px solid var(--border); padding-block-end: .75rem; }
+.gulf-kds-header { background: var(--card); padding: .75rem 1rem; border: 1px solid var(--border); border-radius: .625rem; border-inline-start: 4px solid #005bb9; }
+.gulf-kds-mark { color: #fff; background: #0a2b50; border-radius: .5rem; padding: .5rem .7rem; font-size: .875rem; font-weight: 800; white-space: nowrap; }
+.gulf-kds-column { border: 1px solid var(--border); }
+.gulf-kds-ticket { box-shadow: 0 2px 6px #0a254014; }
+.gulf-management [data-slot="tabs-list"][data-variant="default"] { background: var(--card); border: 1px solid var(--border); max-inline-size: 100%; }
+.gulf-management [data-slot="tabs-list"][data-variant="default"] [data-slot="tabs-trigger"][data-state="active"] { background: #0055ad; color: #fff; }
+@media (max-width: 640px) {
+  .gulf-page-heading, .gulf-toolbar { padding: .65rem .75rem; }
+  .gulf-kds-header { padding: .5rem .65rem; }
+}
+
+.gulf-order-card { box-shadow: 0 2px 8px #0a25400a; }
+.gulf-title-bar { background: var(--card); border-block-end: 1px solid var(--border); }
+.dark .gulf-management [data-slot="tabs-trigger"][data-state="active"] { color: white; }
+@media (prefers-reduced-motion: reduce) {
+  .gulf-panel, .gulf-table-card, .gulf-order-card, .gulf-kds-ticket { transition: none; }
+}
+
+/* Customer-facing TV, setup wizard and service dialogs use GULF chrome. */
+.gulf-customer-display, .gulf-setup-shell {
+  background: radial-gradient(ellipse at 100% 0%, #123c68 0%, transparent 62%), #071b35;
+}
+.gulf-display-heading {
+  background: #0c2948;
+  border: 1px solid #355777;
+  border-inline-start: 4px solid #00b7ed;
+  border-radius: .75rem;
+  padding: 1rem 1.25rem;
+}
+.gulf-setup-heading { color: white; }
+.gulf-dialog-brand {
+  align-self: flex-start;
+  border-radius: .375rem;
+  padding: .25rem .6rem;
+  color: #fff;
+  background: #071b35;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+}
+.gulf-support-brand { border-block-end: 1px solid var(--border); padding-block-end: .75rem; }
+.gulf-critical-notice { border-inline-start: 4px solid #b91c1c; }

@@ -50,7 +50,7 @@ function basePayload(overrides: Record<string, unknown> = {}): Record<string, un
     lic_id: 'GL-TEST-1',
     customer: 'Test Cafe',
     type: 'annual',
-    issued_at: new Date().toISOString(),
+    issued_at: new Date(Date.now() - 30 * 864e5).toISOString(),
     expires_at: new Date(Date.now() + 365 * 864e5).toISOString(),
     max_devices: 1,
     max_branches: 1,
@@ -113,6 +113,25 @@ state = activateLicense(
 );
 assertEqualOrThrow(state.status, 'active', 'device-bound key activates on the right device');
 
+// Reject malformed signed claims and keep the previous valid activation.
+for (const overrides of [
+  { max_devices: 0 }, { max_branches: 1.5 }, { devices: ['invalid'] },
+  { devices: [deviceFingerprint(db), 'deadbeef'.repeat(4)] },
+  { modules: [] }, { expires_at: 'invalid-date' }, { expires_at: null },
+  { issued_at: new Date(Date.now() + 864e5).toISOString() },
+]) {
+  let rejected = false;
+  try { activateLicense(db, signKey(basePayload({ ...overrides, lic_id: 'INVALID' }))); }
+  catch { rejected = true; }
+  assertOrThrow(rejected, 'malformed signed claims rejected: ' + JSON.stringify(overrides));
+}
+assertEqualOrThrow(getLicenseState(db).payload?.lic_id, 'GL-TEST-3', 'invalid license does not replace active key');
+const savedSalt = db.prepare("SELECT value FROM license_meta WHERE key = 'device_salt'").get().value;
+db.prepare("UPDATE license_meta SET value = ? WHERE key = 'device_salt'").run('restored-to-another-device');
+assertEqualOrThrow(getLicenseState(db).can_write, false, 'stored key binding checked on every status read');
+db.prepare("UPDATE license_meta SET value = ? WHERE key = 'device_salt'").run(savedSalt);
+assertEqualOrThrow(getLicenseState(db).can_write, true, 'original device remains valid');
+
 // 7. Already-expired key (beyond grace) rejected.
 threw = false;
 try {
@@ -138,13 +157,18 @@ state = activateLicense(
 assertEqualOrThrow(state.status, 'grace', 'recently expired key lands in grace');
 assertEqualOrThrow(state.can_write, true, 'grace can still write');
 
-// 9. Deactivate returns a transfer receipt and reverts to trial status path.
+// 9. Deactivate returns an unverified transfer claim and blocks local reuse.
 const { transfer_receipt } = deactivateLicense(db);
 assertOrThrow(/^GPLR1\./.test(transfer_receipt), 'transfer receipt issued');
 state = getLicenseState(db);
-assertOrThrow(state.status === 'trial' || state.status === 'expired', 'no active license after deactivate');
+assertEqualOrThrow(state.status, 'expired', 'deactivation does not restore trial access');
+threw = false;
+try { activateLicense(db, signKey(basePayload({ lic_id: 'GL-TEST-5' }))); } catch (e: any) { threw = /deactivated/.test(e.message); }
+assertOrThrow(threw, 'deactivated license ID cannot be reused on this database');
 
 // 10. Trial expiry flips to read-only and blocks sales writes.
+// Remove activations in this isolated fixture only to exercise the fresh-install trial path.
+db.prepare('DELETE FROM license_activations').run();
 db.prepare("UPDATE license_meta SET value = ? WHERE key = 'trial_started_at'").run(
   new Date(Date.now() - (TRIAL_DAYS + 2) * 864e5).toISOString(),
 );

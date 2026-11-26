@@ -808,9 +808,9 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-full bg-background p-4 sm:p-6 lg:p-7">
-      <div className="mb-7 flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+      <div className="gulf-dashboard-heading mb-5 flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+          <h1 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
             {t('title')}
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -986,7 +986,7 @@ export default function DashboardPage() {
               <Link
                 key={tile.label}
                 href={tile.href}
-                className={`group rounded-2xl border p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${tile.color}`}
+                className={`gulf-kpi-card group rounded-lg border p-5 shadow-sm transition-shadow hover:shadow-md ${tile.color}`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <span className="text-sm font-medium text-muted-foreground">{tile.label}</span>
@@ -996,7 +996,7 @@ export default function DashboardPage() {
                     <tile.icon size={19} />
                   </span>
                 </div>
-                <p className="mt-5 text-3xl font-bold tracking-tight text-foreground">
+                <p className="mt-4 text-3xl font-extrabold tracking-tight text-foreground tabular-nums">
                   {tile.value}
                 </p>
                 <div className="mt-3 min-h-6">

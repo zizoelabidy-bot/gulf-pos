@@ -5,6 +5,7 @@ import { rateLimit } from '../middleware/security';
 import { requirePermission } from '../services/authorization';
 import { asyncHandler } from '../middleware/async-handler';
 import { cloudSync } from '../services/cloud-sync';
+import { isLegacyCloudBlocked } from '../services/offline-mode';
 import { getDatabase } from '../db';
 import { getHttpRequestSignal } from '../shutdown';
 import { normalizeOptionalPhone } from '../lib/phone';
@@ -147,6 +148,10 @@ function statusHandler(req: Request, res: Response) {
 }
 
 async function submitTicketHandler(req: Request, res: Response) {
+  if (isLegacyCloudBlocked()) {
+    res.status(503).json({ error: 'Online support delivery is unavailable in this GULF POS release' });
+    return;
+  }
   const body = req.body && typeof req.body === 'object' ? req.body : {};
   const subject = String(body.subject || '')
     .trim()

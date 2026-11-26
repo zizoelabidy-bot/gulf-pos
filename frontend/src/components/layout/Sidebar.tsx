@@ -30,7 +30,7 @@ import {
   KeyRound,
   type LucideIcon,
 } from 'lucide-react';
-import { useTranslations, type AppConfig } from 'use-intl';
+import { useLocale, useTranslations, type AppConfig } from 'use-intl';
 import { useAuthStore } from '@/store/auth';
 import {
   CLOUD_ACCOUNT_STATUS_CHANGED_EVENT,
@@ -182,6 +182,7 @@ const ALL_NAV_ITEMS: NavItem[] = [
 
 export default function AppSidebar() {
   const pathname = usePathname();
+  const locale = useLocale();
   const { user, currentTenant, logout, lock } = useAuthStore();
   const { tablesRequired, kdsEnabled, whatsappEnabled, setKdsEnabled, setWhatsappEnabled } =
     usePosSettingsStore();
@@ -284,18 +285,21 @@ export default function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
+        <div className="gulf-sidebar-company px-2 pt-2 pb-1">
+          <img src={locale.startsWith('ar') ? '/gulfcctv-logo-ar.png' : '/gulfcctv-logo.png'} alt="GULF CCTV" className="gulf-company-logo w-full" />
+        </div>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link href={homeHref}>
                 <div className="flex aspect-square size-8 shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-[#38BDF8] to-[#0369A1] text-white font-semibold shadow-[0_2px_8px_rgba(2,132,199,0.35)]">
-                  {(currentTenant?.business_name || tCommon('brandName')).charAt(0).toUpperCase()}
+                  <span className="text-xs font-extrabold" dir="ltr">GP</span>
                 </div>
-                <div className="flex flex-col gap-0.5 min-w-0 leading-none">
-                  <span className="font-semibold truncate">
+                <div className="gulf-sidebar-wordmark flex flex-col gap-1 min-w-0 leading-none">
+                  <span className="font-extrabold truncate" dir="ltr">GULF POS</span>
+                  <span className="text-[11px] font-medium text-sidebar-foreground/80 truncate">
                     {currentTenant?.business_name || tCommon('brandName')}
                   </span>
-                  <span className="text-[10px] font-medium text-sidebar-foreground/55 truncate">Powered by GULF CCTV</span>
                 </div>
               </Link>
             </SidebarMenuButton>

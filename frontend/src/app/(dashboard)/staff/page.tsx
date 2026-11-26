@@ -317,8 +317,8 @@ export default function StaffPage() {
     staff.filter((s) => s.role === 'owner' && Boolean(s.is_active)).length === 1;
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
+    <div className="gulf-management">
+      <div className="gulf-page-heading flex flex-wrap justify-between items-center gap-3 mb-4">
         <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
         {canManageStaff && (
           <Button ref={addTriggerRef} onClick={openAdd}>
@@ -331,13 +331,16 @@ export default function StaffPage() {
         {staff.map((s) => (
           <div
             key={s.id}
-            className={`bg-card rounded-xl p-5 border ${s.is_active ? 'border-border' : 'border-border opacity-60'}`}
+            className={`gulf-panel bg-card rounded-xl p-5 border ${s.is_active ? 'border-border' : 'border-border opacity-60'}`}
           >
-            <div className="flex justify-between items-start mb-3">
-              <div>
-                <p className="font-bold text-foreground">{s.name}</p>
+            <div className="flex justify-between items-start gap-2 mb-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div aria-hidden="true" className="gulf-staff-avatar">{(s.name || "?").trim().slice(0, 1).toUpperCase()}</div>
+                <div className="min-w-0">
+                <p className="font-bold text-foreground break-words">{s.name}</p>
                 <p className="text-xs text-muted-foreground">{s.email || '—'}</p>
                 {Boolean(s.has_pin) && <p className="text-xs text-green-600 mt-1">{t('pinSet')}</p>}
+                </div>
               </div>
               <span
                 className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${roleColors[s.role] || 'bg-muted text-foreground'}`}

@@ -22,6 +22,8 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import api from '@/lib/api';
+import { isAxiosError } from 'axios';
+import type { LucideIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 // Inline en/ar dictionary: GULF POS commercial licensing is an Arabic-first
@@ -177,7 +179,8 @@ export function LicenseSettingsTab() {
   }, [t]);
 
   useEffect(() => {
-    load();
+    const timer = setTimeout(() => void load(), 0);
+    return () => clearTimeout(timer);
   }, [load]);
 
   const activate = async () => {
@@ -189,8 +192,8 @@ export function LicenseSettingsTab() {
       setKey('');
       toast.success(t('activated'));
       load();
-    } catch (error: any) {
-      toast.error(error?.response?.data?.error || 'Activation failed');
+    } catch (error: unknown) {
+      toast.error((isAxiosError<{ error?: string }>(error) ? error.response?.data?.error : undefined) || 'Activation failed');
     } finally {
       setActivating(false);
     }
@@ -202,8 +205,8 @@ export function LicenseSettingsTab() {
       const res = await api.post('/license/deactivate');
       setReceipt(res.data?.transfer_receipt || null);
       load();
-    } catch (error: any) {
-      toast.error(error?.response?.data?.error || 'Deactivation failed');
+    } catch (error: unknown) {
+      toast.error((isAxiosError<{ error?: string }>(error) ? error.response?.data?.error : undefined) || 'Deactivation failed');
     }
   };
 
@@ -216,7 +219,7 @@ export function LicenseSettingsTab() {
     }
   };
 
-  const statusMeta: Record<string, { label: string; className: string; Icon: any }> = {
+  const statusMeta: Record<string, { label: string; className: string; Icon: LucideIcon }> = {
     active: {
       label: t('statusActive'),
       className: 'text-emerald-600 dark:text-emerald-400',

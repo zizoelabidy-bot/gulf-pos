@@ -366,7 +366,7 @@ export function OrderCard({
 
   return (
     <div
-      className={`bg-card rounded-xl border flex flex-col overflow-hidden transition-shadow hover:shadow-sm ${
+      className={`gulf-order-card bg-card rounded-lg border flex flex-col overflow-hidden transition-shadow hover:shadow-sm ${
         order.status === 'cancelled'
           ? 'border-red-200 dark:border-red-900/40 opacity-80'
           : 'border-border'
@@ -377,7 +377,7 @@ export function OrderCard({
         {/* Header Row 1: Order Number, Status Badges, Quick Actions */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 flex-wrap min-w-0">
-            <span className="font-bold text-base text-foreground tracking-tight">
+            <span className="font-extrabold text-lg text-foreground tracking-tight tabular-nums">
               #<Ltr>{order.order_number}</Ltr>
             </span>
             {statusBadgeInfo && (

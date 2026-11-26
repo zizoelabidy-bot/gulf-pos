@@ -52,3 +52,12 @@ export function notifyOfflineModeEnabled(): void {
 export function assertOnlineAllowed(feature: string): void {
   if (isOfflineMode()) throw new OfflineModeError(feature);
 }
+
+/** Release policy: no legacy cloud or telemetry service is authorized for GULF POS.
+ * Deliberately independent of the owner-controlled offline switch: local LAN,
+ * merchant integrations and GULF updates retain their existing controls.
+ * Replacing this policy requires an audited, GULF-owned service implementation.
+ */
+export function isLegacyCloudBlocked(): boolean {
+  return true;
+}
