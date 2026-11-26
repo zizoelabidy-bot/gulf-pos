@@ -64,8 +64,16 @@ function cmdPubkey() {
   process.stdout.write(fs.readFileSync(PUBLIC_KEY_PATH, 'utf8'));
 }
 
-function sign(payload) {
+function sign(payload, developmentKey = false) {
   const privateKey = fs.readFileSync(PRIVATE_KEY_PATH, 'utf8');
+  const derived = crypto.createPublicKey(privateKey).export({ type: 'spki', format: 'der' });
+  const expected = crypto.createPublicKey('-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA7lmcnKGiE+4WO4D5CKaNAc9w2z5QxXT2gP0BICAMFbQ=\n-----END PUBLIC KEY-----').export({ type: 'spki', format: 'der' });
+  const stored = crypto.createPublicKey(fs.readFileSync(PUBLIC_KEY_PATH, 'utf8')).export({ type: 'spki', format: 'der' });
+  if (!derived.equals(stored)) throw new Error('Issuer private and public keys do not match');
+  if (!derived.equals(expected)) {
+    if (!developmentKey) throw new Error('Issuer key does not match the production GULF POS verifier');
+    console.warn('DEVELOPMENT ONLY: this key will not activate production clients');
+  }
   const payloadBytes = Buffer.from(JSON.stringify(payload), 'utf8');
   const sig = crypto.sign(null, payloadBytes, privateKey);
   return `GPL1.${b64url(payloadBytes)}.${b64url(sig)}`;
@@ -116,7 +124,7 @@ function cmdIssue(args, forceType) {
     modules,
     devices,
   };
-  const key = sign(payload);
+  const key = sign(payload, args.includes('--development-key'));
   const record = { ...payload, key };
   fs.appendFileSync(REGISTRY_PATH, JSON.stringify(record) + '\n', { mode: 0o600 });
   console.log(`Issued ${payload.lic_id} (${type}) for ${customer}`);
@@ -157,6 +165,7 @@ function cmdVerifyReceipt(args) {
   if (hit.devices.length && !hit.devices.includes(fingerprint)) throw new Error('Receipt device does not match registry');
   console.log(`Receipt claims license ${licId} (customer: ${hit.customer}) was deactivated on device ${fingerprint} at ${at}.`);
   console.log('UNVERIFIED CLAIM: the issuer cannot authenticate this receipt or establish revocation. Manually verify customer and device before approving a replacement.');
+  process.exitCode = 2;
 }
 
 const [cmd, ...args] = process.argv.slice(2);
