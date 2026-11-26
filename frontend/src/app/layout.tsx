@@ -27,7 +27,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'GULF POS',
-  description: 'Smart Point of Sale for restaurants',
+  description: 'GULF POS — Restaurant Management System by GULF CCTV | Smart System Solutions',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0284C7',
+  themeColor: '#071b35',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
