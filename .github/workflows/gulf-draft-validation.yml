@@ -68,3 +68,43 @@ jobs:
             release/GULF-POS-Setup.exe
             release/SHA256SUMS.txt
             release/REVIEW-ONLY.txt
+
+  build-admin-windows:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate license issuer
+        run: node tests/gulf-license-admin.test.cjs
+      - name: Validate administration service
+        run: node tests/gulf-admin-service.test.cjs
+      - name: Validate commercial records
+        run: node tests/gulf-commercial-store.test.cjs
+      - name: Check commercial UI and packaging syntax
+        run: |
+          node --check admin-app/commercial-ui.js
+          node --check scripts/build-gulf-admin.cjs
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Package standalone administration center
+        run: node scripts/build-gulf-admin.cjs
+      - name: Hash review installer
+        shell: pwsh
+        run: |
+          $exe = "release-admin/GULF-POS-Admin-Setup.exe"
+          if (!(Test-Path $exe)) { throw "Admin installer missing" }
+          $hash = (Get-FileHash $exe -Algorithm SHA256).Hash
+          "$hash  GULF-POS-Admin-Setup.exe" | Set-Content release-admin/SHA256SUMS.txt
+          "Internal review only; unsigned; commit $env:GITHUB_SHA" | Set-Content release-admin/REVIEW-ONLY.txt
+      - name: Upload independent admin review installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: GULF-POS-Admin-Windows-REVIEW
+          retention-days: 7
+          path: |
+            release-admin/GULF-POS-Admin-Setup.exe
+            release-admin/SHA256SUMS.txt
+            release-admin/REVIEW-ONLY.txt
