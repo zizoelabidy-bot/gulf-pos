@@ -297,13 +297,19 @@ export default function PrepaidCheckoutModal({
       ? normalizeFixedDiscountValue(rawDiscountValue, unitAdapter.maxDecimals)
       : null;
   const hasInvalidFixedDiscount = normalizedFixedDiscountValue === 0;
-  const { tax, loading: taxLoading } = useTaxPreview(
+  const { tax, loading: taxLoading, error: taxError } = useTaxPreview(
     cart.items,
     cart.customerId,
     undefined,
     previewDiscount,
     chargeContext,
   );
+
+  const taxStatusLabel = taxError
+    ? String(locale).startsWith('ar')
+      ? 'تعذّر حساب الضريبة. راجع إعدادات الضرائب أو عطّلها إن لم تكن مطلوبة.'
+      : 'Tax could not be calculated. Check tax settings or turn taxes off if not required.'
+    : t('calculatingTax');
 
   if (discountCommitted && amountTarget?.kind === 'discount') {
     setAmountTarget({ kind: 'payment', index: 0 });
@@ -934,7 +940,7 @@ export default function PrepaidCheckoutModal({
     : recovery
       ? t(recovery.statusChecked ? 'retrySamePayment' : 'checkPaymentStatus')
       : taxLoading
-        ? t('calculatingTax')
+        ? taxStatusLabel
         : t('confirmPaymentAmount', { amount: currencyFmt(remaining) });
 
   const handlePrimarySubmit = () => {
@@ -1888,7 +1894,7 @@ export default function PrepaidCheckoutModal({
             {/* [2A] Hero Balance Header */}
             <div className="flex shrink-0 items-center justify-between gap-3 rounded-xl border border-border bg-card px-3.5 py-2.5 shadow-2xs dark:border-white/10 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
               <span className="text-xs font-semibold text-muted-foreground">
-                {taxLoading || !preview ? t('calculatingTax') : t('totalDue')}
+                {taxLoading || !preview ? taxStatusLabel : t('totalDue')}
               </span>
               <span className="text-xl font-bold tracking-tight tabular-nums text-foreground sm:text-2xl">
                 {taxLoading || !preview ? '…' : currencyFmt(remaining)}
@@ -2131,7 +2137,7 @@ export default function PrepaidCheckoutModal({
                 amountText: readoutFormattedAmount,
                 paidSummaryText:
                   taxLoading || !preview
-                    ? t('calculatingTax')
+                    ? taxStatusLabel
                     : `${t('payment')}: ${currencyFmt(totalPaymentMinor / minorFactor)}`,
                 dueSummaryText:
                   taxLoading || !preview ? '…' : `${t('total')}: ${currencyFmt(remaining)}`,

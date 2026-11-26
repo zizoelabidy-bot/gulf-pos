@@ -50,5 +50,5 @@ jobs:
         run: |
           $v = node -p "require('./package.json').version"
           $tag = "gulf-v$v-build$env:GITHUB_RUN_NUMBER"
-          gh release create $tag "release/GULF-POS-Setup.exe" --title "GULF POS $v (build $env:GITHUB_RUN_NUMBER)" --notes "GULF POS Windows installer. Unsigned build - Windows SmartScreen will warn on install. Built on the open-source FloCafe project (MIT)." --prerelease
+          $notes = "docs/release-notes/gulf-v$v.md"; if (Test-Path $notes) { gh release create $tag "release/GULF-POS-Setup.exe" --title "GULF POS $v (build $env:GITHUB_RUN_NUMBER)" --notes-file $notes --prerelease } else { gh release create $tag "release/GULF-POS-Setup.exe" --title "GULF POS $v (build $env:GITHUB_RUN_NUMBER)" --notes "GULF POS Windows installer. Unsigned build - Windows SmartScreen will warn on install. Built on the open-source FloCafe project (MIT)." --prerelease }
           gh release view $tag --json url,assets
