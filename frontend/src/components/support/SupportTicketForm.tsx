@@ -102,7 +102,7 @@ export function SupportTicketForm({
   const [subject, setSubject] = useState(initialSubject || '');
   const [message, setMessage] = useState(initialMessage || '');
   const [attachLog, setAttachLog] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [submittedId, setSubmittedId] = useState('');
   const submissionIdentityRef = useRef<{
