@@ -991,8 +991,8 @@ function createWindow(): void {
       dialog
         .showMessageBox({
           type: 'error',
-          title: 'App Crashed',
-          message: 'The app crashed and will restart.',
+          title: 'GULF POS — Application error',
+          message: 'GULF POS encountered an error and will restart.',
           detail: `Reason: ${details.reason}`,
           buttons: ['OK'],
         })
@@ -1830,7 +1830,7 @@ async function initialize(): Promise<void> {
         return;
       }
       try {
-        dialog.showErrorBox('Initialization Error', `Failed to start Flo: ${fatalStartupError}`);
+        dialog.showErrorBox('Initialization Error', `Failed to start GULF POS: ${fatalStartupError}`);
       } catch (dialogError) {
         console.error('[Flo] Failed to display initialization error dialog:', dialogError);
       }
