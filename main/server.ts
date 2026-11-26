@@ -218,7 +218,14 @@ export function startServer(): Promise<void> {
     // Scope the anonymous pre-login route to a body limit far below the
     // general API import limit, so it can't force a large allocation.
     app.use('/api/support-ticket/pre-login', express.json({ limit: '300kb' }));
-    app.use(express.json({ limit: API_JSON_BODY_LIMIT }));
+    app.use(express.json({
+      limit: API_JSON_BODY_LIMIT,
+      verify(req, res, buf) {
+        if (/^\/api\/integrations\/webhook(?:\/|$)/i.test((req.url ?? '').split('?')[0])) {
+          (res as Response).locals.aggregatorRawBody = buf.toString('utf8');
+        }
+      },
+    }));
     app.use((error: any, req: Request, res: Response, next: NextFunction) => {
       if (error?.type === 'entity.too.large') {
         res.status(413).json({
