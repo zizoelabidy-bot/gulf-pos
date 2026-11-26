@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useTranslations, type AppConfig } from 'use-intl';
+import { useLocale, useTranslations, type AppConfig } from 'use-intl';
 import { getLandingPage, resolveSafeRedirect } from '@/components/layout/AuthGuard';
 import { useAuthStore, StorageUnavailableError } from '@/store/auth';
 import { parseLoginFailure } from '@/lib/login-errors';
@@ -58,6 +58,7 @@ function LoginContent() {
   const { login, pinLogin, selectTenant, user, tenants, currentTenant, loadFromStorage } =
     useAuthStore();
   const t = useTranslations('auth');
+  const isArabic = useLocale().startsWith('ar');
   const tStaff = useTranslations('staff');
   const tCommon = useTranslations('common');
   const tBusinessType = useTranslations('businessType');
@@ -297,13 +298,13 @@ function LoginContent() {
   return (
     <div className="gulf-login-shell">
       <section className="gulf-login-brand" aria-label="GULF POS">
-        <img src="/gulfcctv-logo.png" alt="GULF CCTV — Smart System Solutions" className="gulf-company-logo w-64 mb-12" />
-        <div dir="ltr" className="relative z-10">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-200">Restaurant technology</span>
-          <h2 className="mt-4 text-5xl font-extrabold tracking-tight">GULF <span className="text-sky-300">POS</span></h2>
-          <p className="mt-4 text-xl font-medium text-slate-200">Restaurant Management System</p>
+        <img src={isArabic ? "/gulfcctv-logo-ar.png" : "/gulfcctv-logo.png"} alt="GULF CCTV" className="gulf-company-logo w-64 mb-12" />
+        <div className="relative z-10">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-200">{isArabic ? "تقنيات المطاعم" : "Restaurant technology"}</span>
+          <h2 className="mt-4 text-5xl font-extrabold tracking-tight" dir="ltr">GULF <span className="text-sky-300">POS</span></h2>
+          <p className="mt-4 text-xl font-medium text-slate-200">{isArabic ? "نظام إدارة المطاعم ونقاط البيع" : "Restaurant Management System"}</p>
           <div className="mt-10 h-1 w-24 rounded bg-sky-400" />
-          <p className="mt-6 text-sm text-slate-300">Smart System Solutions</p>
+          <p className="mt-6 text-sm text-slate-300">{isArabic ? "حلول الأنظمة الذكية" : "Smart System Solutions"}</p>
         </div>
       </section>
       <div className="gulf-login-form">
@@ -312,7 +313,7 @@ function LoginContent() {
           <h1 className="text-3xl font-extrabold tracking-tight text-foreground">GULF POS</h1>
           <div className="mt-2 inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 border border-border">
             <span className="text-[10px] font-medium uppercase tracking-wide text-[#0284C7]">Powered by</span>
-            <img suppressHydrationWarning src={typeof document !== 'undefined' && (document.documentElement.lang || navigator.language || '').toLowerCase().startsWith('ar') ? '/gulfcctv-logo-ar.png' : '/gulfcctv-logo.png'} alt="GULF CCTV" style={{ height: 34, width: 'auto' }} />
+            <img src={isArabic ? '/gulfcctv-logo-ar.png' : '/gulfcctv-logo.png'} alt="GULF CCTV" style={{ height: 34, width: 'auto' }} />
           </div>
           <p className="text-muted-foreground mt-2">{t('signInTitle')}</p>
         </div>
