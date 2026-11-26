@@ -268,11 +268,12 @@ function SettingsNavItem({
       <button
         onClick={() => onClick(value)}
         aria-describedby={attention ? attentionDescId : undefined}
+        aria-current={isActive ? "page" : undefined}
         className={[
           'flex items-center shrink-0 md:shrink w-auto md:w-full min-w-0 whitespace-nowrap md:whitespace-normal text-start text-sm rounded-md py-1.5 transition-colors',
           indent ? 'ps-5 pe-2 border-s-2 ms-1 text-xs md:ms-0' : 'px-3',
           isActive
-            ? 'bg-brand/10 text-brand font-semibold' + (indent ? ' border-brand' : '')
+            ? 'gulf-settings-active font-semibold' + (indent ? ' border-brand' : '')
             : 'text-muted-foreground hover:bg-muted hover:text-foreground' +
               (indent ? ' border-transparent' : ''),
         ].join(' ')}
@@ -4477,8 +4478,8 @@ export default function SettingsPage() {
         className="flex flex-col md:flex-row gap-6 items-start md:h-full md:min-h-0"
       >
         {/* Settings sidebar nav */}
-        <div className="w-full md:w-40 md:min-w-[10rem] shrink-0 md:h-full md:min-h-0 md:flex md:flex-col">
-          <div className="flex items-center gap-3 mb-4 shrink-0">
+        <div className="gulf-settings-nav w-full md:w-52 md:min-w-[13rem] shrink-0 md:h-full md:min-h-0 md:flex md:flex-col">
+          <div className="gulf-settings-section-heading flex items-center gap-3 mb-4 shrink-0">
             <Settings size={28} className="text-brand" />
             <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
           </div>
