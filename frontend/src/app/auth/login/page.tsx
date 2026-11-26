@@ -295,12 +295,22 @@ function LoginContent() {
       : 'password';
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-[radial-gradient(1100px_560px_at_50%_-8%,#BAE6FD_0%,#E0F2FE_38%,#F3F8FC_100%)] dark:bg-[radial-gradient(1100px_560px_at_50%_-8%,#0C4A6E_0%,#082F49_45%,#0A1622_100%)]">
-      <div className="w-full max-w-md">
+    <div className="gulf-login-shell">
+      <section className="gulf-login-brand" aria-label="GULF POS">
+        <img src="/gulfcctv-logo.png" alt="GULF CCTV — Smart System Solutions" className="gulf-company-logo w-64 mb-12" />
+        <div dir="ltr" className="relative z-10">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-200">Restaurant technology</span>
+          <h2 className="mt-4 text-5xl font-extrabold tracking-tight">GULF <span className="text-sky-300">POS</span></h2>
+          <p className="mt-4 text-xl font-medium text-slate-200">Restaurant Management System</p>
+          <div className="mt-10 h-1 w-24 rounded bg-sky-400" />
+          <p className="mt-6 text-sm text-slate-300">Smart System Solutions</p>
+        </div>
+      </section>
+      <div className="gulf-login-form">
         <div className="text-center mb-6">
-          <img src="/logo.svg" alt="GULF POS" width={112} height={112} className="mx-auto mb-3 drop-shadow-[0_6px_16px_rgba(2,132,199,0.25)]" />
-          <h1 className="text-2xl font-bold tracking-tight text-[#075985] dark:text-sky-200">GULF POS</h1>
-          <div className="mt-1 inline-flex items-center gap-2 rounded-lg bg-white/90 px-3 py-1 shadow-sm">
+          <img src="/logo.svg" alt="GULF POS" width={72} height={72} className="mx-auto mb-3" />
+          <h1 className="text-3xl font-extrabold tracking-tight text-foreground">GULF POS</h1>
+          <div className="mt-2 inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 border border-border">
             <span className="text-[10px] font-medium uppercase tracking-wide text-[#0284C7]">Powered by</span>
             <img suppressHydrationWarning src={typeof document !== 'undefined' && (document.documentElement.lang || navigator.language || '').toLowerCase().startsWith('ar') ? '/gulfcctv-logo-ar.png' : '/gulfcctv-logo.png'} alt="GULF CCTV" style={{ height: 34, width: 'auto' }} />
           </div>
