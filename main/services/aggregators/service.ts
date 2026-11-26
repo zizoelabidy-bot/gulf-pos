@@ -230,22 +230,23 @@ export function ingestWebhook(platform: string, payload: unknown, headers: Recor
     logEvent(platform, 'unmapped_payload', null, 'Invalid or unsupported order payload');
     return { ok: false, reason: 'unmapped' };
   }
+  const order = canonical;
   return db.transaction((): IngestResult => {
-  const existing = db.prepare(
-    'SELECT id, order_number FROM orders WHERE online_platform = ? AND external_order_id = ?'
-  ).get(canonical.platform, canonical.externalOrderId) as { id: number; order_number: string } | undefined;
-  if (existing) {
-    logEvent(platform, 'order_duplicate', canonical.externalOrderId, `existing order ${existing.order_number}`);
-    return { ok: true, duplicate: true, orderId: existing.id, orderNumber: existing.order_number };
-  }
-  const { orderId, orderNumber } = insertOnlineOrder(canonical);
-  logEvent(platform, 'order_received', canonical.externalOrderId, `POS order ${orderNumber}, ${canonical.items.length} items, total ${canonical.total}${canonical.currency ? ' ' + canonical.currency : ''}`);
-  const autoAccepted = false;
-  if (cfg.autoAccept) {
-    const update = adapter.buildStatusUpdate(cfg, canonical.externalOrderId, 'accepted');
-    logEvent(platform, 'auto_accept_unavailable', canonical.externalOrderId, update ? 'Status delivery is not implemented' : 'Partner endpoints required');
-  }
-  return { ok: true, orderId, orderNumber, autoAccepted };
+    const existing = db.prepare(
+      'SELECT id, order_number FROM orders WHERE online_platform = ? AND external_order_id = ?'
+    ).get(order.platform, order.externalOrderId) as { id: number; order_number: string } | undefined;
+    if (existing) {
+      logEvent(platform, 'order_duplicate', order.externalOrderId, `existing order ${existing.order_number}`);
+      return { ok: true, duplicate: true, orderId: existing.id, orderNumber: existing.order_number };
+    }
+    const { orderId, orderNumber } = insertOnlineOrder(order);
+    logEvent(platform, 'order_received', order.externalOrderId, `POS order ${orderNumber}, ${order.items.length} items, total ${order.total}${order.currency ? ' ' + order.currency : ''}`);
+    const autoAccepted = false;
+    if (cfg.autoAccept) {
+      const update = adapter.buildStatusUpdate(cfg, order.externalOrderId, 'accepted');
+      logEvent(platform, 'auto_accept_unavailable', order.externalOrderId, update ? 'Status delivery is not implemented' : 'Partner endpoints required');
+    }
+    return { ok: true, orderId, orderNumber, autoAccepted };
   }).immediate();
 }
 
