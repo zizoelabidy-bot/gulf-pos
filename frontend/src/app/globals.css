@@ -684,3 +684,67 @@ html.dark::-webkit-scrollbar-thumb:hover,
 .dark .gulf-product-tile .text-brand { color: #7dd3fc; }
 .gulf-status-bar .text-muted-foreground\/80 { color: #b9cce2; }
 .gulf-status-bar button:hover { color: #fff; background: #173c61; }
+
+/* GULF management screens: local layout primitives, shared visual hierarchy. */
+.gulf-page-heading {
+  padding: .85rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-inline-start: 4px solid #005bb9;
+  border-radius: .625rem;
+}
+.gulf-page-heading h1 { font-weight: 800; }
+.gulf-toolbar {
+  padding: .65rem .8rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: .625rem;
+}
+.gulf-panel, .gulf-table-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: .625rem;
+  box-shadow: 0 2px 8px #0a25400a;
+}
+.gulf-table-panel thead th {
+  background: var(--muted);
+  color: var(--foreground);
+  font-weight: 700;
+  border-block-end: 1px solid var(--border);
+}
+.gulf-table-panel tbody tr:hover { background: var(--accent); }
+.gulf-table-panel td { font-variant-numeric: tabular-nums; }
+.gulf-table-card {
+  border-block-start: 3px solid var(--border);
+  box-shadow: 0 2px 8px #0a25400a;
+}
+.gulf-table-card[data-table-status="available"], .gulf-panel[data-table-status="available"] { border-block-start: 3px solid #16834b; }
+.gulf-table-card[data-table-status="occupied"], .gulf-panel[data-table-status="occupied"] { border-block-start: 3px solid #005bb9; }
+.gulf-table-card[data-table-status="reserved"], .gulf-panel[data-table-status="reserved"] { border-block-start: 3px solid #b7791f; }
+.gulf-table-card[data-table-status="cleaning"], .gulf-panel[data-table-status="cleaning"] { border-block-start: 3px solid #64748b; }
+.gulf-table-card-heading { background: var(--muted); border-start-start-radius: .5rem; border-start-end-radius: .5rem; }
+.gulf-staff-avatar {
+  display: grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  flex: none;
+  border-radius: .625rem;
+  background: #0a2b50;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+.gulf-settings-nav { background: var(--card); padding: .75rem; border: 1px solid var(--border); border-radius: .625rem; }
+.gulf-settings-active { background: #0055ad; color: #fff; }
+.gulf-settings-section-heading { border-block-end: 1px solid var(--border); padding-block-end: .75rem; }
+.gulf-kds-header { background: var(--card); padding: .75rem 1rem; border: 1px solid var(--border); border-radius: .625rem; border-inline-start: 4px solid #005bb9; }
+.gulf-kds-mark { color: #fff; background: #0a2b50; border-radius: .5rem; padding: .5rem .7rem; font-size: .875rem; font-weight: 800; white-space: nowrap; }
+.gulf-kds-column { border: 1px solid var(--border); }
+.gulf-kds-ticket { box-shadow: 0 2px 6px #0a254014; }
+.gulf-management [data-slot="tabs-list"][data-variant="default"] { background: var(--card); border: 1px solid var(--border); max-inline-size: 100%; }
+.gulf-management [data-slot="tabs-list"][data-variant="default"] [data-slot="tabs-trigger"][data-state="active"] { background: #0055ad; color: #fff; }
+@media (max-width: 640px) {
+  .gulf-page-heading, .gulf-toolbar { padding: .65rem .75rem; }
+  .gulf-kds-header { padding: .5rem .65rem; }
+}
