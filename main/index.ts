@@ -695,14 +695,14 @@ async function showRuntimeStuckDialog(reason: string): Promise<void> {
       `URL: ${lastWindowLoadFailure.validatedURL ?? `http://localhost:${getServerPort()}`}`,
     );
   }
-  detailLines.push(`Platform: ${process.platform} | Flo: ${app.getVersion()}`);
+  detailLines.push(`Platform: ${process.platform} | GULF POS: ${app.getVersion()}`);
 
   const { response } = await dialog.showMessageBox({
     type: 'error',
-    title: 'Flo needs to restart',
+    title: 'GULF POS needs to restart',
     message:
-      'Flo could not recover automatically. This usually means another program ' +
-      '(antivirus, firewall, or a leftover Flo process) is blocking its local server.\n\n' +
+      'GULF POS could not recover automatically. This usually means another program ' +
+      '(antivirus, firewall, or a leftover GULF POS process) is blocking its local server.\n\n' +
       'Please quit and reopen the app. If this keeps happening, sending a diagnostic ' +
       'report helps us fix it — it contains no order, customer, or business data.',
     detail: detailLines.join('\n'),
@@ -721,7 +721,7 @@ async function showRuntimeStuckDialog(reason: string): Promise<void> {
 
   await dialog.showMessageBox({
     type: 'info',
-    title: 'Flo',
+    title: 'GULF POS',
     message:
       'Diagnostic captured. If sharing is enabled and this device is online, it will be sent automatically.',
     buttons: ['Quit'],
@@ -1226,7 +1226,7 @@ function createTray(): void {
 
     const contextMenu = Menu.buildFromTemplate([
       {
-        label: 'Open Flo',
+        label: 'Open GULF POS',
         click: () => {
           showMainWindow();
         },
@@ -1241,7 +1241,7 @@ function createTray(): void {
       },
     ]);
 
-    tray.setToolTip('Flo');
+    tray.setToolTip('GULF POS');
     tray.setContextMenu(contextMenu);
     tray.on('double-click', () => {
       showMainWindow();
@@ -1534,7 +1534,7 @@ function createMenu(): void {
       label: 'Help',
       submenu: [
         ...(process.platform !== 'darwin'
-          ? [{ label: 'About Flo', click: () => showAbout() }]
+          ? [{ label: 'About GULF POS', click: () => showAbout() }]
           : []),
         ...(isStoreBuild ? [] : [{ label: 'Check for Updates', click: () => checkForUpdates() }]),
         {
@@ -1573,22 +1573,22 @@ function showAbout(): void {
   const serverAppPort = getServerAppPort();
   dialog.showMessageBox({
     type: 'info',
-    title: 'About Flo',
+    title: 'About GULF POS',
     message: 'GULF POS',
     detail: [
       `Version: ${app.getVersion()}`,
       `Electron: ${process.versions.electron}`,
       `Node: ${process.versions.node}`,
       '',
-      'A self-hosted, offline-first Point of Sale system.',
+      'GULF CCTV — Smart System Solutions',
+      'Restaurant Management System',
       'Your data stays yours.',
       '',
-      `POS URL: http://flo.local:${getServerPort()}`,
-      `KDS URL: http://flo.local:${kdsPort}`,
-      `Server App URL: http://flo.local:${serverAppPort}`,
+      `POS URL: http://${ip}:${getServerPort()}`,
+      `KDS URL: http://${ip}:${kdsPort}`,
+      `Server App URL: http://${ip}:${serverAppPort}`,
       '',
-      `KDS IP fallback: http://${ip}:${kdsPort}`,
-      `Server App IP fallback: http://${ip}:${serverAppPort}`,
+      'Legal notices: licenses/LICENSE.txt (installation resources)',
     ].join('\n'),
   });
 }
