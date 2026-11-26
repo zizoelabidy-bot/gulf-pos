@@ -1,4 +1,5 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, safeStorage } = require('electron');
+const { createCommercialStore } = require('./commercial-store.cjs');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const issuer = require('./license-admin.cjs');
@@ -35,6 +36,9 @@ else {
     win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
     win.webContents.on('will-navigate', event => event.preventDefault());
     win.webContents.session.setPermissionRequestHandler((_contents, _permission, callback) => callback(false));
+    const commercial = createCommercialStore(path.join(app.getPath('userData'), 'commercial-registry.enc'), safeStorage);
+    ipcMain.handle('gulf-admin:commercial-list', safe(() => commercial.read()));
+    ipcMain.handle('gulf-admin:commercial-record', safe(input => commercial.record(input)));
     ipcMain.handle('gulf-admin:status', safe(() => ({
       ...issuer.issuerStatus(), configured: Boolean(process.env.GULF_LICENSE_KEYS_DIR)
     })));
