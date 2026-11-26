@@ -677,3 +677,10 @@ html.dark::-webkit-scrollbar-thumb:hover,
 .gulf-status-bar .text-muted-foreground, .gulf-status-bar .text-foreground { color: #e2edf9; }
 .gulf-status-bar .text-emerald-700, .gulf-status-bar .text-emerald-600 { color: #86efac; }
 .gulf-status-bar .text-amber-600 { color: #fcd34d; }
+
+/* Green is reserved for the real payment confirmation, not order creation. */
+.gulf-payment-cta:not(:disabled) { background: #08783e; color: #fff; }
+.gulf-payment-cta:not(:disabled):hover { background: #066333; }
+.dark .gulf-product-tile .text-brand { color: #7dd3fc; }
+.gulf-status-bar .text-muted-foreground\/80 { color: #b9cce2; }
+.gulf-status-bar button:hover { color: #fff; background: #173c61; }
