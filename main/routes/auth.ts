@@ -46,7 +46,6 @@ import {
   cloudSync,
   CloudRequestError,
   DEFAULT_CLOUD_SERVER_URL,
-  normalizeCloudServerUrl,
 } from '../services/cloud-sync';
 import { asyncHandler } from '../middleware/async-handler';
 import { handleRestoreFromPickedFile } from './database';
@@ -64,7 +63,6 @@ import { serializeOperationFailure } from '../lib/operation-failure';
 import { capturePostHogUsage, syncPostHogIdentity } from '../services/posthog';
 import {
   PRODUCT_ANALYTICS_LEVEL_SETTING,
-  parseProductAnalyticsLevel,
 } from '../services/posthog-identity';
 
 const router = Router();
@@ -1685,14 +1683,10 @@ router.post('/setup/initialize', (req: Request, res: Response) => {
       master_pin,
       owner_approval_pin,
       owner_approval_pin_confirmation,
-      cloud_server_url,
-      email_product_updates,
-      email_marketing,
-      product_analytics_level,
     } = req.body;
-    // Without a choice the store shares anonymously and the owner is asked after setup.
-    const analyticsLevel = parseProductAnalyticsLevel(product_analytics_level);
-    const telemetryChoice = analyticsLevel === 'off' ? 'false' : 'true';
+    // GULF local-first release: ignore legacy cloud/telemetry opt-ins from old clients.
+    const analyticsLevel = 'off';
+    const telemetryChoice = 'false';
     const email = normalizeEmail(req.body.email);
     // Regional settings come from signup, never from a fallback — see
     // docs/reference/product-invariants.md. There is no default country.
@@ -1783,18 +1777,7 @@ router.post('/setup/initialize', (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid service model' });
     }
 
-    // New installs start with cloud coordination enabled.
-    const cloudSyncEnabled = true;
-    let normalizedCloudServerUrl: string | undefined;
-    if (cloudSyncEnabled) {
-      try {
-        normalizedCloudServerUrl = normalizeCloudServerUrl(
-          cloud_server_url || DEFAULT_CLOUD_SERVER_URL,
-        );
-      } catch {
-        return res.status(400).json({ error: 'Cloud server URL must be a valid HTTPS URL' });
-      }
-    }
+    const cloudSyncEnabled = false;
 
     let userId = '';
     const hashedPassword = bcrypt.hashSync(password, 10);
@@ -1873,10 +1856,14 @@ router.post('/setup/initialize', (req: Request, res: Response) => {
         // '1'/'0', not 'true'/'false' — mirrors FloAdmin's own `stores` table and
         // matches how cloud-sync.ts reads this key everywhere else.
         cloud_sync_enabled: cloudSyncEnabled ? '1' : '0',
-        cloud_server_url: normalizedCloudServerUrl || DEFAULT_CLOUD_SERVER_URL,
-        email_product_updates: email_product_updates === true ? 'true' : 'false',
-        email_marketing: email_marketing === true ? 'true' : 'false',
+        cloud_server_url: DEFAULT_CLOUD_SERVER_URL,
+        email_product_updates: 'false',
+        email_marketing: 'false',
         cloud_services_disabled_by_user: 'false',
+        cloud_orders_enabled: '0',
+        cloud_reports_enabled: '0',
+        cloud_command_polling_enabled: '0',
+        diagnostics_consent: 'false',
       });
 
       if (!pendingCurrencyReset) {
