@@ -147,10 +147,10 @@ export default function FoodCostPage() {
   }, []);
 
   return (
-    <div className="p-4 space-y-4">
-      <h1 className="text-xl font-semibold">{t('title')}</h1>
+    <div className="gulf-management space-y-4">
+      <h1 className="gulf-page-heading text-2xl font-bold text-foreground">{t('title')}</h1>
       {error && <p className="text-sm text-red-600">{error}</p>}
-      <div className="flex gap-2">
+      <div className="gulf-toolbar flex flex-wrap gap-2">
         <Button
           variant={tab === 'profitability' ? 'default' : 'outline'}
           onClick={() => setTab('profitability')}
@@ -166,7 +166,7 @@ export default function FoodCostPage() {
       </div>
 
       {tab === 'profitability' && (
-        <div className="overflow-x-auto rounded-md border">
+        <div className="gulf-table-panel overflow-x-auto rounded-lg border border-border bg-card">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b bg-muted/50">
@@ -238,7 +238,7 @@ export default function FoodCostPage() {
             </label>
             <Button onClick={() => void loadConsumption(from, to)}>{t('apply')}</Button>
           </div>
-          <div className="overflow-x-auto rounded-md border">
+          <div className="gulf-table-panel overflow-x-auto rounded-lg border border-border bg-card">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b bg-muted/50">
