@@ -227,6 +227,10 @@ export function SupportTicketForm({
         </div>
       )}
 
+      <div className="gulf-panel p-4 text-sm" role="status">
+        <p>{locale.startsWith('ar') ? 'إرسال تذاكر الدعم عبر الإنترنت غير متاح حاليًا. تواصل مع جلف مباشرة من خلال موقع الشركة.' : 'Online ticket delivery is currently unavailable. Contact GULF directly through the company website.'}</p>
+        <a href="https://gulfcctv.com/" target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex font-medium text-brand dark:text-sky-300 underline">gulfcctv.com</a>
+      </div>
       <form onSubmit={submit} className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <Card>
           <CardHeader>
@@ -310,7 +314,7 @@ export function SupportTicketForm({
             </label>
             <Button
               type="submit"
-              disabled={loading || submitting || !subject.trim() || !message.trim()}
+              disabled={true}
               className="w-full sm:w-auto"
             >
               {submitting ? <Loader2 className="animate-spin" /> : <LifeBuoy />}
