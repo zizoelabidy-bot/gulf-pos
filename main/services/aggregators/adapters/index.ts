@@ -14,5 +14,5 @@ export const ADAPTERS: Record<PlatformKey, PlatformAdapter> = {
 export const PLATFORM_KEYS = Object.keys(ADAPTERS) as PlatformKey[];
 
 export function getAdapter(key: string): PlatformAdapter | null {
-  return (ADAPTERS as Record<string, PlatformAdapter>)[key] ?? null;
+  return Object.hasOwn(ADAPTERS, key) ? ADAPTERS[key as PlatformKey] : null;
 }

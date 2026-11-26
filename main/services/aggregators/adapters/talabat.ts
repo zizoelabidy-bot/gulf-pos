@@ -8,7 +8,7 @@
  * status updates are logged until credentials supply them.
  */
 import type { CanonicalOrder, PlatformAdapter, StatusUpdate, AggregatorConfig } from '../types';
-import { num, str, strList } from '../types';
+import { strictNumber, strList } from '../types';
 import { verifyHmacHeaders } from './helpers';
 
 function mapInbound(payload: unknown): CanonicalOrder | null {
@@ -16,19 +16,21 @@ function mapInbound(payload: unknown): CanonicalOrder | null {
   const order = (root.order && typeof root.order === 'object' ? root.order : root) as Record<string, unknown>;
   const code = strList(order.code, order.id, order.orderId, root.code);
   const itemsRaw = Array.isArray(order.items) ? order.items : null;
-  if (!code || !itemsRaw || itemsRaw.length === 0) return null;
+  if (!code || !itemsRaw || itemsRaw.length === 0 || itemsRaw.some(i => !i || typeof i !== 'object' || Array.isArray(i))) return null;
   const items = itemsRaw.map((it) => {
     const i = it as Record<string, unknown>;
     return {
       externalItemId: strList(i.sku, i.id, i.externalId),
       name: strList(i.name, i.title) || 'Item',
-      quantity: Math.max(1, Math.round(num(i.quantity) || 1)),
-      unitPrice: num(i.unitPrice) || num(i.price),
+      quantity: strictNumber(i.quantity),
+      unitPrice: strictNumber(i.unitPrice ?? i.price),
     };
   });
   const customer = (order.customer && typeof order.customer === 'object' ? order.customer : {}) as Record<string, unknown>;
+  if (items.some(i => !Number.isSafeInteger(i.quantity) || i.quantity <= 0 || !Number.isFinite(i.unitPrice))) return null;
   const subtotal = items.reduce((s, i) => s + i.unitPrice * i.quantity, 0);
-  const total = num(order.totalPrice) || num(order.total) || subtotal;
+  const total = strictNumber(order.totalPrice ?? order.total);
+  if (!Number.isFinite(total) || !Number.isFinite(strictNumber(order.tax ?? 0))) return null;
   return {
     externalOrderId: code,
     platform: 'talabat',
@@ -38,7 +40,7 @@ function mapInbound(payload: unknown): CanonicalOrder | null {
     currency: strList(order.currency),
     items,
     subtotal,
-    tax: num(order.tax) || Math.max(0, total - subtotal),
+    tax: strictNumber(order.tax ?? 0),
     total,
   };
 }

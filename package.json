@@ -377,7 +377,7 @@
     "test:variant-pos-surface": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/variant-pos-surface.test.ts",
     "test:product-variants-screen": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/product-variants-screen.test.ts",
     "test:printer-text-size": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/printer-text-size.test.ts && node tests/run-electron-node-test.cjs tests/migration-printer-text-size.test.ts",
-    "test:delivery-management": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/delivery-management.test.ts",
+    "test:delivery-management": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/delivery-management.test.ts && node tests/run-electron-node-test.cjs tests/aggregators.test.ts && node tests/run-electron-node-test.cjs tests/card-terminal.test.ts",
     "test:purchasing": "node tests/run-electron-node-test.cjs tests/purchasing.test.ts",
     "test:food-cost": "node tests/run-electron-node-test.cjs tests/food-cost.test.ts"
   },

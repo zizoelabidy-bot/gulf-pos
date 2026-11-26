@@ -7,7 +7,7 @@
  * onboarding, so outbound calls are logged until credentials are in place.
  */
 import type { CanonicalOrder, PlatformAdapter, StatusUpdate, AggregatorConfig } from '../types';
-import { num, str, strList } from '../types';
+import { strictNumber, strList } from '../types';
 import { verifyHmacHeaders } from './helpers';
 
 function mapInbound(payload: unknown): CanonicalOrder | null {
@@ -16,18 +16,20 @@ function mapInbound(payload: unknown): CanonicalOrder | null {
   const order = (root.order && typeof root.order === 'object' ? root.order : root) as Record<string, unknown>;
   const orderId = strList(order.orderId, order.id, root.orderId);
   const itemsRaw = Array.isArray(order.items) ? order.items : null;
-  if (!orderId || !itemsRaw || itemsRaw.length === 0) return null;
+  if (!orderId || !itemsRaw || itemsRaw.length === 0 || itemsRaw.some(i => !i || typeof i !== 'object' || Array.isArray(i))) return null;
   const items = itemsRaw.map((it) => {
     const i = it as Record<string, unknown>;
     return {
       externalItemId: strList(i.skuId, i.id, i.sku),
       name: strList(i.name, i.skuName) || 'Item',
-      quantity: Math.max(1, Math.round(num(i.quantity) || 1)),
-      unitPrice: num(i.price) || num(i.unitPrice),
+      quantity: strictNumber(i.quantity),
+      unitPrice: strictNumber(i.price ?? i.unitPrice),
     };
   });
+  if (items.some(i => !Number.isSafeInteger(i.quantity) || i.quantity <= 0 || !Number.isFinite(i.unitPrice))) return null;
   const subtotal = items.reduce((s, i) => s + i.unitPrice * i.quantity, 0);
-  const total = num(order.total) || num(order.totalPrice) || subtotal;
+  const total = strictNumber(order.total ?? order.totalPrice);
+  if (!Number.isFinite(total) || !Number.isFinite(strictNumber(order.tax ?? 0))) return null;
   return {
     externalOrderId: orderId,
     platform: 'keeta',
@@ -37,7 +39,7 @@ function mapInbound(payload: unknown): CanonicalOrder | null {
     currency: strList(order.currency),
     items,
     subtotal,
-    tax: num(order.tax) || Math.max(0, total - subtotal),
+    tax: strictNumber(order.tax ?? 0),
     total,
   };
 }

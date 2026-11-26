@@ -14,7 +14,13 @@ const crypto = require('crypto');
 const testDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gulf-aggregators-'));
 Module._load = function (request: string, parent: unknown, isMain: boolean) {
   if (request === 'electron')
-    return { app: { isPackaged: true, getPath: () => testDir, getVersion: () => 'test' } };
+    return { app: { isPackaged: true, getPath: () => testDir, getVersion: () => 'test' },
+      safeStorage: {
+        isEncryptionAvailable: () => true,
+        getSelectedStorageBackend: () => 'mock',
+        encryptString: (value: string) => Buffer.from(value.split('').reverse().join('')),
+        decryptString: (value: Buffer) => value.toString().split('').reverse().join(''),
+      } };
   return originalLoad.apply(this, arguments as any);
 };
 
@@ -33,6 +39,7 @@ function talabatDispatch(orderCode: string, items: { sku: string; name: string; 
       code: orderCode,
       currency: 'KWD',
       items: items.map((i) => ({ sku: i.sku, name: i.name, quantity: i.quantity, price: i.price })),
+      total: items.reduce((sum, item) => sum + item.price * item.quantity, 0),
       customer: { name: 'Sim Customer', phone: '+96590000000' },
       comment: 'ring twice',
     },
@@ -48,6 +55,7 @@ function keetaOrder(orderId: string) {
       orderId,
       currency: 'KWD',
       items: [{ skuId: 'K-BRG-1', name: 'Keeta Burger', quantity: 1, price: 1.75 }],
+      total: 1.75,
       remark: 'no onions',
     },
   };
@@ -100,7 +108,7 @@ const sim1 = talabatDispatch('TLB-100001', [
 const r1 = svc.ingestWebhook('talabat', sim1.payload, sim1.headers);
 assertOrThrow(r1.ok && !r1.duplicate, 'talabat order ingested');
 assertOrThrow(!!r1.orderNumber, 'POS order number allocated');
-assertOrThrow(r1.autoAccepted === true, 'auto-accept logged');
+assertOrThrow(r1.autoAccepted === false, 'unimplemented auto-accept never reports success');
 const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(r1.orderId);
 assertEqualOrThrow(order.type, 'online', 'order type online');
 assertEqualOrThrow(order.online_platform, 'talabat', 'online_platform set');
@@ -109,6 +117,27 @@ assertEqualOrThrow(order.total, 2.75, 'order total from payload');
 const items = db.prepare('SELECT * FROM order_items WHERE order_id = ? ORDER BY id').all(r1.orderId);
 assertEqualOrThrow(items.length, 2, 'two order items');
 assertOrThrow(items[0].product_id === 'ext:talabat:sku-zaatar', 'unmapped item uses placeholder product id');
+
+// Financial and signature regressions.
+const keyRow = db.prepare("SELECT value FROM license_meta WHERE key = 'aggregator_secret'").get();
+assertOrThrow(keyRow.value.startsWith('os1.'), 'key wrapped with OS storage adapter');
+assertOrThrow(!svc.testConnection('talabat').ok, 'configuration is not live connectivity');
+const pretty = talabatDispatch('TLB-PRETTY', [{ sku: 'a', name: 'A', quantity: 1, price: 1 }]);
+const rawPretty = JSON.stringify(pretty.payload, null, 2);
+const signedPretty = crypto.createHmac('sha256', SECRET).update(rawPretty).digest('hex');
+assertOrThrow(svc.ingestWebhook('talabat', pretty.payload, { webhookhmacauth: signedPretty }, rawPretty).ok, 'original bytes accepted');
+assertOrThrow(!svc.ingestWebhook('talabat', pretty.payload, { webhookhmacauth: signedPretty }).ok, 'reserialized bytes do not match signature');
+for (const [id, quantity, price] of [['NEG', 1, -1], ['ZEROQ', 0, 1], ['FRACQ', 1.5, 1], ['BADPRICE', 1, '1xyz']]) {
+  const badOrder = talabatDispatch(String(id), [{ sku: 'a', name: 'A', quantity: Number(quantity), price: price as number }]);
+  assertOrThrow(!svc.ingestWebhook('talabat', badOrder.payload, badOrder.headers).ok, 'invalid order rejected: ' + id);
+}
+const broken = talabatDispatch('TLB-ROLLBACK', [{ sku: 'a', name: 'A', quantity: 1, price: 1 }, { sku: 'b', name: 'FAIL-ITEM', quantity: 1, price: 1 }]);
+db.exec("CREATE TEMP TRIGGER fail_aggregator_item BEFORE INSERT ON order_items WHEN NEW.product_name = 'FAIL-ITEM' BEGIN SELECT RAISE(ABORT, 'forced item failure'); END");
+let rolledBack = false;
+try { svc.ingestWebhook('talabat', broken.payload, broken.headers); } catch { rolledBack = true; }
+db.exec('DROP TRIGGER fail_aggregator_item');
+assertOrThrow(rolledBack, 'forced item failure surfaced');
+assertEqualOrThrow(db.prepare("SELECT COUNT(*) AS c FROM orders WHERE external_order_id = 'TLB-ROLLBACK'").get().c, 0, 'failed line rolls back entire order');
 
 // 6. Dedupe: same external order id is not inserted twice
 const r2 = svc.ingestWebhook('talabat', sim1.payload, sim1.headers);

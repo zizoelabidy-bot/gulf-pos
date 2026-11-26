@@ -65,6 +65,13 @@ export interface PlatformAdapter {
   validateConfig(cfg: AggregatorConfig): { ok: boolean; message: string };
 }
 
+/** Do not coerce invalid, missing or partially numeric values to zero. */
+export function strictNumber(v: unknown): number {
+  if (typeof v === 'string' && !/^\d+(?:\.\d+)?$/.test(v.trim())) return NaN;
+  const n = typeof v === 'number' ? v : typeof v === 'string' ? Number(v) : NaN;
+  return Number.isFinite(n) && n >= 0 ? n : NaN;
+}
+
 export function num(v: unknown): number {
   const n = typeof v === 'string' ? parseFloat(v) : typeof v === 'number' ? v : NaN;
   return Number.isFinite(n) ? n : 0;
