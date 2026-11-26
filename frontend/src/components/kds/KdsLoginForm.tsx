@@ -55,9 +55,10 @@ export function KdsLoginForm({ conn }: { conn: UseKdsConnectionResult }) {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="bg-card rounded-2xl shadow-xl p-8 w-full max-w-md">
+      <div className="gulf-panel bg-card p-6 sm:p-8 w-full max-w-md">
         <div className="text-center mb-6">
           <ChefHat size={48} className="mx-auto text-brand dark:text-sky-300 mb-4" />
+          <p className="font-extrabold tracking-wide text-brand dark:text-sky-300 mb-2" dir="ltr">GULF POS</p>
           <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
           <p className="text-slate-700 dark:text-slate-300 mt-2">{t('loginSubtitle')}</p>
         </div>
