@@ -21,7 +21,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
-const KEYS_DIR = path.join(__dirname, 'keys');
+const KEYS_DIR = process.env.GULF_LICENSE_KEYS_DIR ? path.resolve(process.env.GULF_LICENSE_KEYS_DIR) : path.join(__dirname, 'keys');
 const PRIVATE_KEY_PATH = path.join(KEYS_DIR, 'license-private.pem');
 const PUBLIC_KEY_PATH = path.join(KEYS_DIR, 'license-public.pem');
 const REGISTRY_PATH = path.join(KEYS_DIR, 'issued-licenses.jsonl');
@@ -52,7 +52,7 @@ function cmdInit() {
   }
   fs.mkdirSync(KEYS_DIR, { recursive: true, mode: 0o700 });
   const { publicKey, privateKey } = crypto.generateKeyPairSync('ed25519');
-  fs.writeFileSync(PRIVATE_KEY_PATH, privateKey.export({ type: 'pkcs8', format: 'pem' }), { mode: 0o600 });
+  fs.writeFileSync(PRIVATE_KEY_PATH, privateKey.export({ type: 'pkcs8', format: 'pem' }), { mode: 0o600, flag: 'wx' });
   fs.writeFileSync(PUBLIC_KEY_PATH, publicKey.export({ type: 'spki', format: 'pem' }));
   console.log('Keypair generated in admin-app/keys/');
   console.log('NEVER commit or share license-private.pem.');
@@ -60,7 +60,7 @@ function cmdInit() {
 }
 
 function cmdPubkey() {
-  if (!fs.existsSync(PUBLIC_KEY_PATH)) return console.error('Run init first.');
+  if (!fs.existsSync(PUBLIC_KEY_PATH)) throw new Error('Import the existing issuer keypair before issuing licenses.');
   process.stdout.write(fs.readFileSync(PUBLIC_KEY_PATH, 'utf8'));
 }
 
@@ -71,13 +71,39 @@ function sign(payload) {
   return `GPL1.${b64url(payloadBytes)}.${b64url(sig)}`;
 }
 
+function positiveInteger(raw, name, max) {
+  if (!/^\d+$/.test(raw) || !Number.isSafeInteger(Number(raw)) || Number(raw) < 1 || Number(raw) > max) throw new Error('Invalid --' + name);
+  return Number(raw);
+}
+
+function registryRecords() {
+  if (!fs.existsSync(REGISTRY_PATH)) return [];
+  return fs.readFileSync(REGISTRY_PATH, 'utf8').split('\n').filter(Boolean).map(line => JSON.parse(line));
+}
+
+function cmdList() {
+  const records = registryRecords().map(({ key, ...record }) => ({
+    ...record,
+    status: !record.expires_at || Date.parse(record.expires_at) >= Date.now() ? 'issued' : 'past expiry',
+  }));
+  console.table(records.map(r => ({ id: r.lic_id, customer: r.customer, type: r.type, expires: r.expires_at || 'never', devices: r.devices.length, status: r.status })));
+  console.log('Registry records issuance only, not live activation or revocation.');
+}
+
 function cmdIssue(args, forceType) {
-  if (!fs.existsSync(PRIVATE_KEY_PATH)) return console.error('Run init first.');
+  if (!fs.existsSync(PRIVATE_KEY_PATH)) throw new Error('Import the existing issuer keypair before issuing licenses.');
   const customer = argValue(args, 'customer');
-  if (!customer) return console.error('--customer is required');
+  if (!customer || !customer.trim() || customer.length > 256) throw new Error('Valid --customer is required');
   const type = forceType || argValue(args, 'type', 'annual');
-  if (!['perpetual', 'annual', 'trial'].includes(type)) return console.error('bad --type');
-  const days = parseInt(argValue(args, 'days', type === 'trial' ? '14' : '365'), 10);
+  if (!['perpetual', 'annual', 'trial'].includes(type)) throw new Error('Invalid --type');
+  const days = positiveInteger(argValue(args, 'days', type === 'trial' ? '14' : '365'), 'days', 36500);
+  const maxDevices = positiveInteger(argValue(args, 'max-devices', '1'), 'max-devices', 10000);
+  const maxBranches = positiveInteger(argValue(args, 'max-branches', '1'), 'max-branches', 10000);
+  const devices = argValues(args, 'device');
+  const modules = argValues(args, 'modules').length ? argValues(args, 'modules') : ['*'];
+  if (!devices.length || devices.length > maxDevices || new Set(devices).size !== devices.length ||
+      devices.some(d => !/^[a-f0-9]{32}$/.test(d))) throw new Error('Provide valid unique --device fingerprints within the device limit');
+  if (modules.length > 128 || modules.some(m => !/^(?:\*|[a-z0-9_-]{1,64})$/.test(m))) throw new Error('Invalid modules');
   const now = new Date();
   const payload = {
     lic_id: `GL-${now.getTime().toString(36).toUpperCase()}-${crypto.randomBytes(3).toString('hex').toUpperCase()}`,
@@ -85,14 +111,14 @@ function cmdIssue(args, forceType) {
     type,
     issued_at: now.toISOString(),
     expires_at: type === 'perpetual' ? null : new Date(now.getTime() + days * 864e5).toISOString(),
-    max_devices: parseInt(argValue(args, 'max-devices', '1'), 10),
-    max_branches: parseInt(argValue(args, 'max-branches', '1'), 10),
-    modules: argValues(args, 'modules').length ? argValues(args, 'modules') : ['*'],
-    devices: argValues(args, 'device'),
+    max_devices: maxDevices,
+    max_branches: maxBranches,
+    modules,
+    devices,
   };
   const key = sign(payload);
   const record = { ...payload, key };
-  fs.appendFileSync(REGISTRY_PATH, JSON.stringify(record) + '\n');
+  fs.appendFileSync(REGISTRY_PATH, JSON.stringify(record) + '\n', { mode: 0o600 });
   console.log(`Issued ${payload.lic_id} (${type}) for ${customer}`);
   console.log(`Expires: ${payload.expires_at || 'never'}`);
   console.log('\nLicense key:\n' + key);
@@ -100,9 +126,9 @@ function cmdIssue(args, forceType) {
 
 function cmdInspect(args) {
   const key = argValue(args, 'key') || args[1];
-  if (!key) return console.error('--key is required');
+  if (!key) throw new Error('--key is required');
   const parts = key.trim().split('.');
-  if (parts.length !== 3 || parts[0] !== 'GPL1') return console.error('Not a GULF POS license key');
+  if (parts.length !== 3 || parts[0] !== 'GPL1') throw new Error('Not a GULF POS license key');
   const payload = JSON.parse(fromB64url(parts[1]).toString('utf8'));
   let verified = 'unsigned (no public key found)';
   if (fs.existsSync(PUBLIC_KEY_PATH)) {
@@ -112,25 +138,29 @@ function cmdInspect(args) {
   }
   console.log(JSON.stringify(payload, null, 2));
   console.log(`Signature: ${verified}`);
+  if (verified !== 'VALID') process.exitCode = 1;
 }
 
 function cmdVerifyReceipt(args) {
   // Confirms a deactivation receipt corresponds to an issued license on record.
   const receipt = argValue(args, 'receipt');
-  if (!receipt) return console.error('--receipt is required');
+  if (!receipt) throw new Error('--receipt is required');
   const parts = receipt.trim().split('.');
-  if (parts.length !== 3 || parts[0] !== 'GPLR1') return console.error('Not a transfer receipt');
+  if (parts.length !== 3 || parts[0] !== 'GPLR1') throw new Error('Not a transfer receipt');
   const body = fromB64url(parts[1]).toString('utf8');
-  const [licId, fingerprint, at] = body.split('|');
-  if (!fs.existsSync(REGISTRY_PATH)) return console.error('No registry found');
+  const [licId, fingerprint, at, extra] = body.split('|');
+  if (extra !== undefined || !licId || !/^[a-f0-9]{32}$/.test(fingerprint || '') || !Number.isFinite(Date.parse(at)) || !/^[a-f0-9]{24}$/.test(parts[2])) throw new Error('Malformed receipt');
+  if (!fs.existsSync(REGISTRY_PATH)) throw new Error('No registry found');
   const hit = fs.readFileSync(REGISTRY_PATH, 'utf8').split('\n').filter(Boolean)
     .map((l) => JSON.parse(l)).find((r) => r.lic_id === licId);
-  if (!hit) return console.error(`License ${licId} not found in registry`);
+  if (!hit) throw new Error(`License ${licId} not found in registry`);
+  if (hit.devices.length && !hit.devices.includes(fingerprint)) throw new Error('Receipt device does not match registry');
   console.log(`Receipt claims license ${licId} (customer: ${hit.customer}) was deactivated on device ${fingerprint} at ${at}.`);
-  console.log('You may now issue a new key bound to the replacement device fingerprint.');
+  console.log('UNVERIFIED CLAIM: the issuer cannot authenticate this receipt or establish revocation. Manually verify customer and device before approving a replacement.');
 }
 
 const [cmd, ...args] = process.argv.slice(2);
+try {
 switch (cmd) {
   case 'init': cmdInit(); break;
   case 'pubkey': cmdPubkey(); break;
@@ -138,6 +168,8 @@ switch (cmd) {
   case 'trial': cmdIssue(args, 'trial'); break;
   case 'inspect': cmdInspect(args); break;
   case 'verify-receipt': cmdVerifyReceipt(args); break;
+  case 'list': cmdList(); break;
   default:
-    console.log('GULF CCTV License Admin\nCommands: init | pubkey | issue | trial | inspect | verify-receipt');
+    console.log('GULF CCTV License Admin\nCommands: init | pubkey | issue | trial | inspect | list | verify-receipt');
 }
+} catch (error) { console.error(error.message); process.exitCode = 1; }
