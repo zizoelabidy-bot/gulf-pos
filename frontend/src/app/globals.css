@@ -748,3 +748,10 @@ html.dark::-webkit-scrollbar-thumb:hover,
   .gulf-page-heading, .gulf-toolbar { padding: .65rem .75rem; }
   .gulf-kds-header { padding: .5rem .65rem; }
 }
+
+.gulf-order-card { box-shadow: 0 2px 8px #0a25400a; }
+.gulf-title-bar { background: var(--card); border-block-end: 1px solid var(--border); }
+.dark .gulf-management [data-slot="tabs-trigger"][data-state="active"] { color: white; }
+@media (prefers-reduced-motion: reduce) {
+  .gulf-panel, .gulf-table-card, .gulf-order-card, .gulf-kds-ticket { transition: none; }
+}
