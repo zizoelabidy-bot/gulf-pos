@@ -495,6 +495,10 @@
         "to": "licenses/LICENSE.txt"
       },
       {
+        "from": "OPEN_SOURCE_LICENSES.md",
+        "to": "licenses/OPEN_SOURCE_LICENSES.md"
+      },
+      {
         "from": "assets",
         "to": "assets"
       },
@@ -540,7 +544,7 @@
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "notarize": true,
-      "artifactName": "flocafe-${version}-mac-${arch}.${ext}",
+      "artifactName": "gulf-pos-${version}-mac-${arch}.${ext}",
       "extendInfo": {
         "NSLocalNetworkUsageDescription": "GULF POS connects to thermal printers, KDS displays, and the Waiter & Table Terminal on your local network.",
         "NSBonjourServices": [
@@ -618,7 +622,7 @@
       "icon": "assets",
       "category": "Office",
       "executableName": "flocafe",
-      "artifactName": "flocafe-${version}-linux.${ext}",
+      "artifactName": "gulf-pos-${version}-linux.${ext}",
       "extraFiles": [
         {
           "from": "assets/com.flo.desktop.metainfo.xml",
@@ -632,7 +636,7 @@
       "desktop": {
         "entry": {
           "Name": "GULF POS",
-          "Comment": "Free, open-source POS for cafes and restaurants",
+          "Comment": "GULF POS — Restaurant Management System",
           "GenericName": "Point of Sale",
           "Keywords": "pos;point of sale;restaurant;cafe;billing;invoice;",
           "StartupWMClass": "flo-desktop"
@@ -640,7 +644,7 @@
       }
     },
     "appImage": {
-      "artifactName": "flocafe-${version}-linux.appimage"
+      "artifactName": "gulf-pos-${version}-linux.appimage"
     },
     "snapcraft": {
       "base": "core24",
@@ -671,6 +675,10 @@
     },
     "nsis": {
       "oneClick": false,
+      "shortcutName": "GULF POS",
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "installerHeaderIcon": "assets/icon.ico",
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
