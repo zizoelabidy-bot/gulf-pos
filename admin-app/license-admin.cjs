@@ -98,7 +98,7 @@ function cmdList() {
   console.log('Registry records issuance only, not live activation or revocation.');
 }
 
-function cmdIssue(args, forceType) {
+function issueLicense(args, forceType) {
   if (!fs.existsSync(PRIVATE_KEY_PATH)) throw new Error('Import the existing issuer keypair before issuing licenses.');
   const customer = argValue(args, 'customer');
   if (!customer || !customer.trim() || customer.length > 256) throw new Error('Valid --customer is required');
@@ -127,8 +127,14 @@ function cmdIssue(args, forceType) {
   const key = sign(payload, args.includes('--development-key'));
   const record = { ...payload, key };
   fs.appendFileSync(REGISTRY_PATH, JSON.stringify(record) + '\n', { mode: 0o600 });
-  console.log(`Issued ${payload.lic_id} (${type}) for ${customer}`);
-  console.log(`Expires: ${payload.expires_at || 'never'}`);
+  return record;
+}
+
+function cmdIssue(args, forceType) {
+  const record = issueLicense(args, forceType);
+  const { lic_id, type, customer, expires_at, key } = record;
+  console.log(`Issued ${lic_id} (${type}) for ${customer}`);
+  console.log(`Expires: ${expires_at || 'never'}`);
   console.log('\nLicense key:\n' + key);
 }
 
@@ -168,6 +174,36 @@ function cmdVerifyReceipt(args) {
   process.exitCode = 2;
 }
 
+function issuerStatus() {
+  try {
+    const privateKey = fs.readFileSync(PRIVATE_KEY_PATH, 'utf8');
+    const derived = crypto.createPublicKey(privateKey).export({ type: 'spki', format: 'der' });
+    const stored = crypto.createPublicKey(fs.readFileSync(PUBLIC_KEY_PATH, 'utf8')).export({ type: 'spki', format: 'der' });
+    const expected = crypto.createPublicKey('-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA7lmcnKGiE+4WO4D5CKaNAc9w2z5QxXT2gP0BICAMFbQ=\n-----END PUBLIC KEY-----').export({ type: 'spki', format: 'der' });
+    return { ready: derived.equals(stored) && derived.equals(expected), reason: derived.equals(stored) && derived.equals(expected) ? 'ready' : 'key_mismatch' };
+  } catch { return { ready: false, reason: 'key_unavailable' }; }
+}
+
+function listLicenses() {
+  return registryRecords().map(({ lic_id, customer, type, issued_at, expires_at, max_devices, max_branches, modules, devices }) =>
+    ({ lic_id, customer, type, issued_at, expires_at, max_devices, max_branches, modules, devices }));
+}
+
+function issueFromForm(input) {
+  if (!input || typeof input !== 'object') throw new Error('Invalid issuance request');
+  if (!issuerStatus().ready) throw new Error('Production issuer unavailable');
+  const { customer, type, days, max_devices, max_branches, devices } = input;
+  if (typeof customer !== 'string' || !customer.trim() || customer.startsWith('--') ||
+      !['annual', 'perpetual', 'trial'].includes(type) || !Array.isArray(devices) || devices.length > 100 ||
+      !devices.every(v => typeof v === 'string' && /^[a-f0-9]{32}$/.test(v))) throw new Error('Invalid issuance fields');
+  const args = ['--customer', customer.trim(), '--type', type, '--days', String(days),
+    '--max-devices', String(max_devices), '--max-branches', String(max_branches), '--modules', '*'];
+  for (const d of devices) args.push('--device', d);
+  return issueLicense(args);
+}
+
+module.exports = { issuerStatus, listLicenses, issueFromForm };
+if (require.main === module) {
 const [cmd, ...args] = process.argv.slice(2);
 try {
 switch (cmd) {
@@ -182,3 +218,5 @@ switch (cmd) {
     console.log('GULF CCTV License Admin\nCommands: init | pubkey | issue | trial | inspect | list | verify-receipt');
 }
 } catch (error) { console.error(error.message); process.exitCode = 1; }
+
+}
