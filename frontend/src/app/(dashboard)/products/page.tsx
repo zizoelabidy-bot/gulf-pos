@@ -1133,9 +1133,9 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="dashboard-scroll-shell flex h-full min-h-0 flex-col">
+    <div className="gulf-management dashboard-scroll-shell flex h-full min-h-0 flex-col">
       {tabQuerySync}
-      <div className="mb-6 flex shrink-0 flex-wrap items-center justify-between gap-3">
+      <div className="gulf-page-heading mb-4 flex shrink-0 flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
         {activeTab === 'products' && (
           <Button onClick={openCreate}>
@@ -1183,7 +1183,7 @@ export default function ProductsPage() {
           )}
         </TabsList>
 
-        <div className="mb-4 flex shrink-0 flex-wrap items-center justify-between gap-3">
+        <div className="gulf-toolbar mb-3 flex shrink-0 flex-wrap items-center justify-between gap-3">
           <div className="relative w-full sm:max-w-xs">
             <Search
               size={16}
@@ -1248,7 +1248,7 @@ export default function ProductsPage() {
           {/* Product Table */}
           <div
             data-testid="products-list-scroll"
-            className="bg-card rounded-xl border border-border flex-1 min-h-0 overflow-x-hidden overflow-y-auto"
+            className="gulf-table-panel bg-card rounded-xl border border-border flex-1 min-h-0 overflow-x-hidden overflow-y-auto"
           >
             <table className="w-full">
               <thead className="bg-muted">
@@ -2205,7 +2205,7 @@ export default function ProductsPage() {
         >
           <div
             data-testid="categories-list-scroll"
-            className="bg-card rounded-xl border border-border flex-1 min-h-0 overflow-x-hidden overflow-y-auto"
+            className="gulf-table-panel bg-card rounded-xl border border-border flex-1 min-h-0 overflow-x-hidden overflow-y-auto"
           >
             <table className="w-full">
               <thead className="bg-muted">
@@ -2487,7 +2487,7 @@ export default function ProductsPage() {
         <TabsContent value="addons" className="dashboard-scroll-pane flex min-h-0 flex-1 flex-col">
           <div
             data-testid="addons-list-scroll"
-            className="bg-card rounded-xl border border-border flex-1 min-h-0 overflow-x-hidden overflow-y-auto"
+            className="gulf-table-panel bg-card rounded-xl border border-border flex-1 min-h-0 overflow-x-hidden overflow-y-auto"
           >
             <table className="w-full">
               <thead className="bg-muted">
