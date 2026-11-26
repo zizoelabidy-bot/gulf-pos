@@ -25,7 +25,6 @@ import {
   KeyRound,
   LifeBuoy,
   Mail,
-  MessageCircle,
   Ticket,
   UserCheck,
 } from 'lucide-react';
@@ -41,7 +40,6 @@ interface PinPickerUser {
   role: string;
 }
 
-const WHATSAPP_COMMUNITY_URL = 'https://chat.whatsapp.com/LxHobzv6d2X81NzrVfMjzo?mode=gi_t';
 const SETUP_STATUS_MAX_RETRIES = 2;
 const SETUP_STATUS_RETRY_DELAY_MS = 400;
 
@@ -621,9 +619,8 @@ function LoginContent() {
                 {tSupport('menuSubmitTicket')}
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <a href={WHATSAPP_COMMUNITY_URL} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="size-4" />
-                  {tSupport('menuWhatsapp')}
+                <a href="https://gulfcctv.com" target="_blank" rel="noopener noreferrer">
+                  GULF CCTV
                 </a>
               </DropdownMenuItem>
             </DropdownMenuContent>
