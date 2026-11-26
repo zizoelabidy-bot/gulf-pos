@@ -38,7 +38,7 @@ import { getTenantCurrency } from './refund';
 import { getCurrencyMinorUnitFactor, resolveRegionalSnapshot } from '../countries';
 import { businessDateForInstant } from '../../shared/business-date';
 import { buildDailySalesExportDataset, type DailySalesExportItemRow } from './daily-sales-export';
-import { assertOnlineAllowed, isOfflineMode } from './offline-mode';
+import { assertOnlineAllowed, isOfflineMode, isLegacyCloudBlocked } from './offline-mode';
 import { normalizeSupportedCurrencyCode } from '../../shared/currencies';
 
 export const DEFAULT_CLOUD_SERVER_URL = 'https://blue.flopos.com/';
@@ -1314,6 +1314,10 @@ export class CloudSyncService {
   reload() {
     if (this.cloudDeletionInProgress || this.shutdownRequested) return;
     this.stop();
+    if (isLegacyCloudBlocked()) {
+      this.settings = null;
+      return;
+    }
     if (isOfflineMode()) return;
     const persisted = this.loadSettings(false);
     this.settings = persisted;
@@ -1479,6 +1483,7 @@ export class CloudSyncService {
 
   /** Returns whether cloud account features are available and enabled by the user. */
   isCloudAccountAvailable(): boolean {
+    if (isLegacyCloudBlocked()) return false;
     const settings = this.readSettings(getDatabase());
     return (
       settings.cloud_registration_status === 'registered' &&
@@ -1498,13 +1503,13 @@ export class CloudSyncService {
       cloud_server_url: refreshed.cloud_server_url || DEFAULT_CLOUD_SERVER_URL,
       cloud_pos_hash: refreshed.cloud_pos_hash || null,
       cloud_pos_id: refreshed.cloud_pos_id || null,
-      cloud_sync_enabled: refreshed.cloud_sync_enabled === '1',
-      cloud_orders_enabled: refreshed.cloud_orders_enabled === '1',
-      cloud_reports_enabled: refreshed.cloud_reports_enabled === '1',
-      cloud_command_polling_enabled: refreshed.cloud_command_polling_enabled === '1',
+      cloud_sync_enabled: !isLegacyCloudBlocked() && refreshed.cloud_sync_enabled === '1',
+      cloud_orders_enabled: !isLegacyCloudBlocked() && refreshed.cloud_orders_enabled === '1',
+      cloud_reports_enabled: !isLegacyCloudBlocked() && refreshed.cloud_reports_enabled === '1',
+      cloud_command_polling_enabled: !isLegacyCloudBlocked() && refreshed.cloud_command_polling_enabled === '1',
       cloud_registration_status: refreshed.cloud_registration_status || 'unregistered',
       cloud_services_disabled_by_user: refreshed.cloud_services_disabled_by_user === 'true',
-      cloud_connected: refreshed.cloud_connected === 'true',
+      cloud_connected: !isLegacyCloudBlocked() && refreshed.cloud_connected === 'true',
       cloud_last_sync: refreshed.cloud_last_sync || null,
       cloud_last_heartbeat: refreshed.cloud_last_heartbeat || null,
       cloud_last_error: refreshed.cloud_last_error
@@ -1527,6 +1532,7 @@ export class CloudSyncService {
   // Registration carries contact metadata for FloAdmin support. It is not an
   // authentication credential and does not create a cloud owner account.
   async register(signal?: AbortSignal): Promise<Record<string, unknown>> {
+    if (isLegacyCloudBlocked()) throw new CloudRequestError('GULF POS cloud services are not available in this release', 503);
     throwIfRequestAborted(signal);
     if (this.cloudDeletionInProgress || this.shutdownRequested)
       throw new Error('Cloud shutdown in progress');
@@ -1762,6 +1768,7 @@ export class CloudSyncService {
   }
 
   isTrustedRecoveryServerUrl(rawUrl?: string): boolean {
+    if (isLegacyCloudBlocked()) return false;
     const trustedDefault = normalizeCloudServerUrl(DEFAULT_CLOUD_SERVER_URL);
     const isTrustedCandidate = (candidate: string): boolean => {
       const normalized = normalizeCloudServerUrl(candidate);
@@ -3580,6 +3587,7 @@ export class CloudSyncService {
 
   /** Register on startup to sync updated store metadata with FloAdmin. */
   private maybeAutoRegister() {
+    if (isLegacyCloudBlocked()) return;
     if (isOfflineMode()) return;
     const db = getDatabase();
     const settings = this.readSettings(db);
@@ -3609,6 +3617,7 @@ export class CloudSyncService {
   }
 
   private attemptAutoRegister() {
+    if (isLegacyCloudBlocked()) return;
     if (this.shutdownRequested || isOfflineMode()) return;
     let settings: Record<string, string>;
     try {
@@ -3659,6 +3668,7 @@ export class CloudSyncService {
   // --- Live-relay connection (WSS primary, HTTP fallback) ---------------------------------
 
   private maybeStartRelay() {
+    if (isLegacyCloudBlocked()) { this.teardownRelay(); this.stopHttpFallback(); return; }
     if (this.cloudDeletionInProgress || this.shutdownRequested) return;
     const cfg = this.settings;
     if (!cfg?.api_key || !(cfg.sync_enabled || cfg.command_polling_enabled)) {
@@ -3670,6 +3680,7 @@ export class CloudSyncService {
   }
 
   private connectRelay() {
+    if (isLegacyCloudBlocked()) return;
     if (this.cloudDeletionInProgress || this.shutdownRequested) return;
     const cfg = this.settings;
     if (!cfg?.api_key || !(cfg.sync_enabled || cfg.command_polling_enabled)) return;
@@ -4444,6 +4455,7 @@ export class CloudSyncService {
   ): Promise<Response> {
     if (this.cloudDeletionInProgress && !allowDuringDeletion)
       throw new Error('Cloud deletion in progress');
+    if (isLegacyCloudBlocked()) throw new CloudRequestError('GULF POS cloud services are not available in this release', 503);
     assertOnlineAllowed('Cloud sync');
     this.cloudNetworkOperations += 1;
     let released = false;
