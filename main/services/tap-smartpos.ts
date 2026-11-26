@@ -181,7 +181,7 @@ export function ingestWebhook(body: any, headers: Record<string, string>, allowS
   }
   const st = String(body.status || '').toUpperCase();
   const mapped: IntentStatus =
-    st === 'CAPTURED' ? 'CAPTURED' : ['DECLINED', 'FAILED', 'CANCELLED', 'ABANDONED', 'TIMEDOUT', 'VOID'].includes(st) ? (st === 'DECLINED' ? 'DECLINED' : 'FAILED') : 'INITIATED';
+    st === 'CAPTURED' ? 'CAPTURED' : st === 'CANCELLED' ? 'CANCELLED' : st === 'DECLINED' ? 'DECLINED' : ['FAILED', 'ABANDONED', 'TIMEDOUT', 'VOID'].includes(st) ? 'FAILED' : 'INITIATED';
   if (st === 'CAPTURED' && (typeof body?.reference?.payment !== 'string' || !body.reference.payment.trim())) {
     return { ok: false as const, reason: 'missing_payment_reference' };
   }
