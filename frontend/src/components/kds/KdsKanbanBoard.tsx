@@ -244,7 +244,7 @@ const KanbanOrderCard = memo(function KanbanOrderCard({
       } ${busy ? 'pointer-events-none opacity-60' : ''}`}
     >
       <div
-        className={`rounded-xl bg-card shadow-sm ring-1 ring-border/50 border-t-4 ${config.border} p-3 flex flex-col`}
+        className={`gulf-kds-ticket rounded-lg bg-card ring-1 ring-border/50 border-t-4 ${config.border} p-3 flex flex-col`}
       >
         <div className="flex justify-between items-center mb-2 gap-2">
           <div className="flex items-center gap-1.5 min-w-0 flex-wrap">
@@ -287,7 +287,7 @@ const KanbanOrderCard = memo(function KanbanOrderCard({
                 e.stopPropagation();
                 onItemOpen(item);
               }}
-              className="w-full text-start px-2 py-2 first:pt-1.5 last:pb-1 hover:bg-muted/60 active:bg-muted/80 active:scale-[0.99] transition rounded-md"
+              className="w-full min-h-11 text-start px-2 py-2 first:pt-1.5 last:pb-1 hover:bg-muted/60 active:bg-muted/80 active:scale-[0.99] transition rounded-md"
             >
               <div className="flex items-center gap-2">
                 <span className={`text-base font-bold w-6 shrink-0 ${config.text}`}>
@@ -336,7 +336,7 @@ function VoidedColumn({
   const count = groups.reduce((sum, g) => sum + g.items.length, 0);
 
   return (
-    <div className="rounded-2xl bg-muted/40 dark:bg-muted/25 flex-1 min-w-[260px] flex flex-col overflow-hidden">
+    <div className="gulf-kds-column rounded-xl bg-muted/40 dark:bg-muted/25 flex-1 min-w-[260px] flex flex-col overflow-hidden">
       <div className={`flex items-center gap-2 px-3.5 py-2.5 ${config.bg}`}>
         <div className={`w-2.5 h-2.5 rounded-full ${config.color}`} />
         <span className={`text-base font-semibold ${config.text}`}>{t(config.labelKey)}</span>
@@ -351,7 +351,7 @@ function VoidedColumn({
         {groups.map(({ order, items }) => (
           <div
             key={order.id}
-            className={`rounded-xl bg-card shadow-sm ring-1 ring-border/50 border-t-4 ${config.border} p-3 flex flex-col`}
+            className={`gulf-kds-ticket rounded-lg bg-card ring-1 ring-border/50 border-t-4 ${config.border} p-3 flex flex-col`}
           >
             <div className="flex items-center gap-1.5 min-w-0 flex-wrap mb-2">
               <Ltr as="span" className="font-extrabold text-lg tracking-tight shrink-0">
@@ -367,7 +367,7 @@ function VoidedColumn({
                   key={item.id}
                   type="button"
                   onClick={() => onItemOpen(item, order.order_number)}
-                  className="w-full text-start px-2 py-2 first:pt-1.5 last:pb-1 hover:bg-muted/60 active:bg-muted/80 active:scale-[0.99] transition rounded-md"
+                  className="w-full min-h-11 text-start px-2 py-2 first:pt-1.5 last:pb-1 hover:bg-muted/60 active:bg-muted/80 active:scale-[0.99] transition rounded-md"
                 >
                   <div className="flex items-center gap-2">
                     <span className={`text-base font-bold w-6 shrink-0 ${config.text}`}>
