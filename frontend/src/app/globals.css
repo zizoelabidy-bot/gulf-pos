@@ -755,3 +755,28 @@ html.dark::-webkit-scrollbar-thumb:hover,
 @media (prefers-reduced-motion: reduce) {
   .gulf-panel, .gulf-table-card, .gulf-order-card, .gulf-kds-ticket { transition: none; }
 }
+
+/* Customer-facing TV, setup wizard and service dialogs use GULF chrome. */
+.gulf-customer-display, .gulf-setup-shell {
+  background: radial-gradient(ellipse at 100% 0%, #123c68 0%, transparent 62%), #071b35;
+}
+.gulf-display-heading {
+  background: #0c2948;
+  border: 1px solid #355777;
+  border-inline-start: 4px solid #00b7ed;
+  border-radius: .75rem;
+  padding: 1rem 1.25rem;
+}
+.gulf-setup-heading { color: white; }
+.gulf-dialog-brand {
+  align-self: flex-start;
+  border-radius: .375rem;
+  padding: .25rem .6rem;
+  color: #fff;
+  background: #071b35;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+}
+.gulf-support-brand { border-block-end: 1px solid var(--border); padding-block-end: .75rem; }
+.gulf-critical-notice { border-inline-start: 4px solid #b91c1c; }
