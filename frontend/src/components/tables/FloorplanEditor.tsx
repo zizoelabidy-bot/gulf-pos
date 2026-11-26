@@ -921,7 +921,7 @@ export default function FloorplanEditor({
 
   return (
     <div>
-      <div className="sticky top-0 z-20 -mx-1 mb-5 flex flex-wrap items-center justify-between gap-3 rounded-b-2xl bg-card px-2 py-2.5 shadow-sm">
+      <div className="gulf-toolbar sticky top-0 z-20 mb-4 flex flex-wrap items-center justify-between gap-3 shadow-sm">
         <div
           data-testid="floorplan-floor-tabs"
           className="flex flex-wrap items-center gap-1 rounded-xl bg-muted/50 p-1 border border-border"
@@ -1162,7 +1162,7 @@ export default function FloorplanEditor({
               <div
                 key={f || 'unassigned'}
                 data-testid={`floorplan-mini-${f || 'unassigned'}`}
-                className="rounded-2xl border border-border bg-card p-4 shadow-sm"
+                className="gulf-panel rounded-lg border border-border bg-card p-4 shadow-sm"
               >
                 <div className="mb-3 flex items-center justify-between">
                   <p className="text-sm font-bold text-foreground">
@@ -1215,7 +1215,7 @@ export default function FloorplanEditor({
           <div
             ref={canvasRef}
             data-testid="floorplan-canvas"
-            className={`relative mx-auto w-full overflow-hidden rounded-2xl border border-border bg-card/50 text-muted-foreground/30 shadow-inner ${
+            className={`relative mx-auto w-full overflow-hidden rounded-lg border border-border bg-card/50 text-muted-foreground/30 shadow-inner ${
               canvasMode === 'auto' ? 'max-w-3xl' : ''
             }`}
             style={{
