@@ -21,7 +21,9 @@ webhook.post('/webhook/:platform', (req: Request, res: Response) => {
   for (const [k, v] of Object.entries(req.headers)) {
     if (typeof v === 'string') headers[k.toLowerCase()] = v;
   }
-  const result = ingestWebhook(String(req.params.platform), req.body, headers);
+  const rawBody: unknown = res.locals.aggregatorRawBody;
+  if (typeof rawBody !== 'string') return res.status(401).json({ ok: false, reason: 'signature' });
+  const result = ingestWebhook(String(req.params.platform), req.body, headers, rawBody);
   if (!result.ok) {
     const code = result.reason === 'signature' ? 401 : result.reason === 'disabled' ? 403 : 422;
     return res.status(code).json({ ok: false, reason: result.reason });
