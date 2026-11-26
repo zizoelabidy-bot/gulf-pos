@@ -26,7 +26,7 @@ router.get('/config', requirePermission('settings.view'), wrap(() => svc.getConf
 router.put('/config', requirePermission('settings.manage'), wrap((req) => svc.saveConfig(req.body || {})));
 router.get('/intents', requirePermission('settings.view'), wrap(() => ({ intents: svc.listIntents() })));
 router.post('/intents', requirePermission('payments.take'), wrap((req) => svc.createIntent({
-  amount: Number(req.body?.amount), orderRef: req.body?.orderRef, currency: req.body?.currency,
+  amount: req.body?.amount, orderRef: req.body?.orderRef, currency: req.body?.currency,
 })));
 router.get('/intents/:id', requirePermission('payments.take'), wrap((req) => svc.getIntent(String(req.params.id)) || { error: 'not found' }));
 router.post('/intents/:id/cancel', requirePermission('payments.take'), wrap((req) => svc.cancelIntent(String(req.params.id))));
