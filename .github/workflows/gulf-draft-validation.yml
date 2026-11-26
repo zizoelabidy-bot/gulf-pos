@@ -11,7 +11,7 @@ permissions:
 jobs:
   validate-windows:
     runs-on: windows-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -33,5 +33,38 @@ jobs:
         run: npm run test:gulf-legacy-service-policy
       - name: Printer regression
         run: npm run test:printer
+      - name: Delivery and card terminal regressions
+        run: npm run test:delivery-management
+      - name: Financial integrity regression
+        run: npm run test:financial-safety-remediation
+      - name: Payment integration regression
+        run: npm run test:integration-payments
+      - name: Checkout guard regression
+        run: npm run test:checkout-quick-tender-and-guards
+      - name: Backup and restore regression
+        run: npm run test:backup
+      - name: Database upgrade regression
+        run: npm run test:upgrade-path
       - name: Lint
         run: npm run lint
+      - name: Build unsigned review installer
+        run: npx electron-builder --win nsis --publish never
+      - name: Verify review package
+        shell: pwsh
+        run: |
+          $exe = "release/GULF-POS-Setup.exe"
+          if (!(Test-Path $exe)) { throw "Review installer missing" }
+          if (!(Test-Path "release/win-unpacked/resources/licenses/LICENSE.txt")) { throw "MIT notice missing" }
+          if (!(Test-Path "release/win-unpacked/resources/licenses/OPEN_SOURCE_LICENSES.md")) { throw "Third-party notices missing" }
+          $hash = (Get-FileHash $exe -Algorithm SHA256).Hash
+          "$hash  GULF-POS-Setup.exe" | Set-Content release/SHA256SUMS.txt
+          "Review only; unsigned; not approved for production; commit $env:GITHUB_SHA" | Set-Content release/REVIEW-ONLY.txt
+      - name: Upload review installer only
+        uses: actions/upload-artifact@v4
+        with:
+          name: GULF-POS-Windows-REVIEW
+          retention-days: 7
+          path: |
+            release/GULF-POS-Setup.exe
+            release/SHA256SUMS.txt
+            release/REVIEW-ONLY.txt
