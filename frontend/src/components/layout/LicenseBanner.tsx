@@ -35,7 +35,7 @@ interface LicenseStatus {
 export default function LicenseBanner() {
   const locale = useLocale();
   const token = useAuthStore((s) => s.token);
-  const [state, setState] = useState<LicenseStatus | null>(null);
+  const [snapshot, setSnapshot] = useState<{ state: LicenseStatus; checkedAt: number } | null>(null);
 
   useEffect(() => {
     if (!token) return;
@@ -44,7 +44,7 @@ export default function LicenseBanner() {
       api
         .get('/license/status')
         .then((res) => {
-          if (active) setState(res.data);
+          if (active) setSnapshot({ state: res.data, checkedAt: Date.now() });
         })
         .catch(() => {});
     load();
@@ -55,10 +55,11 @@ export default function LicenseBanner() {
     };
   }, [token]);
 
-  if (!state || state.status === 'active') return null;
+  const state = snapshot?.state;
+  if (!state || !snapshot || state.status === 'active') return null;
   // Trial only nags during its final 5 days.
   if (state.status === 'trial' && state.trial_ends_at) {
-    const daysLeft = (new Date(state.trial_ends_at).getTime() - Date.now()) / 864e5;
+    const daysLeft = (new Date(state.trial_ends_at).getTime() - snapshot.checkedAt) / 864e5;
     if (daysLeft > 5) return null;
   }
 
