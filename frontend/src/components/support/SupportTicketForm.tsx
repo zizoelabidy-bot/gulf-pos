@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useTranslations } from 'use-intl';
+import { useLocale, useTranslations } from 'use-intl';
 import { useFormatNumber } from '@/hooks/useFormatNumber';
 import { useSupportTicketStatus } from '@/hooks/useSupportTicketStatus';
 import { useSupportDiagnosticsPreview } from '@/hooks/useSupportDiagnosticsPreview';
@@ -94,6 +94,7 @@ export function SupportTicketForm({
   initialDiagnostics,
 }: SupportTicketFormProps) {
   const t = useTranslations('support');
+  const locale = useLocale();
   const fmtNum = useFormatNumber();
   const [profile, setProfile] = useState<SupportProfile>(EMPTY_PROFILE);
   const [category, setCategory] = useState(initialCategory || 'general');
@@ -199,7 +200,7 @@ export function SupportTicketForm({
 
   return (
     <div className="space-y-6">
-      <div className="gulf-support-brand flex items-center gap-3"><img src="/gulfcctv-logo.png" alt="GULF CCTV" className="gulf-company-logo w-36" /><span dir="ltr" className="font-extrabold text-foreground">GULF POS</span></div>
+      <div className="gulf-support-brand flex items-center gap-3"><img src={locale.startsWith("ar") ? "/gulfcctv-logo-ar.png" : "/gulfcctv-logo.png"} alt="GULF CCTV" className="gulf-company-logo w-36" /><span dir="ltr" className="font-extrabold text-foreground">GULF POS</span></div>
       {submittedId && (
         <div className="flex gap-3 rounded-xl border border-green-200 bg-green-50 p-4 text-green-900">
           <CheckCircle2 className="mt-0.5 size-5 shrink-0" />
