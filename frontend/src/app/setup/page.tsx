@@ -33,7 +33,6 @@ import {
   type Country,
 } from '@/lib/countries';
 import { TimeZoneSelect } from '@/components/TimeZoneSelect';
-import type { ProductAnalyticsLevel } from '@/components/analytics/ProductAnalyticsDialog';
 import { CurrencySelect } from '@/components/CurrencySelect';
 import { useLocale, useTranslations, type AppConfig } from 'use-intl';
 import { LANGUAGES, getBrowserLanguage, type Language } from '@/lib/i18n';
@@ -70,9 +69,6 @@ const SELECTABLE_LANGUAGES: Language[] = (Object.keys(LANGUAGES) as Language[]).
   (lang) => LANGUAGES[lang].selectable,
 );
 
-// Mirrors main/services/cloud-sync.ts DEFAULT_CLOUD_SERVER_URL — kept in sync
-// manually since the frontend can't import backend TS modules directly.
-const DEFAULT_CLOUD_SERVER_URL = 'https://blue.flopos.com/';
 const SETUP_STATUS_MAX_RETRIES = 2;
 const SETUP_STATUS_RETRY_DELAY_MS = 400;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -124,9 +120,6 @@ export default function SetupPage() {
     instagram_handle: '',
   });
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const [productUpdates, setProductUpdates] = useState(false);
-  const [marketing, setMarketing] = useState(false);
-  const [analyticsLevel, setAnalyticsLevel] = useState<ProductAnalyticsLevel | null>(null);
   const passwordsEntered = form.password.length > 0 && form.confirmPassword.length > 0;
   const passwordsMatch = !passwordsEntered || form.password === form.confirmPassword;
   const ownerEmail = form.email.trim().toLowerCase();
@@ -144,13 +137,10 @@ export default function SetupPage() {
   const ownerApprovalPinValid =
     /^\d{4,6}$/.test(ownerApprovalPin) && ownerApprovalPin === ownerApprovalPinConfirm;
 
-  const cloudEnabled = true;
-  const [cloudServerUrl, setCloudServerUrl] = useState(DEFAULT_CLOUD_SERVER_URL);
 
   const isPasswordValid = validatePassword;
   const passwordMeetsRequirements = form.password.length === 0 || isPasswordValid(form.password);
   const t = useTranslations('setup');
-  const tAnalytics = useTranslations('productAnalytics');
   const tSettings = useTranslations('settings');
   const tRestore = useTranslations('restore');
   const tCommon = useTranslations('common');
@@ -304,10 +294,6 @@ export default function SetupPage() {
       toast.error(t('errorTermsRequired'));
       return false;
     }
-    if (!analyticsLevel) {
-      toast.error(tAnalytics('choiceRequired'));
-      return false;
-    }
     return true;
   };
 
@@ -338,24 +324,6 @@ export default function SetupPage() {
       return;
     }
 
-    if (cloudEnabled && cloudServerUrl.trim()) {
-      try {
-        const parsed = new URL(cloudServerUrl.trim());
-        const localHttp =
-          parsed.protocol === 'http:' &&
-          ['localhost', '127.0.0.1', '::1', '[::1]'].includes(parsed.hostname);
-        if (parsed.protocol !== 'https:' && !localHttp) {
-          toast.error(t('cloudUrlHttpsRequired'));
-          setStep(5);
-          return;
-        }
-      } catch {
-        toast.error(t('cloudUrlInvalid'));
-        setStep(5);
-        return;
-      }
-    }
-
     initInFlightRef.current = true;
     setLoading(true);
     try {
@@ -381,11 +349,10 @@ export default function SetupPage() {
         master_pin: masterPinAvailable ? masterPin : undefined,
         owner_approval_pin: ownerApprovalPin,
         owner_approval_pin_confirmation: ownerApprovalPinConfirm,
-        cloud_sync_enabled: true,
-        cloud_server_url: cloudServerUrl.trim() || DEFAULT_CLOUD_SERVER_URL,
-        email_product_updates: productUpdates,
-        email_marketing: marketing,
-        product_analytics_level: analyticsLevel ?? undefined,
+        cloud_sync_enabled: false,
+        email_product_updates: false,
+        email_marketing: false,
+        product_analytics_level: 'off',
         ...countryPayload,
       });
       completeSetup();
@@ -948,81 +915,9 @@ export default function SetupPage() {
                     </span>
                   </label>
 
-                  <fieldset
-                    className="space-y-3 rounded-lg border border-border px-3 py-3 text-sm"
-                    data-testid="setup-analytics-choice"
-                  >
-                    <legend className="px-1 font-medium text-foreground">
-                      {tAnalytics('title')}
-                    </legend>
-                    <p className="text-muted-foreground">{tAnalytics('intro')}</p>
-                    <div className="grid gap-2 sm:grid-cols-2">
-                      {(['full', 'anonymous'] as const).map((level) => (
-                        <label
-                          key={level}
-                          className={`cursor-pointer rounded-lg border p-3 focus-within:ring-2 focus-within:ring-brand ${
-                            analyticsLevel === level ? 'border-brand bg-brand/5' : 'border-border'
-                          }`}
-                        >
-                          <input
-                            type="radio"
-                            name="setup-analytics-level"
-                            value={level}
-                            checked={analyticsLevel === level}
-                            onChange={() => setAnalyticsLevel(level)}
-                            className="sr-only"
-                          />
-                          <span className="block font-medium text-foreground">
-                            {tAnalytics(level === 'full' ? 'linkEmail' : 'keepAnonymous')}
-                          </span>
-                          <span className="mt-1 block text-xs text-muted-foreground">
-                            {tAnalytics(level === 'full' ? 'fullHint' : 'anonymousHint')}
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                    <p className="text-xs text-muted-foreground">
-                      <span className="font-medium text-foreground">
-                        {tAnalytics('errorsTitle')}:
-                      </span>{' '}
-                      {tAnalytics('errorsBody')}
-                    </p>
-                    <p className="text-xs text-muted-foreground">{tAnalytics('neverSee')}</p>
-                    <label className="flex items-center gap-2 text-xs text-muted-foreground cursor-pointer">
-                      <input
-                        type="radio"
-                        name="setup-analytics-level"
-                        value="off"
-                        checked={analyticsLevel === 'off'}
-                        onChange={() => setAnalyticsLevel('off')}
-                        className="h-3.5 w-3.5"
-                      />
-                      {tAnalytics('dontShare')}
-                    </label>
-                    <p className="text-xs text-muted-foreground">{tAnalytics('changeLater')}</p>
-                  </fieldset>
-
-                  <div className="space-y-3 rounded-lg border border-border px-3 py-3 text-sm">
-                    <p className="font-medium text-foreground">{t('emailCommunicationTitle')}</p>
-                    <p className="text-muted-foreground">{t('emailCommunicationDescription')}</p>
-                    <label className="flex items-start gap-2">
-                      <input
-                        type="checkbox"
-                        checked={productUpdates}
-                        onChange={(e) => setProductUpdates(e.target.checked)}
-                        className="mt-0.5 h-4 w-4 rounded border-gray-300"
-                      />
-                      <span>{t('productUpdatesOptional')}</span>
-                    </label>
-                    <label className="flex items-start gap-2">
-                      <input
-                        type="checkbox"
-                        checked={marketing}
-                        onChange={(e) => setMarketing(e.target.checked)}
-                        className="mt-0.5 h-4 w-4 rounded border-gray-300"
-                      />
-                      <span>{t('marketingOptional')}</span>
-                    </label>
+                  <div className="gulf-panel p-4 text-sm" data-testid="setup-analytics-choice">
+                    <p className="font-bold text-foreground">{locale.startsWith('ar') ? 'خصوصية بيانات المطعم' : 'Restaurant data privacy'}</p>
+                    <p className="mt-2 text-muted-foreground">{locale.startsWith('ar') ? 'إرسال بيانات الاستخدام والتشخيص إلى الخدمات القديمة متوقف في هذا الإصدار.' : 'Usage and diagnostic transmission to legacy services is disabled in this release.'}</p>
                   </div>
 
                   <Button
@@ -1031,7 +926,6 @@ export default function SetupPage() {
                       ownerEmailInvalid ||
                       !passwordsMatch ||
                       !termsAccepted ||
-                      !analyticsLevel ||
                       !isPasswordValid(form.password)
                     }
                     className="w-full"
@@ -1125,44 +1019,14 @@ export default function SetupPage() {
                     <Cloud className="w-5 h-5 text-primary" />
                   </div>
                   <h2 className="text-xl font-semibold mb-2">{t('cloudTitle')}</h2>
-                  <p className="text-muted-foreground text-sm">{t('cloudSubtitle')}</p>
+                  <p className="text-muted-foreground text-sm">{locale.startsWith('ar') ? 'إعدادات الاتصال واستعادة الحساب' : 'Connectivity and account recovery'}</p>
                 </div>
 
-                <label className="flex items-start gap-3 cursor-pointer p-4 rounded-xl border-2 border-gray-200">
-                  <input
-                    type="checkbox"
-                    checked={cloudEnabled}
-                    disabled
-                    className="mt-0.5 h-4 w-4 rounded border-gray-300"
-                  />
-                  <span>
-                    <span className="font-medium text-foreground">
-                      {t('cloudManagedAutomaticallyTitle')}
-                    </span>
-                    <span className="block text-sm text-muted-foreground mt-1">
-                      {t('cloudManagedAutomaticallyDescription')}
-                    </span>
-                  </span>
-                </label>
-
-                {cloudEnabled && (
-                  <div className="space-y-2">
-                    <Label htmlFor="cloud-server-url">{t('cloudUrlLabel')}</Label>
-                    <Input
-                      id="cloud-server-url"
-                      type="url"
-                      value={cloudServerUrl}
-                      onChange={(e) => setCloudServerUrl(e.target.value)}
-                      placeholder={DEFAULT_CLOUD_SERVER_URL}
-                      dir="ltr"
-                    />
-                    <p className="text-xs text-muted-foreground">{t('cloudUrlHint')}</p>
-                  </div>
-                )}
-
-                <p className="text-xs text-muted-foreground bg-muted rounded-lg p-3">
-                  {cloudEnabled ? t('cloudRecoveryNoteEnabled') : t('cloudRecoveryNoteDisabled')}
-                </p>
+                <div className="gulf-panel p-5">
+                  <p className="font-bold text-foreground">{locale.startsWith('ar') ? 'التشغيل المحلي' : 'Local operation'}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">{locale.startsWith('ar') ? 'الخدمات السحابية غير متاحة في هذا الإصدار. احتفظ بالرمز الرئيسي ونسخة احتياطية آمنة.' : 'Cloud services are unavailable in this release. Keep your Master PIN and a secure backup.'}</p>
+                </div>
+                <p className="text-xs text-muted-foreground bg-muted rounded-lg p-3">{t('cloudRecoveryNoteDisabled')}</p>
 
                 <Button onClick={() => setStep(6)} className="w-full" size="lg">
                   {t('continue')} <ArrowRight className="w-4 h-4 ms-2 rtl-flip" />
