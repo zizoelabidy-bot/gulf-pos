@@ -406,19 +406,21 @@ export default function SetupPage() {
   const restoreShortcutLabel = isMacPlatform ? '⌘⇧R' : 'Ctrl+Shift+R';
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted px-4 py-12">
+    <div className="gulf-setup-shell min-h-screen flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-2xl">
-        <div className="text-center mb-8">
-          <img src="/logo.svg" alt="GULF POS" width={72} height={72} className="mx-auto mb-4" />
-          <h1 className="text-3xl font-bold">{t('welcome')}</h1>
-          <p className="text-muted-foreground mt-2">{t('tagline')}</p>
+        <div className="gulf-setup-heading text-center mb-6">
+          <img src={language === "ar" ? "/gulfcctv-logo-ar.png" : "/gulfcctv-logo.png"} alt="GULF CCTV" className="gulf-company-logo mx-auto mb-4 w-48" />
+          <p className="text-sm font-extrabold text-sky-300 tracking-wide mb-2" dir="ltr">GULF POS</p>
+          <h1 className="text-3xl font-extrabold text-white">{t('welcome')}</h1>
+          <p className="text-slate-200 mt-2">{t('tagline')}</p>
         </div>
 
         <div className="flex justify-center gap-2 mb-6">
           {[1, 2, 3, 4, 5, 6].map((s) => (
             <div
               key={s}
-              className={`w-3 h-3 rounded-full transition-colors ${
+              aria-hidden="true"
+              className={`h-1.5 w-8 rounded-full transition-colors sm:w-12 ${
                 s === step ? 'bg-primary' : s < step ? 'bg-primary/50' : 'bg-muted'
               }`}
             />
