@@ -1,6 +1,6 @@
 /** PostHog project configuration. Without a token the client sends nothing. */
 
-import { isOfflineMode } from './offline-mode';
+import { isOfflineMode, isLegacyCloudBlocked } from './offline-mode';
 import { getSettingValue } from '../db';
 import { isOfficialReleaseBuild, readBuildPostHogSettings } from './build-identity';
 
@@ -37,6 +37,7 @@ export type PostHogEnvironment = 'production' | 'development';
  * Test suites run as plain Node, so they never connect even with a stubbed isPackaged.
  */
 export function postHogEnvironment(): PostHogEnvironment | null {
+  if (isLegacyCloudBlocked()) return null;
   if (process.env.CI) return null;
   if (isOfflineMode()) return null;
   if (process.env.E2E_TASK_LOCAL_PORTS) return null;
@@ -56,6 +57,7 @@ export function postHogNetworkSuppressed(): boolean {
  * build-identity.json; the host defaults to EU Cloud.
  */
 export function readPostHogConfig(): PostHogConfig | null {
+  if (isLegacyCloudBlocked()) return null;
   try {
     const build = readBuildPostHogSettings();
     const host =
