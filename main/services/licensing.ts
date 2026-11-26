@@ -34,7 +34,8 @@ MCowBQYDK2VwAyEA7lmcnKGiE+4WO4D5CKaNAc9w2z5QxXT2gP0BICAMFbQ=
 // Test-only override: honored solely when GULF_LICENSE_TEST=1, so the test
 // suite can sign keys with a throwaway keypair. Never set in production.
 function publicKeyPem(): string {
-  if (process.env.GULF_LICENSE_TEST === '1' && process.env.GULF_LICENSE_PUBLIC_KEY_PEM) {
+  if ((process as NodeJS.Process & { type?: string }).type !== 'browser' &&
+      process.env.GULF_LICENSE_TEST === '1' && process.env.GULF_LICENSE_PUBLIC_KEY_PEM) {
     return process.env.GULF_LICENSE_PUBLIC_KEY_PEM;
   }
   return EMBEDDED_PUBLIC_KEY_PEM;
@@ -113,12 +114,14 @@ export function deviceFingerprint(db: Database.Database): string {
 }
 
 export function verifyToken(token: string): LicensePayload {
-  const parts = String(token || '').trim().split('.');
-  if (parts.length !== 3 || parts[0] !== 'GPL1') {
+  if (typeof token !== 'string' || token.length > 32768) throw new LicenseError('Invalid license key format');
+  const parts = token.trim().split('.');
+  if (parts.length !== 3 || parts[0] !== 'GPL1' || !/^[A-Za-z0-9_-]+$/.test(parts[1]) || !/^[A-Za-z0-9_-]+$/.test(parts[2])) {
     throw new LicenseError('Invalid license key format');
   }
   const payloadBytes = fromB64url(parts[1]);
   const signature = fromB64url(parts[2]);
+  if (signature.length !== 64) throw new LicenseError('License key signature is invalid', 403);
   let payload: LicensePayload;
   try {
     payload = JSON.parse(payloadBytes.toString('utf8'));
@@ -127,14 +130,32 @@ export function verifyToken(token: string): LicensePayload {
   }
   const ok = crypto.verify(null, payloadBytes, publicKeyPem(), signature);
   if (!ok) throw new LicenseError('License key signature is invalid', 403);
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new LicenseError('Invalid license payload');
   for (const field of ['lic_id', 'customer', 'type', 'issued_at'] as const) {
-    if (!payload[field]) throw new LicenseError(`License key is missing ${field}`);
+    if (typeof payload[field] !== 'string' || !payload[field].trim() || payload[field].length > 256) {
+      throw new LicenseError(`License key has invalid ${field}`);
+    }
   }
   if (!['perpetual', 'annual', 'trial'].includes(payload.type)) {
     throw new LicenseError('License key has an unknown type');
   }
-  payload.modules = Array.isArray(payload.modules) ? payload.modules : [];
-  payload.devices = Array.isArray(payload.devices) ? payload.devices : [];
+  const issued = Date.parse(payload.issued_at);
+  if (!Number.isFinite(issued) || issued > Date.now() + 5 * 60_000) throw new LicenseError('Invalid license issue date');
+  if (payload.type === 'perpetual' ? payload.expires_at !== null :
+    typeof payload.expires_at !== 'string' || !Number.isFinite(Date.parse(payload.expires_at)) ||
+    Date.parse(payload.expires_at) <= issued) throw new LicenseError('Invalid license expiry');
+  if (![payload.max_devices, payload.max_branches].every(v => Number.isSafeInteger(v) && v > 0 && v <= 10000)) {
+    throw new LicenseError('Invalid license limits');
+  }
+  if (!Array.isArray(payload.modules) || !payload.modules.length || payload.modules.length > 128 ||
+      payload.modules.some(m => typeof m !== 'string' || !/^(?:\*|[a-z0-9_-]{1,64})$/.test(m))) {
+    throw new LicenseError('Invalid license modules');
+  }
+  if (!Array.isArray(payload.devices) || payload.devices.length > payload.max_devices ||
+      new Set(payload.devices).size !== payload.devices.length ||
+      payload.devices.some(d => typeof d !== 'string' || !/^[a-f0-9]{32}$/.test(d))) {
+    throw new LicenseError('Invalid license device bindings');
+  }
   return payload;
 }
 
@@ -182,6 +203,7 @@ export function getLicenseState(db: Database.Database): LicenseState {
     let payload: LicensePayload;
     try {
       payload = verifyToken(activation.token);
+      if (payload.devices.length && !payload.devices.includes(fp)) throw new LicenseError('License device mismatch');
     } catch {
       return {
         status: 'expired',
@@ -229,6 +251,11 @@ export function getLicenseState(db: Database.Database): LicenseState {
       message: null,
     };
   }
+  // A previously deactivated paid installation does not get a fresh trial.
+  if (db.prepare("SELECT 1 FROM license_activations WHERE status = 'deactivated' LIMIT 1").get()) {
+    return { status: 'expired', can_write: false, payload: null, trial_ends_at: null,
+      grace_ends_at: null, device_fingerprint: fp, message: 'License deactivated; activate a replacement key' };
+  }
   // No activated key: built-in trial.
   const started = ensureTrialStarted(db);
   const trialEnd = daysFrom(started, TRIAL_DAYS);
@@ -264,6 +291,9 @@ export function activateLicense(db: Database.Database, token: string): LicenseSt
       403,
     );
   }
+  if (db.prepare("SELECT 1 FROM license_activations WHERE lic_id = ? AND status = 'deactivated' LIMIT 1").get(payload.lic_id)) {
+    throw new LicenseError('This license was deactivated on this installation; request a replacement key', 403);
+  }
   if (payload.expires_at && new Date() > new Date(daysFrom(payload.expires_at, GRACE_DAYS))) {
     logEvent(db, 'activate_rejected_expired', payload.lic_id, null);
     throw new LicenseError('This license key has already expired');
@@ -294,7 +324,7 @@ export function activateLicense(db: Database.Database, token: string): LicenseSt
 export function deactivateLicense(db: Database.Database): { transfer_receipt: string } {
   const activation = activeActivation(db);
   if (!activation) throw new LicenseError('No active license to deactivate', 404);
-  const payload = JSON.parse(activation.payload) as LicensePayload;
+  const payload = verifyToken(activation.token);
   const fp = deviceFingerprint(db);
   db.transaction(() => {
     db.prepare(
@@ -302,10 +332,8 @@ export function deactivateLicense(db: Database.Database): { transfer_receipt: st
     ).run(new Date().toISOString());
     logEvent(db, 'deactivated', payload.lic_id, null);
   })();
-  // Offline transfer: the receipt proves to GULF CCTV support that this
-  // device released the license; support issues a new key for the new
-  // device. The receipt is HMACed with a device-local key so it cannot be
-  // forged without access to this device's database.
+  // Offline transfer receipt is a local claim, NOT independently verifiable
+  // revocation proof. The issuer must review it manually.
   let receiptKey = metaGet(db, 'receipt_key');
   if (!receiptKey) {
     receiptKey = crypto.randomBytes(32).toString('hex');
@@ -318,6 +346,7 @@ export function deactivateLicense(db: Database.Database): { transfer_receipt: st
 
 export function moduleEnabled(db: Database.Database, module: string): boolean {
   const state = getLicenseState(db);
+  if (!state.can_write) return false;
   if (state.status === 'trial') return true;
   if (!state.payload) return state.status !== 'expired';
   const mods = state.payload.modules;
