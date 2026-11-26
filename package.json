@@ -134,6 +134,7 @@
     "test:self-service-credentials": "node tests/run-electron-node-test.cjs tests/self-service-credentials.test.ts",
     "test:orders-authz": "node tests/run-electron-node-test.cjs tests/orders-authz.test.ts && node tests/run-electron-node-test.cjs tests/order-write-rate-limits.test.ts",
     "test:item-price-override": "node tests/run-electron-node-test.cjs tests/item-price-override.test.ts",
+    "test:gulf-legacy-service-policy": "node tests/run-electron-node-test.cjs tests/gulf-legacy-service-policy.test.ts",
     "test:offline-mode": "node tests/run-electron-node-test.cjs tests/offline-mode.test.ts",
     "test:order-item-edit": "node tests/run-electron-node-test.cjs tests/order-item-edit.test.ts",
     "test:order-item-cancel-restore": "node tests/run-electron-node-test.cjs tests/order-item-cancel-restore.test.ts",
