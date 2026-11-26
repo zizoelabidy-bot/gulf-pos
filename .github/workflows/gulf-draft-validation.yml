@@ -1,0 +1,35 @@
+name: GULF POS draft validation
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-windows:
+    runs-on: windows-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test offline license issuer
+        run: node tests/gulf-license-admin.test.cjs
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Build frontend
+        run: npm run build:frontend
+      - name: Build backend
+        run: npm run build
+      - name: License regression
+        run: node tests/run-electron-node-test.cjs tests/licensing.test.ts
+      - name: Legacy service isolation regression
+        run: npm run test:gulf-legacy-service-policy
+      - name: Printer regression
+        run: npm run test:printer
+      - name: Lint
+        run: npm run lint
