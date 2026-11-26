@@ -63,7 +63,7 @@ db.exec("INSERT OR IGNORE INTO settings (key, value) VALUES ('country', 'KW'), (
 
 // 1. Migration 130 is last and created the tables
 const lastMigration = MIGRATIONS[MIGRATIONS.length - 1];
-assertEqualOrThrow(lastMigration.version, 130, 'add_aggregator_integrations is the last registered migration');
+assertEqualOrThrow(lastMigration.version, 131, 'add_card_terminal_tap_smartpos is the last registered migration');
 for (const table of ['aggregator_integrations', 'aggregator_events', 'aggregator_item_map']) {
   const row = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name = ?").get(table);
   assertOrThrow(!!row, `table ${table} exists`);

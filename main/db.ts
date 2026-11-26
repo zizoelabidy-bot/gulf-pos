@@ -10603,6 +10603,45 @@ export const MIGRATIONS: { version: number; name: string; up: () => void }[] = [
       for (const p of ['talabat', 'keeta', 'deliveroo', 'jahez']) seed.run(p);
     },
   },
+  {
+    version: 131,
+    name: 'add_card_terminal_tap_smartpos',
+    up: () => {
+      db.exec(`
+        CREATE TABLE IF NOT EXISTS card_terminal_config (
+          id INTEGER PRIMARY KEY CHECK (id = 1),
+          provider TEXT NOT NULL DEFAULT 'tap_smartpos',
+          enabled INTEGER NOT NULL DEFAULT 0,
+          mode TEXT NOT NULL DEFAULT 'simulator',
+          merchant_id TEXT,
+          terminal_id TEXT,
+          secret_key_enc TEXT,
+          webhook_base_url TEXT,
+          last_error TEXT,
+          updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+        INSERT OR IGNORE INTO card_terminal_config (id) VALUES (1);
+        CREATE TABLE IF NOT EXISTS card_terminal_intents (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          intent_id TEXT UNIQUE NOT NULL,
+          idempotent_key TEXT UNIQUE NOT NULL,
+          order_ref TEXT,
+          amount REAL NOT NULL,
+          currency TEXT NOT NULL DEFAULT 'KWD',
+          mode TEXT NOT NULL,
+          status TEXT NOT NULL DEFAULT 'INITIATED',
+          transaction_ref TEXT,
+          scheme TEXT,
+          last_four TEXT,
+          detail TEXT,
+          created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+        CREATE INDEX IF NOT EXISTS idx_card_terminal_intents_created
+          ON card_terminal_intents(created_at DESC);
+      `);
+    },
+  },
 ];
 
 export function backfillWhatsAppMessageAttempts(
