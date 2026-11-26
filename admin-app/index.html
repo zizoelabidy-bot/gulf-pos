@@ -2,11 +2,11 @@
 <html lang="ar" dir="rtl">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
-<title>GULF POS Administration Center</title><link rel="stylesheet" href="admin.css"><script defer src="renderer.js"></script></head>
+<title>GULF POS Administration Center</title><link rel="stylesheet" href="admin.css"><script defer src="renderer.js"></script><script defer src="commercial-ui.js"></script></head>
 <body><aside class="sidebar">
 <div class="brand"><span class="brand-mark">GP</span><div><strong dir="ltr">GULF POS</strong><small>Administration Center</small></div></div>
 <p class="eyebrow" data-i="workspace">مساحة الإدارة</p>
-<nav aria-label="Administration"><button data-view="overview" class="active" data-i="overview">نظرة عامة</button><button data-view="registry" data-i="registry">سجل التراخيص</button><button data-view="issue" data-i="issue">إصدار ترخيص</button></nav>
+<nav aria-label="Administration"><button data-view="overview" class="active" data-i="overview">نظرة عامة</button><button data-view="registry" data-i="registry">سجل التراخيص</button><button data-view="issue" data-i="issue">إصدار ترخيص</button><button data-view="commercial" id="commercialNav">العملاء والاشتراكات</button></nav>
 <div class="side-bottom"><p data-i="local">مركز إدارة محلي مستقل</p><small>GULF CCTV · Smart System Solutions</small></div></aside>
 <main><header><div><p class="eyebrow" data-i="internal">الاستخدام الداخلي لشركة جلف</p><h1 data-i="title">مركز إدارة GULF POS</h1></div><div class="actions"><button id="lang" class="secondary">English</button><button id="refresh" class="secondary" data-i="refresh">تحديث</button></div></header>
 <div id="notice" class="notice" role="status"></div>
@@ -20,4 +20,12 @@
 <label><span data-i="fingerprints">بصمات الأجهزة (واحدة في كل سطر)</span><textarea id="fingerprints" required rows="4" dir="ltr" spellcheck="false" placeholder="32 hexadecimal characters"></textarea></label><p class="hint" data-i="issueHint">الترخيص يشمل جميع الوحدات. حدود الفروع ليست رقابة مركزية. استخدم بصمات الأجهزة الفعلية فقط.</p>
 <label class="check"><input type="checkbox" id="confirm" required><span data-i="confirm">راجعت بيانات العميل والأجهزة وأوافق على إصدار المفتاح وتسجيله.</span></label><button id="submit" type="submit" class="primary" disabled data-i="issue">إصدار ترخيص</button></form>
 <div id="result" class="panel" hidden><h2 data-i="success">تم إصدار الترخيص</h2><p data-i="keyHint">انسخ المفتاح للعميل المعني فقط. لا تشارك مفتاح التوقيع الخاص.</p><textarea id="key" readonly rows="5" dir="ltr" spellcheck="false"></textarea><button id="copy" class="primary" data-i="copy">نسخ مفتاح الترخيص</button><button id="clear" class="secondary" data-i="clear">إخفاء المفتاح</button></div></section>
-</main></body></html>
+<section id="commercial" class="view" hidden>
+<div class="heading"><h2 id="commercialTitle">الإدارة التجارية</h2></div>
+<div id="commercialStatus" class="notice" role="status"></div>
+<div id="commercialSummary" class="metrics"></div>
+<div class="panel form" id="commercialPanel">
+<label><span id="operationLabel">نوع العملية</span><select id="operation"><option value="customer">عميل جديد</option><option value="subscription">اشتراك جديد</option><option value="payment">تسجيل تحصيل</option><option value="ticket">تذكرة دعم</option></select></label>
+<form id="commercialForm" class="form"><div id="commercialFields" class="fields"></div><button class="primary" id="commercialSave" type="submit">حفظ</button></form>
+</div><div class="panel table-wrap commercial-list"><table><thead id="commercialHead"></thead><tbody id="commercialRows"></tbody></table></div>
+</section></main></body></html>
