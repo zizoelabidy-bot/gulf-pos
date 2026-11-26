@@ -4004,7 +4004,7 @@ export default function PaymentModal({
                 <Button
                   onClick={handlePay}
                   disabled={payCtaDisabled}
-                  className={`h-11 w-full shrink-0 rounded-xl text-base font-semibold transition-colors sm:h-12 [@media(max-height:660px)]:h-11 ${CHECKOUT_PRIMARY_CTA_CLASS}`}
+                  className={`gulf-payment-cta h-11 w-full shrink-0 rounded-xl text-base font-semibold transition-colors sm:h-12 [@media(max-height:660px)]:h-11 ${CHECKOUT_PRIMARY_CTA_CLASS}`}
                   size="lg"
                 >
                   {payCtaLabel}

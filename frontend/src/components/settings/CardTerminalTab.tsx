@@ -7,17 +7,18 @@ import { Button } from '@/components/ui/button';
 import { SettingsTabShell } from '@/components/settings/SettingsTabShell';
 import { Toggle } from '@/components/settings/Toggle';
 import api from '@/lib/api';
+import { isAxiosError } from 'axios';
 import toast from 'react-hot-toast';
 
 // Inline en/ar dictionary (GULF-specific feature, not part of the upstream locale gate).
 const dict = {
   en: {
     title: 'Payments terminal (Tap SmartPOS)',
-    description: 'Take KNET, Visa and Mastercard on a Tap SmartPOS card terminal. The terminal amount is sent from the POS.',
+    description: 'Configure and simulate Tap SmartPOS. Live payment initiation is blocked until certified.',
     enable: 'Enable card terminal',
     mode: 'Mode',
     simulator: 'Simulator (no real terminal, for training and testing)',
-    live: 'Live (real Tap terminal)',
+    live: 'Live configuration (charges blocked)',
     merchantId: 'Tap merchant ID',
     terminalId: 'Terminal ID',
     secretKey: 'Tap secret API key',
@@ -26,7 +27,7 @@ const dict = {
     webhookHint: 'Tap sends the payment result to this address + /api/card-terminal/webhook. It must be reachable from the internet; localhost does not work.',
     need: 'What you need from Tap',
     needList: ['A Tap merchant account in Kuwait with the SmartPOS API enabled', 'A SmartPOS terminal (PAX A920Pro or A99) linked to that account', 'Your Tap merchant ID, terminal ID and secret API key'],
-    liveNote: 'Live mode has not been tested against a real Tap account yet. Test with a Tap sandbox or one small real payment before opening to customers.',
+    liveNote: 'Live charges are blocked pending merchant certification. Use the separate physical card terminal and reconcile payments manually.',
     save: 'Save',
     saved: 'Saved',
     testTitle: 'Simulator test',
@@ -38,15 +39,15 @@ const dict = {
     status: 'Status',
     txn: 'Transaction ref',
     loadFailed: 'Could not load terminal settings',
-    s_disabled: 'Disabled', s_simulator: 'Simulator', s_configured: 'Configured', s_incomplete: 'Incomplete',
+    s_disabled: 'Disabled', s_simulator: 'Simulator', s_configured: 'Configured', s_unverified: 'Not certified', s_incomplete: 'Incomplete',
   },
   ar: {
     title: 'جهاز الدفع بالبطاقات (Tap SmartPOS)',
-    description: 'استلام كي نت وفيزا وماستركارد عبر جهاز Tap SmartPOS. يُرسل المبلغ من نقطة البيع إلى الجهاز.',
+    description: 'إعداد ومحاكاة Tap SmartPOS. بدء المدفوعات الفعلية محظور حتى الاعتماد.',
     enable: 'تفعيل جهاز البطاقات',
     mode: 'الوضع',
     simulator: 'تجريبي (بدون جهاز حقيقي، للتدريب والاختبار)',
-    live: 'فعلي (جهاز Tap حقيقي)',
+    live: 'إعداد فعلي (الدفع محظور)',
     merchantId: 'معرّف التاجر في Tap',
     terminalId: 'معرّف الجهاز',
     secretKey: 'المفتاح السري لـ Tap (Secret API key)',
@@ -55,7 +56,7 @@ const dict = {
     webhookHint: 'ترسل Tap نتيجة الدفع إلى هذا العنوان + /api/card-terminal/webhook. يجب أن يكون متاحاً من الإنترنت ولا يعمل localhost.',
     need: 'ما تحتاجه من Tap',
     needList: ['حساب تاجر في Tap بالكويت مع تفعيل واجهة SmartPOS', 'جهاز SmartPOS (PAX A920Pro أو A99) مرتبط بالحساب', 'معرّف التاجر ومعرّف الجهاز والمفتاح السري'],
-    liveNote: 'الوضع الفعلي لم يُختبر بعد مع حساب Tap حقيقي. جرّبه ببيئة Tap التجريبية أو بدفعة صغيرة حقيقية قبل فتحه للعملاء.',
+    liveNote: 'الدفع الفعلي محظور حتى اعتماد التكامل مع التاجر. استخدم جهاز الدفع المستقل وطابق المدفوعات يدويًا.',
     save: 'حفظ',
     saved: 'تم الحفظ',
     testTitle: 'اختبار تجريبي',
@@ -67,7 +68,7 @@ const dict = {
     status: 'الحالة',
     txn: 'رقم المعاملة',
     loadFailed: 'تعذّر تحميل إعدادات الجهاز',
-    s_disabled: 'معطّل', s_simulator: 'تجريبي', s_configured: 'مُهيّأ', s_incomplete: 'غير مكتمل',
+    s_disabled: 'معطّل', s_simulator: 'تجريبي', s_configured: 'مُهيّأ', s_unverified: 'غير معتمد', s_incomplete: 'غير مكتمل',
   },
 } as const;
 type K = keyof (typeof dict)['en'];
@@ -107,13 +108,13 @@ export function CardTerminalTab({ isAdmin }: { isAdmin: boolean }) {
       setCfg(r.data);
       setSecretKey('');
       toast.success(t('saved'));
-    } catch (e: any) { toast.error(e?.response?.data?.error || 'Error'); }
+    } catch (e: unknown) { toast.error((isAxiosError<{ error?: string }>(e) ? e.response?.data?.error : undefined) || 'Error'); }
     finally { setSaving(false); }
   };
 
-  const act = async (fn: () => Promise<any>) => {
+  const act = async (fn: () => Promise<{ data: Intent }>) => {
     try { const r = await fn(); if (r?.data?.intent_id) setIntent(r.data); else if (intent) { const g = await api.get(`/card-terminal/intents/${intent.intent_id}`); setIntent(g.data); } }
-    catch (e: any) { toast.error(e?.response?.data?.error || 'Error'); }
+    catch (e: unknown) { toast.error((isAxiosError<{ error?: string }>(e) ? e.response?.data?.error : undefined) || 'Error'); }
   };
 
   if (!cfg) return <SettingsTabShell><Loader2 className="h-5 w-5 animate-spin" /></SettingsTabShell>;

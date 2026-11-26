@@ -16,7 +16,7 @@ import {
 import { normalizeSupportedCurrencyCode } from '../../shared/currencies';
 import { isOperationReference, serializeOperationFailure } from '../lib/operation-failure';
 import { getBuildIdentity } from './build-identity';
-import { getOfflineModeAbortSignal, isOfflineMode, onOfflineModeEnabled } from './offline-mode';
+import { getOfflineModeAbortSignal, isOfflineMode, onOfflineModeEnabled, isLegacyCloudBlocked } from './offline-mode';
 import { postHogNetworkSuppressed } from './posthog-config';
 
 export const TELEMETRY_URL = 'https://telemetry.flopos.com/collect';
@@ -136,6 +136,7 @@ export function getInstallSource(): InstallSource {
 }
 
 export function isTelemetrySuppressed(): boolean {
+  if (isLegacyCloudBlocked()) return true;
   if (isOfflineMode()) return true;
   if (
     process.env.FLO_MATRIX_OFFLINE === '1' ||

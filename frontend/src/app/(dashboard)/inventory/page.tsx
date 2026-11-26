@@ -453,8 +453,8 @@ export default function InventoryPage() {
   }
 
   return (
-    <div className="dashboard-scroll-shell flex h-full min-h-0 flex-col">
-      <div className="mb-6 flex min-h-9 shrink-0 flex-wrap items-center justify-between gap-3">
+    <div className="gulf-management dashboard-scroll-shell flex h-full min-h-0 flex-col">
+      <div className="gulf-page-heading mb-4 flex min-h-9 shrink-0 flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold text-foreground">{tNav('inventory')}</h1>
         {tab === 'supplies' && (
           <Button onClick={openAddSupply}>
@@ -486,7 +486,7 @@ export default function InventoryPage() {
           value="supplies"
           className="dashboard-scroll-pane flex min-h-0 flex-1 flex-col"
         >
-          <div className="mb-4 flex shrink-0 flex-wrap items-center gap-3">
+          <div className="gulf-toolbar mb-3 flex shrink-0 flex-wrap items-center gap-3">
             <div className="relative w-full sm:max-w-xs">
               <Search
                 size={16}
@@ -532,7 +532,7 @@ export default function InventoryPage() {
 
           <div
             data-testid="inventory-supplies-scroll"
-            className="bg-card rounded-xl border border-border flex-1 min-h-0 overflow-x-hidden overflow-y-auto"
+            className="gulf-table-panel bg-card rounded-xl border border-border flex-1 min-h-0 overflow-x-hidden overflow-y-auto"
           >
             <table className="w-full">
               <thead className="bg-muted">
@@ -686,7 +686,7 @@ export default function InventoryPage() {
           </div>
           <div
             data-testid="inventory-recipes-scroll"
-            className="bg-card rounded-xl border border-border flex-1 min-h-0 overflow-x-hidden overflow-y-auto"
+            className="gulf-table-panel bg-card rounded-xl border border-border flex-1 min-h-0 overflow-x-hidden overflow-y-auto"
           >
             <table className="w-full">
               <thead className="bg-muted">
@@ -832,7 +832,7 @@ export default function InventoryPage() {
           </div>
           <div
             data-testid="inventory-movements-scroll"
-            className="bg-card rounded-xl border border-border flex-1 min-h-0 overflow-x-hidden overflow-y-auto"
+            className="gulf-table-panel bg-card rounded-xl border border-border flex-1 min-h-0 overflow-x-hidden overflow-y-auto"
           >
             <table className="w-full">
               <thead className="bg-muted">

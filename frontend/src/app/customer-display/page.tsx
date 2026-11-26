@@ -1040,6 +1040,7 @@ export default function CustomerDisplayPage() {
   if (unpaired) {
     return (
       <main className="flex h-screen min-h-0 flex-col items-center justify-center gap-2 bg-slate-950 p-6 text-center text-white">
+        <p className="font-extrabold tracking-wide text-sky-300" dir="ltr">GULF POS</p>
         <h1 className="text-2xl font-bold">{t('unpairedTitle')}</h1>
         <p className="text-slate-400">{t('unpairedHint')}</p>
       </main>
@@ -1058,17 +1059,18 @@ export default function CustomerDisplayPage() {
   }
 
   return (
-    <main className="flex h-screen min-h-0 min-w-0 flex-col overflow-hidden bg-slate-950 p-4 text-white md:p-10 select-none">
-      <header className="mx-auto mb-5 flex w-full shrink-0 min-w-0 items-end justify-between gap-4 md:mb-8">
+    <main className="gulf-customer-display flex h-screen min-h-0 min-w-0 flex-col overflow-hidden p-4 text-white md:p-8 select-none">
+      <header className="gulf-display-heading mx-auto mb-4 flex w-full shrink-0 min-w-0 flex-wrap items-center justify-between gap-3 md:mb-6">
         <div className="min-w-0">
-          <div className="break-all text-[clamp(1.875rem,1.5vw,3.75rem)] font-bold tracking-tight">
+          <div className="break-words text-[clamp(1.875rem,1.5vw,3.75rem)] font-extrabold tracking-tight">
             {pairedToken ? businessName : currentTenant?.business_name}
           </div>
           <div className="mt-1 text-[clamp(1rem,0.8vw,2rem)] text-slate-400">
             {t('orderStatus')}
           </div>
         </div>
-        <div className="max-w-[50%] shrink-0 text-end text-[clamp(0.75rem,0.65vw,1.5rem)] text-slate-500">
+        <div className="max-w-[50%] shrink-0 text-end text-[clamp(0.75rem,0.65vw,1.5rem)] text-slate-300">
+          <div dir="ltr" className="mb-1 text-sm font-extrabold tracking-wide text-sky-300">GULF POS</div>
           {error
             ? lastUpdated
               ? t('staleData')

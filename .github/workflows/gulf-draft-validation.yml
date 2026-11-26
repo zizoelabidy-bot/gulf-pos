@@ -1,0 +1,110 @@
+name: GULF POS draft validation
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-windows:
+    runs-on: windows-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test offline license issuer
+        run: node tests/gulf-license-admin.test.cjs
+      - name: Test administration service
+        run: node tests/gulf-admin-service.test.cjs
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Build frontend
+        run: npm run build:frontend
+      - name: Build backend
+        run: npm run build
+      - name: License regression
+        run: node tests/run-electron-node-test.cjs tests/licensing.test.ts
+      - name: Legacy service isolation regression
+        run: npm run test:gulf-legacy-service-policy
+      - name: Printer regression
+        run: npm run test:printer
+      - name: Delivery and card terminal regressions
+        run: npm run test:delivery-management
+      - name: Financial integrity regression
+        run: npm run test:financial-safety-remediation
+      - name: Payment integration regression
+        run: npm run test:integration-payments
+      - name: Checkout guard regression
+        run: npm run test:checkout-quick-tender-and-guards
+      - name: Backup and restore regression
+        run: npm run test:backup
+      - name: Database upgrade regression
+        run: npm run test:upgrade-path
+      - name: Lint
+        run: npm run lint
+      - name: Build unsigned review installer
+        run: npx electron-builder --win nsis --publish never
+      - name: Verify review package
+        shell: pwsh
+        run: |
+          $exe = "release/GULF-POS-Setup.exe"
+          if (!(Test-Path $exe)) { throw "Review installer missing" }
+          if (!(Test-Path "release/win-unpacked/resources/licenses/LICENSE.txt")) { throw "MIT notice missing" }
+          if (!(Test-Path "release/win-unpacked/resources/licenses/OPEN_SOURCE_LICENSES.md")) { throw "Third-party notices missing" }
+          $hash = (Get-FileHash $exe -Algorithm SHA256).Hash
+          "$hash  GULF-POS-Setup.exe" | Set-Content release/SHA256SUMS.txt
+          "Review only; unsigned; not approved for production; commit $env:GITHUB_SHA" | Set-Content release/REVIEW-ONLY.txt
+      - name: Upload review installer only
+        uses: actions/upload-artifact@v4
+        with:
+          name: GULF-POS-Windows-REVIEW
+          retention-days: 7
+          path: |
+            release/GULF-POS-Setup.exe
+            release/SHA256SUMS.txt
+            release/REVIEW-ONLY.txt
+
+  build-admin-windows:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate license issuer
+        run: node tests/gulf-license-admin.test.cjs
+      - name: Validate administration service
+        run: node tests/gulf-admin-service.test.cjs
+      - name: Validate commercial records
+        run: node tests/gulf-commercial-store.test.cjs
+      - name: Check commercial UI and packaging syntax
+        run: |
+          node --check admin-app/commercial-ui.js
+          node --check scripts/build-gulf-admin.cjs
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Package standalone administration center
+        run: node scripts/build-gulf-admin.cjs
+      - name: Hash review installer
+        shell: pwsh
+        run: |
+          $exe = "release-admin/GULF-POS-Admin-Setup.exe"
+          if (!(Test-Path $exe)) { throw "Admin installer missing" }
+          $hash = (Get-FileHash $exe -Algorithm SHA256).Hash
+          "$hash  GULF-POS-Admin-Setup.exe" | Set-Content release-admin/SHA256SUMS.txt
+          "Internal review only; unsigned; commit $env:GITHUB_SHA" | Set-Content release-admin/REVIEW-ONLY.txt
+      - name: Upload independent admin review installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: GULF-POS-Admin-Windows-REVIEW
+          retention-days: 7
+          path: |
+            release-admin/GULF-POS-Admin-Setup.exe
+            release-admin/SHA256SUMS.txt
+            release-admin/REVIEW-ONLY.txt

@@ -488,7 +488,7 @@ export default function CartPanel({
       className={
         isDrawer
           ? 'flex flex-col w-full'
-          : 'pos-cart-shell w-full h-full bg-card rounded-xl border border-border dark:border-border flex flex-col shadow-sm'
+          : 'pos-cart-shell w-full h-full bg-card rounded-lg border border-border dark:border-border flex flex-col shadow-sm'
       }
     >
       {/* Order Type + Compact OrderDetailsSummary */}
@@ -559,7 +559,7 @@ export default function CartPanel({
                             : 'flex-auto min-w-0 gap-0.5 px-0.5'
                       } whitespace-nowrap rounded-md text-xs font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed aria-pressed:forced-colors:outline-1 aria-pressed:forced-colors:outline-[Highlight] ${
                         isSelected
-                          ? 'bg-card text-brand shadow-sm'
+                          ? 'bg-brand text-white shadow-sm'
                           : 'text-muted-foreground hover:text-foreground'
                       }`}
                     >
@@ -1018,7 +1018,7 @@ export default function CartPanel({
       {/* Cart Footer */}
       <div
         data-testid="cart-footer"
-        className="px-2.5 py-1 border-t border-border dark:border-border bg-card space-y-1"
+        className="gulf-cart-footer px-2.5 py-2 border-t border-border dark:border-border bg-card space-y-2"
       >
         {/* Order Notes (shown only when non-empty or toggled open) */}
         {(cart.orderNotes.length > 0 || orderNotesExpanded) && (
@@ -1054,7 +1054,7 @@ export default function CartPanel({
             </button>
           </div>
         )}
-        <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 text-xs">
+        <div className="gulf-cart-subtotal flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 text-xs">
           <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
             <span>
               {t('items')}{' '}

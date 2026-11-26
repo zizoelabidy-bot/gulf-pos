@@ -75,16 +75,16 @@ export function KdsHeader({
   const themeLabel = `${tSettings('themeTitle')}: ${isDark ? tSettings('themeLight') : tSettings('themeDark')}`;
 
   return (
-    <div className="shrink-0 mb-4">
-      <div className="flex items-center gap-3 mb-3">
-        <ChefHat size={24} className="text-brand dark:text-sky-300" />
+    <div className="gulf-kds-header shrink-0 mb-3">
+      <div className="flex flex-wrap items-center gap-3">
+        <span className="gulf-kds-mark inline-flex items-center gap-2" dir="ltr"><ChefHat size={20} aria-hidden="true" /> GULF POS</span>
         <div>
           <h1 className="text-xl font-bold text-foreground">{t('title')}</h1>
           <p className="text-xs text-slate-700 dark:text-slate-300">
             {userName} ({userRole})
           </p>
         </div>
-        <div className="ms-auto flex items-center gap-2">
+        <div className="ms-auto flex flex-wrap items-center gap-2">
           {connectionMode === 'websocket' ? (
             <span title={t('wsConnected')}>
               <Wifi size={16} className="text-green-500" />
@@ -111,7 +111,7 @@ export function KdsHeader({
               aria-pressed={viewMode === 'tabs'}
               className={`min-w-11 min-h-11 px-2.5 py-1 text-xs font-medium rounded-md transition ${
                 viewMode === 'tabs'
-                  ? 'bg-card text-foreground shadow-sm'
+                  ? 'bg-brand text-white shadow-sm'
                   : 'text-slate-700 dark:text-slate-300 hover:text-foreground'
               }`}
             >
@@ -122,7 +122,7 @@ export function KdsHeader({
               aria-pressed={viewMode === 'kanban'}
               className={`min-w-11 min-h-11 px-2.5 py-1 text-xs font-medium rounded-md transition ${
                 viewMode === 'kanban'
-                  ? 'bg-card text-foreground shadow-sm'
+                  ? 'bg-brand text-white shadow-sm'
                   : 'text-slate-700 dark:text-slate-300 hover:text-foreground'
               }`}
             >

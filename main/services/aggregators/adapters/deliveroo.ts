@@ -4,7 +4,7 @@
  * NOTE: Deliveroo exited Kuwait in 2020 - relevant only for other markets.
  */
 import type { CanonicalOrder, PlatformAdapter, StatusUpdate, AggregatorConfig } from '../types';
-import { num, str, strList } from '../types';
+import { strictNumber, strList } from '../types';
 import { verifyHmacHeaders } from './helpers';
 
 function mapInbound(payload: unknown): CanonicalOrder | null {
@@ -13,18 +13,20 @@ function mapInbound(payload: unknown): CanonicalOrder | null {
   const order = (body.order && typeof body.order === 'object' ? body.order : body) as Record<string, unknown>;
   const id = strList(order.id, order.order_id, order.orderId);
   const itemsRaw = Array.isArray(order.items) ? order.items : null;
-  if (!id || !itemsRaw || itemsRaw.length === 0) return null;
+  if (!id || !itemsRaw || itemsRaw.length === 0 || itemsRaw.some(i => !i || typeof i !== 'object' || Array.isArray(i))) return null;
   const items = itemsRaw.map((it) => {
     const i = it as Record<string, unknown>;
     return {
       externalItemId: strList(i.pos_item_id, i.posId, i.id),
       name: strList(i.name) || 'Item',
-      quantity: Math.max(1, Math.round(num(i.quantity) || 1)),
-      unitPrice: num(i.unit_price) || num(i.unitPrice) || num(i.price),
+      quantity: strictNumber(i.quantity),
+      unitPrice: strictNumber(i.unit_price ?? i.unitPrice ?? i.price),
     };
   });
+  if (items.some(i => !Number.isSafeInteger(i.quantity) || i.quantity <= 0 || !Number.isFinite(i.unitPrice))) return null;
   const subtotal = items.reduce((s, i) => s + i.unitPrice * i.quantity, 0);
-  const total = num(order.total_price) || num(order.total) || subtotal;
+  const total = strictNumber(order.total_price ?? order.total);
+  if (!Number.isFinite(total) || !Number.isFinite(strictNumber(order.tax ?? 0))) return null;
   return {
     externalOrderId: id,
     platform: 'deliveroo',
@@ -34,7 +36,7 @@ function mapInbound(payload: unknown): CanonicalOrder | null {
     currency: strList(order.currency),
     items,
     subtotal,
-    tax: Math.max(0, total - subtotal),
+    tax: strictNumber(order.tax ?? 0),
     total,
   };
 }

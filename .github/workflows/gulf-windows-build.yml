@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build-windows:
@@ -26,7 +26,7 @@ jobs:
       - name: Build backend
         run: npm run build
 
-      - name: Build Windows installer (NSIS, unsigned)
+      - name: Build Windows review installer (NSIS, unsigned)
         run: npx electron-builder --win nsis --publish never
 
       - name: Verify installer and hash
@@ -35,20 +35,15 @@ jobs:
           $exe = "release/GULF-POS-Setup.exe"
           if (!(Test-Path $exe)) { Get-ChildItem release; throw "Installer not found at $exe" }
           Get-Item $exe | Select-Object Name, Length
-          (Get-FileHash $exe -Algorithm SHA256).Hash
+          $hash = (Get-FileHash $exe -Algorithm SHA256).Hash
+          "$hash  GULF-POS-Setup.exe" | Set-Content release/SHA256SUMS.txt
+          $hash
 
       - name: Upload installer artifact
         uses: actions/upload-artifact@v4
         with:
           name: GULF-POS-Setup
-          path: release/GULF-POS-Setup.exe
+          path: |
+            release/GULF-POS-Setup.exe
+            release/SHA256SUMS.txt
 
-      - name: Create GitHub prerelease with installer
-        shell: pwsh
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          $v = node -p "require('./package.json').version"
-          $tag = "gulf-v$v-build$env:GITHUB_RUN_NUMBER"
-          $notes = "docs/release-notes/gulf-v$v.md"; if (Test-Path $notes) { gh release create $tag "release/GULF-POS-Setup.exe" --title "GULF POS $v (build $env:GITHUB_RUN_NUMBER)" --notes-file $notes --prerelease } else { gh release create $tag "release/GULF-POS-Setup.exe" --title "GULF POS $v (build $env:GITHUB_RUN_NUMBER)" --notes "GULF POS Windows installer. Unsigned build - Windows SmartScreen will warn on install. Built on the open-source FloCafe project (MIT)." --prerelease }
-          gh release view $tag --json url,assets

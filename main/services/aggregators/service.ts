@@ -2,7 +2,7 @@
  * Aggregator integration service: config (encrypted at rest), inbound webhook
  * ingestion into POS orders, item mapping, status push, and the event log.
  */
-import { generateOrderNumber, getDatabase } from '../../db';
+import { generateOrderNumber, getDatabase, getSettingValue } from '../../db';
 import type { AggregatorConfig, CanonicalOrder, PlatformKey } from './types';
 import { getAdapter, ADAPTERS, PLATFORM_KEYS } from './adapters';
 import { encryptConfigValue, decryptConfigValue } from './crypto';
@@ -132,8 +132,11 @@ export function testConnection(platform: string): { ok: boolean; message: string
   const cfg = getConfig(platform);
   if (!adapter || !cfg) return { ok: false, message: `Unknown platform: ${platform}` };
   const validation = adapter.validateConfig(cfg);
-  logEvent(platform, 'connection_test', null, validation.message);
-  return validation;
+  const result = validation.ok
+    ? { ok: false, message: 'Local configuration is complete; live connectivity has not been verified.' }
+    : validation;
+  logEvent(platform, 'configuration_check', null, result.message);
+  return result;
 }
 
 export function getItemMap(platform: string): unknown[] {
@@ -186,13 +189,13 @@ function insertOnlineOrder(canonical: CanonicalOrder): { orderId: number; orderN
       productId = m?.product_id ?? null;
     }
     if (!productId) productId = `ext:${canonical.platform}:${item.externalItemId ?? item.name}`;
-    const lineTotal = round3(item.unitPrice * item.quantity);
+    const lineTotal = round3(round3(item.unitPrice) * item.quantity);
     insertItem.run(orderId, productId, item.name, round3(item.unitPrice), item.quantity, lineTotal, lineTotal);
   }
   return { orderId, orderNumber };
 }
 
-export function ingestWebhook(platform: string, payload: unknown, headers: Record<string, string>): IngestResult {
+export function ingestWebhook(platform: string, payload: unknown, headers: Record<string, string>, rawBody = JSON.stringify(payload ?? {})): IngestResult {
   const db = getDatabase();
   const adapter = getAdapter(platform);
   if (!adapter) return { ok: false, reason: 'unmapped' };
@@ -201,32 +204,50 @@ export function ingestWebhook(platform: string, payload: unknown, headers: Recor
     logEvent(platform, 'webhook_rejected_disabled', null, null);
     return { ok: false, reason: 'disabled' };
   }
-  const rawBody = JSON.stringify(payload ?? {});
   if (!adapter.verifySignature(rawBody, headers, cfg.webhookSecret)) {
     logEvent(platform, 'signature_rejected', null, 'HMAC verification failed or webhook secret not set');
     return { ok: false, reason: 'signature' };
   }
-  const canonical = adapter.mapInbound(payload);
+  // Parse the authenticated representation, not a separately supplied object.
+  let canonical: CanonicalOrder | null;
+  try {
+    canonical = adapter.mapInbound(JSON.parse(rawBody));
+  } catch {
+    canonical = null;
+  }
+  const money = (n: number) => Number.isFinite(n) && n >= 0 && Number.isSafeInteger(Math.round(n * 1000));
+  const currency = getSettingValue('currency');
+  if (canonical && (
+    canonical.platform !== platform ||
+    (canonical.currency && (!currency || canonical.currency.toUpperCase() !== currency.toUpperCase())) ||
+    !canonical.items.length ||
+    canonical.items.some(i => !Number.isSafeInteger(i.quantity) || i.quantity <= 0 || !money(i.unitPrice) || !money(i.unitPrice * i.quantity)) ||
+    ![canonical.subtotal, canonical.tax, canonical.total].every(money) ||
+    round3(canonical.items.reduce((sum, i) => sum + round3(round3(i.unitPrice) * i.quantity), 0)) !== round3(canonical.subtotal) ||
+    round3(canonical.subtotal + canonical.tax) !== round3(canonical.total)
+  )) canonical = null;
   if (!canonical) {
-    logEvent(platform, 'unmapped_payload', null, rawBody.slice(0, 500));
+    logEvent(platform, 'unmapped_payload', null, 'Invalid or unsupported order payload');
     return { ok: false, reason: 'unmapped' };
   }
-  const existing = db.prepare(
-    'SELECT id, order_number FROM orders WHERE online_platform = ? AND external_order_id = ?'
-  ).get(canonical.platform, canonical.externalOrderId) as { id: number; order_number: string } | undefined;
-  if (existing) {
-    logEvent(platform, 'order_duplicate', canonical.externalOrderId, `existing order ${existing.order_number}`);
-    return { ok: true, duplicate: true, orderId: existing.id, orderNumber: existing.order_number };
-  }
-  const { orderId, orderNumber } = insertOnlineOrder(canonical);
-  logEvent(platform, 'order_received', canonical.externalOrderId, `POS order ${orderNumber}, ${canonical.items.length} items, total ${canonical.total}${canonical.currency ? ' ' + canonical.currency : ''}`);
-  let autoAccepted = false;
-  if (cfg.autoAccept) {
-    const update = adapter.buildStatusUpdate(cfg, canonical.externalOrderId, 'accepted');
-    logEvent(platform, 'order_auto_accepted', canonical.externalOrderId, update ? JSON.stringify(update.body) : 'no status payload (needs partner endpoints)');
-    autoAccepted = true;
-  }
-  return { ok: true, orderId, orderNumber, autoAccepted };
+  const order = canonical;
+  return db.transaction((): IngestResult => {
+    const existing = db.prepare(
+      'SELECT id, order_number FROM orders WHERE online_platform = ? AND external_order_id = ?'
+    ).get(order.platform, order.externalOrderId) as { id: number; order_number: string } | undefined;
+    if (existing) {
+      logEvent(platform, 'order_duplicate', order.externalOrderId, `existing order ${existing.order_number}`);
+      return { ok: true, duplicate: true, orderId: existing.id, orderNumber: existing.order_number };
+    }
+    const { orderId, orderNumber } = insertOnlineOrder(order);
+    logEvent(platform, 'order_received', order.externalOrderId, `POS order ${orderNumber}, ${order.items.length} items, total ${order.total}${order.currency ? ' ' + order.currency : ''}`);
+    const autoAccepted = false;
+    if (cfg.autoAccept) {
+      const update = adapter.buildStatusUpdate(cfg, order.externalOrderId, 'accepted');
+      logEvent(platform, 'auto_accept_unavailable', order.externalOrderId, update ? 'Status delivery is not implemented' : 'Partner endpoints required');
+    }
+    return { ok: true, orderId, orderNumber, autoAccepted };
+  }).immediate();
 }
 
 export function pushStatus(
@@ -236,7 +257,7 @@ export function pushStatus(
 ): { delivered: boolean; payload: unknown } {
   const adapter = getAdapter(platform);
   const cfg = getConfig(platform);
-  if (!adapter || !cfg) return { delivered: false, payload: null };
+  if (!adapter || !cfg || !cfg.enabled) return { delivered: false, payload: null };
   const update = adapter.buildStatusUpdate(cfg, externalOrderId, status);
   if (!update) {
     logEvent(platform, 'status_update_unavailable', externalOrderId, status);

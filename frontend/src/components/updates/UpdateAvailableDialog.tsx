@@ -56,6 +56,7 @@ export default function UpdateAvailableDialog() {
     >
       <DialogContent className="sm:max-w-md" data-testid="update-available-dialog">
         <DialogHeader>
+          <div dir="ltr" className="gulf-dialog-brand">GULF POS</div>
           <DialogTitle className="flex items-center gap-2">
             <Download size={18} className="text-brand" />
             {t('availableTitle')}

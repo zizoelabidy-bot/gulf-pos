@@ -30,15 +30,15 @@ export default function GlobalNotifications() {
   const displayMsg = tCustomers('invalidPhoneCount', { count: invalidPhonesCount });
 
   return (
-    <div className="bg-red-50 border-b border-red-100 px-4 py-2 flex items-center justify-between shrink-0">
+    <div role="status" className="gulf-critical-notice bg-red-50 dark:bg-red-950/60 border-b border-red-200 dark:border-red-900 px-4 py-2 flex flex-wrap items-center justify-between gap-2 shrink-0">
       <div className="flex items-center gap-3">
         <AlertCircle className="text-red-500 w-5 h-5 shrink-0" />
-        <p className="text-sm text-red-800 font-medium">
+        <p className="text-sm text-red-800 dark:text-red-200 font-medium">
           {displayMsg}
         </p>
         <Link 
           href="/customers?filter=invalid_phones" 
-          className="text-sm text-red-600 hover:text-red-700 font-bold flex items-center underline underline-offset-2"
+          className="text-sm text-red-700 dark:text-red-200 hover:underline font-bold flex items-center underline underline-offset-2"
         >
           {tCommon('reviewFix')} <ChevronRight className="w-4 h-4 ms-0.5 rtl-flip" />
         </Link>

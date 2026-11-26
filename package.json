@@ -1,7 +1,7 @@
 {
   "name": "gulf-pos",
   "version": "1.6.1",
-  "description": "GULF POS - Enterprise Restaurant Point of Sale & Management System. Powered by GULF CCTV - Smart Systems Solutions. Built on the open-source FloCafe project (MIT).",
+  "description": "GULF POS - Enterprise Restaurant Point of Sale & Management System. Powered by GULF CCTV - Smart System Solutions.",
   "engines": {
     "node": ">=22.12.0"
   },
@@ -134,6 +134,7 @@
     "test:self-service-credentials": "node tests/run-electron-node-test.cjs tests/self-service-credentials.test.ts",
     "test:orders-authz": "node tests/run-electron-node-test.cjs tests/orders-authz.test.ts && node tests/run-electron-node-test.cjs tests/order-write-rate-limits.test.ts",
     "test:item-price-override": "node tests/run-electron-node-test.cjs tests/item-price-override.test.ts",
+    "test:gulf-legacy-service-policy": "node tests/run-electron-node-test.cjs tests/gulf-legacy-service-policy.test.ts",
     "test:offline-mode": "node tests/run-electron-node-test.cjs tests/offline-mode.test.ts",
     "test:order-item-edit": "node tests/run-electron-node-test.cjs tests/order-item-edit.test.ts",
     "test:order-item-cancel-restore": "node tests/run-electron-node-test.cjs tests/order-item-cancel-restore.test.ts",
@@ -377,21 +378,20 @@
     "test:variant-pos-surface": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/variant-pos-surface.test.ts",
     "test:product-variants-screen": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/product-variants-screen.test.ts",
     "test:printer-text-size": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/printer-text-size.test.ts && node tests/run-electron-node-test.cjs tests/migration-printer-text-size.test.ts",
-    "test:delivery-management": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/delivery-management.test.ts",
+    "test:delivery-management": "tsx --tsconfig tests/tsconfig.json -r ./tests/register-tsx.cjs tests/delivery-management.test.ts && node tests/run-electron-node-test.cjs tests/aggregators.test.ts && node tests/run-electron-node-test.cjs tests/card-terminal.test.ts",
     "test:purchasing": "node tests/run-electron-node-test.cjs tests/purchasing.test.ts",
     "test:food-cost": "node tests/run-electron-node-test.cjs tests/food-cost.test.ts"
   },
   "author": {
-    "name": "Flo",
-    "email": "support@flo.local"
+    "name": "GULF CCTV"
   },
-  "homepage": "https://flopos.com",
+  "homepage": "https://gulfcctv.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/FreeOpenSourcePOS/FloCafe.git"
+    "url": "https://github.com/zizoelabidy-bot/gulf-pos.git"
   },
   "bugs": {
-    "url": "https://github.com/FreeOpenSourcePOS/FloCafe/issues"
+    "url": "https://github.com/zizoelabidy-bot/gulf-pos/issues"
   },
   "license": "MIT",
   "overrides": {
@@ -492,6 +492,14 @@
     "generateUpdatesFilesForAllChannels": true,
     "extraResources": [
       {
+        "from": "LICENSE",
+        "to": "licenses/LICENSE.txt"
+      },
+      {
+        "from": "OPEN_SOURCE_LICENSES.md",
+        "to": "licenses/OPEN_SOURCE_LICENSES.md"
+      },
+      {
         "from": "assets",
         "to": "assets"
       },
@@ -537,9 +545,9 @@
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "notarize": true,
-      "artifactName": "flocafe-${version}-mac-${arch}.${ext}",
+      "artifactName": "gulf-pos-${version}-mac-${arch}.${ext}",
       "extendInfo": {
-        "NSLocalNetworkUsageDescription": "Flo Cafe connects to thermal printers, KDS displays, and the Waiter & Table Terminal on your local network.",
+        "NSLocalNetworkUsageDescription": "GULF POS connects to thermal printers, KDS displays, and the Waiter & Table Terminal on your local network.",
         "NSBonjourServices": [
           "_http._tcp",
           "_pdl-datastream._tcp",
@@ -560,7 +568,7 @@
       "type": "distribution",
       "extendInfo": {
         "ITSAppUsesNonExemptEncryption": false,
-        "NSLocalNetworkUsageDescription": "Flo Cafe connects to thermal printers, KDS displays, and the Waiter & Table Terminal on your local network.",
+        "NSLocalNetworkUsageDescription": "GULF POS connects to thermal printers, KDS displays, and the Waiter & Table Terminal on your local network.",
         "NSBonjourServices": [
           "_http._tcp",
           "_pdl-datastream._tcp",
@@ -581,7 +589,7 @@
     },
     "linux": {
       "synopsis": "Self-hosted Point of Sale for cafes and restaurants",
-      "description": "Flo is a free, open-source point-of-sale system for cafes, restaurants, and small kitchens. Local-first, offline-capable, no cloud lock-in, no per-seat fees.",
+      "description": "GULF POS is a restaurant management and point-of-sale system by GULF CCTV.",
       "target": [
         {
           "target": "AppImage",
@@ -615,7 +623,7 @@
       "icon": "assets",
       "category": "Office",
       "executableName": "flocafe",
-      "artifactName": "flocafe-${version}-linux.${ext}",
+      "artifactName": "gulf-pos-${version}-linux.${ext}",
       "extraFiles": [
         {
           "from": "assets/com.flo.desktop.metainfo.xml",
@@ -628,8 +636,8 @@
       ],
       "desktop": {
         "entry": {
-          "Name": "Flo Cafe",
-          "Comment": "Free, open-source POS for cafes and restaurants",
+          "Name": "GULF POS",
+          "Comment": "GULF POS — Restaurant Management System",
           "GenericName": "Point of Sale",
           "Keywords": "pos;point of sale;restaurant;cafe;billing;invoice;",
           "StartupWMClass": "flo-desktop"
@@ -637,7 +645,7 @@
       }
     },
     "appImage": {
-      "artifactName": "flocafe-${version}-linux.appimage"
+      "artifactName": "gulf-pos-${version}-linux.appimage"
     },
     "snapcraft": {
       "base": "core24",
@@ -668,6 +676,10 @@
     },
     "nsis": {
       "oneClick": false,
+      "shortcutName": "GULF POS",
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "installerHeaderIcon": "assets/icon.ico",
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,

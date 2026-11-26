@@ -5,8 +5,7 @@
  *  - simulator: no network. Intents are created locally and results are produced by
  *    simulateResult(), which signs a webhook with the stored secret and feeds it through
  *    the same ingestWebhook() path the live mode uses (so hashstring checking is exercised).
- *  - live: calls https://api.tap.company/v2/intent. NOT TESTED against Tap: the exact
- *    request body fields must be confirmed with a Tap merchant account / sandbox.
+ *  - live: new charges blocked pending merchant-certified contract and reconciliation.
  *
  * Secrets are encrypted at rest (same AES-GCM helper as the delivery integrations) and
  * are never returned by the API.
@@ -70,7 +69,7 @@ export function getConfigView() {
     webhookBaseUrl: r.webhook_base_url,
     webhookPath: '/api/card-terminal/webhook',
     lastError: r.last_error,
-    status: !r.enabled ? 'disabled' : r.mode === 'simulator' ? 'simulator' : complete ? 'configured' : 'incomplete',
+    status: !r.enabled ? 'disabled' : r.mode === 'simulator' ? 'simulator' : complete ? 'unverified' : 'incomplete',
     updatedAt: r.updated_at,
   };
 }
@@ -84,6 +83,12 @@ export function saveConfig(input: {
     throw new CardTerminalError('Webhook URL cannot be localhost: Tap cannot reach it');
   }
   const cur = cfgRow();
+  if (hasOpenIntent() && (input.enabled === false ||
+      (input.mode !== undefined && input.mode !== cur.mode) ||
+      input.secretKey !== undefined || input.merchantId !== undefined ||
+      input.terminalId !== undefined || input.webhookBaseUrl !== undefined)) {
+    throw new CardTerminalError('Resolve the open payment before changing terminal configuration', 409);
+  }
   const secretEnc = input.secretKey ? encryptConfigValue(input.secretKey.trim()) : cur.secret_key_enc;
   db.prepare(
     `UPDATE card_terminal_config SET enabled = ?, mode = ?, merchant_id = ?, terminal_id = ?, secret_key_enc = ?,
@@ -117,43 +122,23 @@ function hasOpenIntent(): boolean {
 export async function createIntent(input: { amount: number; orderRef?: string; currency?: string }) {
   const cfg = cfgRow();
   if (!cfg.enabled) throw new CardTerminalError('Card terminal is disabled', 409);
-  if (!(input.amount > 0)) throw new CardTerminalError('amount must be positive');
+  if (typeof input.amount !== 'number' || !Number.isFinite(input.amount) || input.amount <= 0) {
+    throw new CardTerminalError('amount must be finite and positive');
+  }
+  // Provider intent contract and reconciliation are not yet merchant-certified.
+  // Do not send real charges from this skeleton.
+  if (cfg.mode !== 'simulator') throw new CardTerminalError('Live terminal payments are not certified; use manual card reconciliation', 409);
   const currency = input.currency || 'KWD';
+  if (typeof currency !== 'string' || !/^[A-Z]{3}$/.test(currency)) throw new CardTerminalError('Invalid currency');
   const amount = Number(formatAmount(input.amount, currency));
+  if (amount <= 0 || amount !== input.amount || !Number.isSafeInteger(Math.round(amount * 1000))) {
+    throw new CardTerminalError('Amount exceeds supported precision or range');
+  }
   // Tap returns 400 while the terminal is busy; mirror that locally so the cashier gets one clear message.
   if (hasOpenIntent()) throw new CardTerminalError('Terminal is busy with another payment. Cancel it or wait for it to finish.', 409);
   const idem = randomUUID();
   const db = getDatabase();
-  let intentId: string;
-  if (cfg.mode === 'simulator') {
-    intentId = 'sim_' + randomUUID().replace(/-/g, '').slice(0, 20);
-  } else {
-    const key = secret();
-    if (!cfg.merchant_id || !cfg.terminal_id || !key) throw new CardTerminalError('Live mode needs merchant id, terminal id and secret key', 409);
-    if (!cfg.webhook_base_url) throw new CardTerminalError('Live mode needs a public webhook base URL', 409);
-    // UNTESTED against Tap: field names follow the public docs (scope, present_payments, idempotent, merchant, order, customer, post).
-    const res = await fetch(`${TAP_API_BASE}/intent`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({
-        scope: 'CHARGE',
-        present_payments: true,
-        idempotent: idem,
-        merchant: { id: cfg.merchant_id },
-        terminal: { id: cfg.terminal_id },
-        order: { amount: formatAmount(amount, currency), currency, reference: input.orderRef || idem },
-        customer: {},
-        post: { url: cfg.webhook_base_url + '/api/card-terminal/webhook' },
-      }),
-    });
-    const data: any = await res.json().catch(() => ({}));
-    if (!res.ok || !data?.id) {
-      const msg = data?.errors?.[0]?.description || data?.message || `Tap returned HTTP ${res.status}`;
-      db.prepare('UPDATE card_terminal_config SET last_error = ? WHERE id = 1').run(String(msg).slice(0, 300));
-      throw new CardTerminalError(String(msg), res.status === 400 ? 409 : 502);
-    }
-    intentId = String(data.id);
-  }
+  const intentId = 'sim_' + randomUUID().replace(/-/g, '').slice(0, 20);
   db.prepare(
     'INSERT INTO card_terminal_intents (intent_id, idempotent_key, order_ref, amount, currency, mode) VALUES (?, ?, ?, ?, ?, ?)',
   ).run(intentId, idem, input.orderRef ?? null, amount, currency, cfg.mode);
@@ -172,26 +157,43 @@ export async function cancelIntent(intentId: string) {
     });
     if (!res.ok) throw new CardTerminalError(`Tap returned HTTP ${res.status} on cancel`, 502);
   }
-  getDatabase().prepare(`UPDATE card_terminal_intents SET status = 'CANCELLED', updated_at = CURRENT_TIMESTAMP WHERE intent_id = ?`).run(intentId);
+  getDatabase().prepare(`UPDATE card_terminal_intents SET status = 'CANCELLED', updated_at = CURRENT_TIMESTAMP WHERE intent_id = ? AND status = 'INITIATED'`).run(intentId);
   return getIntent(intentId);
 }
 
 /** Webhook ingress: verifies the hashstring header, then updates the intent. Idempotent. */
-export function ingestWebhook(body: any, headers: Record<string, string>) {
+export function ingestWebhook(body: any, headers: Record<string, string>, allowSimulator = false) {
+  const cfg = cfgRow();
   const key = secret();
-  if (!key) return { ok: false as const, reason: 'not_configured' };
+  if (!cfg.enabled || !key) return { ok: false as const, reason: 'not_configured' };
   const got = (headers['hashstring'] || '').trim();
   if (!got || !safeEq(got, computeHashstring(body, key))) return { ok: false as const, reason: 'signature' };
-  // SmartPOS payload shape (which field carries the intent id) is unconfirmed: accept the common candidates.
-  const candidates = [body?.intent?.id, body?.intent_id, body?.metadata?.intent_id, body?.id].filter(Boolean).map(String);
-  const it = candidates.map(getIntent).find(Boolean);
+  // Only the id included in the signed hash may select an intent.
+  const it = typeof body?.id === 'string' ? getIntent(body.id) : null;
   if (!it) return { ok: false as const, reason: 'unknown_intent' };
+  if (it.mode !== cfg.mode || (it.mode === 'simulator' && !allowSimulator)) {
+    return { ok: false as const, reason: 'mode_mismatch' };
+  }
+  const amount = typeof body?.amount === 'number' || (typeof body?.amount === 'string' && /^\d+(?:\.\d+)?$/.test(body.amount))
+    ? Number(body.amount) : NaN;
+  if (!Number.isFinite(amount) || amount <= 0 || body.currency !== it.currency || amount !== Number(it.amount)) {
+    return { ok: false as const, reason: 'amount_currency_mismatch' };
+  }
   const st = String(body.status || '').toUpperCase();
   const mapped: IntentStatus =
-    st === 'CAPTURED' ? 'CAPTURED' : ['DECLINED', 'FAILED', 'CANCELLED', 'ABANDONED', 'TIMEDOUT', 'VOID'].includes(st) ? (st === 'DECLINED' ? 'DECLINED' : 'FAILED') : 'INITIATED';
-  if (it.status !== 'INITIATED') return { ok: true as const, duplicate: true, status: it.status };
+    st === 'CAPTURED' ? 'CAPTURED' : st === 'CANCELLED' ? 'CANCELLED' : st === 'DECLINED' ? 'DECLINED' : ['FAILED', 'ABANDONED', 'TIMEDOUT', 'VOID'].includes(st) ? 'FAILED' : 'INITIATED';
+  if (st === 'CAPTURED' && (typeof body?.reference?.payment !== 'string' || !body.reference.payment.trim())) {
+    return { ok: false as const, reason: 'missing_payment_reference' };
+  }
+  if (it.status !== 'INITIATED') {
+    if (it.status !== mapped || (mapped === 'CAPTURED' && it.transaction_ref !== body.reference.payment)) {
+      return { ok: false as const, reason: 'terminal_status_conflict' };
+    }
+    return { ok: true as const, duplicate: true, status: it.status };
+  }
+  if (mapped === 'INITIATED') return { ok: true as const, duplicate: false, status: mapped };
   getDatabase().prepare(
-    `UPDATE card_terminal_intents SET status = ?, transaction_ref = ?, scheme = ?, last_four = ?, detail = ?, updated_at = CURRENT_TIMESTAMP WHERE intent_id = ?`,
+    `UPDATE card_terminal_intents SET status = ?, transaction_ref = ?, scheme = ?, last_four = ?, detail = ?, updated_at = CURRENT_TIMESTAMP WHERE intent_id = ? AND status = 'INITIATED'`,
   ).run(mapped, body?.reference?.payment || body?.reference?.transaction || body?.id || null, body?.card?.scheme || null,
     body?.card?.last_four || null, body?.response?.message || null, it.intent_id);
   return { ok: true as const, duplicate: false, status: mapped, transactionRef: body?.reference?.payment || null };
@@ -203,7 +205,7 @@ export function simulateResult(intentId: string, outcome: 'CAPTURED' | 'DECLINED
   if (cfg.mode !== 'simulator') throw new CardTerminalError('Simulation is only available in simulator mode', 409);
   const key = secret() || ensureSimulatorSecret();
   const it = getIntent(intentId);
-  if (!it) throw new CardTerminalError('Unknown intent', 404);
+  if (!it || it.mode !== 'simulator') throw new CardTerminalError('Unknown simulator intent', 404);
   const body = {
     id: it.intent_id, object: 'charge', status: outcome, amount: it.amount, currency: it.currency,
     transaction: { created: String(Date.now()) },
@@ -211,7 +213,7 @@ export function simulateResult(intentId: string, outcome: 'CAPTURED' | 'DECLINED
     response: { message: outcome === 'CAPTURED' ? 'Captured (simulated)' : 'Declined (simulated)' },
     card: { scheme: 'KNET', last_four: '0000' },
   };
-  return ingestWebhook(body, { hashstring: computeHashstring(body, key) });
+  return ingestWebhook(body, { hashstring: computeHashstring(body, key) }, true);
 }
 
 function ensureSimulatorSecret(): string {
